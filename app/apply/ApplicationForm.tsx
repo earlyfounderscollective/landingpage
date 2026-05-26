@@ -18,6 +18,9 @@ export function ApplicationForm() {
   const [topMessage, setTopMessage] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState<{ id: string | null; name: string } | null>(null);
   const [pending, startTransition] = useTransition();
+  // Stamp the moment this form mounts — used by the server action to detect
+  // instant bot submissions. Computed once per mount.
+  const loadedAtRef = useRef<number>(Date.now());
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,12 +55,14 @@ export function ApplicationForm() {
   if (submitted) {
     return (
       <div className="text-center py-6">
-        <div className="inline-flex items-center justify-center h-14 w-14 rounded-full bg-forest text-ivory mb-7">
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden>
-            <path d="M4 11L9 16L18 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+        <div className="flex justify-center mb-8">
+          <span className="inline-flex items-center justify-center h-14 w-14 rounded-full bg-forest text-ivory">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden>
+              <path d="M4 11L9 16L18 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
         </div>
-        <p className="eyebrow mb-4">Application Received</p>
+        <p className="eyebrow mb-5">Application Received</p>
         <h2 className="font-serif text-display-md text-forest">
           Thank you, {submitted.name.split(" ")[0]}.
         </h2>
@@ -86,6 +91,21 @@ export function ApplicationForm() {
       noValidate
       className="space-y-16"
     >
+      {/* Honeypot — invisible to humans, irresistible to bots. */}
+      <div className="sr-only" aria-hidden tabIndex={-1}>
+        <label htmlFor="websiteUrl">
+          Leave this field empty
+          <input
+            type="text"
+            id="websiteUrl"
+            name="websiteUrl"
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </label>
+      </div>
+      <input type="hidden" name="loadedAt" value={loadedAtRef.current} />
+
       {topMessage && (
         <div
           role="alert"

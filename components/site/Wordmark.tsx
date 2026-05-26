@@ -7,29 +7,25 @@ export function Wordmark({
   tone?: "ink" | "ivory" | "forest";
   size?: "default" | "small";
 }) {
-  const colorClass =
-    tone === "ivory" ? "text-ivory" : tone === "forest" ? "text-forest" : "text-ink";
+  const heightClass = size === "small" ? "h-16 md:h-20" : "h-20 md:h-24";
 
-  const sizeClass = size === "small" ? "text-[13px]" : "text-[14px]";
+  // On the forest footer we invert so the dark serif logo reads against
+  // the dark background. On ivory/bone sections the source artwork sits
+  // naturally.
+  const tonalClass = tone === "ivory" ? "brightness-0 invert opacity-95" : "";
 
   return (
     <Link
       href="/"
       aria-label="Early Founders Collective — Home"
-      className={`group inline-flex flex-col leading-none ${colorClass}`}
+      className="inline-flex items-center"
     >
-      <span
-        className={`font-serif font-medium tracking-[-0.012em] ${
-          size === "small" ? "text-[17px]" : "text-[19px]"
-        }`}
-      >
-        Early Founders
-      </span>
-      <span
-        className={`mt-[2px] font-sans uppercase tracking-[0.28em] opacity-70 ${sizeClass}`}
-      >
-        Collective
-      </span>
+      <img
+        src="/logo.png"
+        alt="Early Founders Collective"
+        className={`${heightClass} w-auto ${tonalClass}`}
+        loading="eager"
+      />
     </Link>
   );
 }

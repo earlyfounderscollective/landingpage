@@ -16,7 +16,7 @@ export default function ThankYouPage() {
   return (
     <>
       <Header />
-      <main className="pt-[160px] md:pt-[200px] pb-28 md:pb-40 bg-ivory grain">
+      <main className="pt-[180px] md:pt-[220px] pb-28 md:pb-40 bg-ivory grain">
         <div className="container-page">
           <div className="max-w-narrow mx-auto text-center">
             <div className="inline-flex items-center justify-center h-14 w-14 rounded-full bg-forest text-ivory mb-9">

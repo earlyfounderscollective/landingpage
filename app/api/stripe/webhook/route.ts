@@ -29,17 +29,15 @@ export async function POST(req: Request) {
   }
 
   try {
+    const supabase = getSupabaseAdmin();
+
     if (event.type === "checkout.session.completed") {
       const session = event.data.object as Stripe.Checkout.Session;
-      const customerId =
-        typeof session.customer === "string"
-          ? session.customer
-          : session.customer?.id ?? null;
+      const customerId = idOrString(session.customer);
       const email =
         session.customer_details?.email ?? session.customer_email ?? null;
       const applicationId = session.metadata?.application_id || null;
 
-      const supabase = getSupabaseAdmin();
       if (supabase) {
         const update = {
           paid: true,
@@ -48,16 +46,52 @@ export async function POST(req: Request) {
         };
 
         if (applicationId) {
-          await supabase.from("applications").update(update).eq("id", applicationId);
+          await supabase
+            .from("applications")
+            .update(update)
+            .eq("id", applicationId);
         } else if (email) {
           await supabase.from("applications").update(update).eq("email", email);
         }
       }
 
       if (email) {
-        const fullName =
-          session.customer_details?.name ?? undefined;
+        const fullName = session.customer_details?.name ?? undefined;
         await sendWelcomeEmail(email, fullName);
+      }
+    }
+
+    if (
+      event.type === "customer.subscription.deleted" ||
+      (event.type === "customer.subscription.updated" &&
+        (event.data.object as Stripe.Subscription).status === "canceled")
+    ) {
+      const sub = event.data.object as Stripe.Subscription;
+      const customerId = idOrString(sub.customer);
+      // TODO: hook into community platform here once chosen
+      // e.g. await removeCircleMember({ stripeCustomerId: customerId });
+
+      if (supabase && customerId) {
+        await supabase
+          .from("applications")
+          .update({ paid: false, status: "cancelled" })
+          .eq("stripe_customer_id", customerId);
+      }
+    }
+
+    if (event.type === "invoice.payment_failed") {
+      const invoice = event.data.object as Stripe.Invoice;
+      const customerId = idOrString(invoice.customer);
+
+      // Stripe retries cards automatically. We mark the row as past_due so
+      // the admin can see at a glance; we DON'T remove community access yet —
+      // that should happen on `customer.subscription.deleted` after the
+      // dunning window closes.
+      if (supabase && customerId) {
+        await supabase
+          .from("applications")
+          .update({ status: "past_due" })
+          .eq("stripe_customer_id", customerId);
       }
     }
 
@@ -66,4 +100,11 @@ export async function POST(req: Request) {
     console.error("Stripe webhook handler error", err);
     return NextResponse.json({ error: "Handler failed" }, { status: 500 });
   }
+}
+
+function idOrString(
+  v: string | Stripe.Customer | Stripe.DeletedCustomer | null | undefined,
+): string | null {
+  if (!v) return null;
+  return typeof v === "string" ? v : v.id;
 }

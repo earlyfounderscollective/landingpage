@@ -8,15 +8,15 @@ export const metadata = {
 
 const steps = [
   { n: "01", t: "Check your inbox", d: "A welcome email is on its way with onboarding details." },
-  { n: "02", t: "Save the rhythm", d: "Weekly call invite and channel access incoming." },
-  { n: "03", t: "Show up Monday", d: "Open the week with what you're committing to." },
+  { n: "02", t: "Watch for your weekly invite", d: "Calendar invite and channel access incoming." },
+  { n: "03", t: "Come ready to grow", d: "Open the week with what you're committing to." },
 ];
 
 export default function SuccessPage() {
   return (
     <>
       <Header />
-      <main className="pt-[160px] md:pt-[200px] pb-28 md:pb-40 bg-ivory grain">
+      <main className="pt-[180px] md:pt-[220px] pb-28 md:pb-40 bg-ivory grain">
         <div className="container-page">
           <div className="max-w-narrow mx-auto text-center">
             <div className="inline-flex items-center justify-center h-14 w-14 rounded-full bg-forest text-ivory mb-9">

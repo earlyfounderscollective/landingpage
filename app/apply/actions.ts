@@ -8,7 +8,27 @@ export type SubmitResult =
   | { ok: true; id: string | null }
   | { ok: false; fieldErrors?: Record<string, string>; message?: string };
 
+// Minimum dwell time before a submission is plausibly human (ms).
+const MIN_DWELL_MS = 3000;
+
 export async function submitApplication(formData: FormData): Promise<SubmitResult> {
+  // Honeypot — a hidden input only bots fill. If it has any value, drop.
+  const honeypot = String(formData.get("websiteUrl") ?? "").trim();
+  if (honeypot.length > 0) {
+    // Pretend it worked so bots don't learn anything from the response.
+    return { ok: true, id: null };
+  }
+
+  // Time-on-page — bots tend to submit instantly. Require 3s+ of dwell.
+  const loadedAt = Number(formData.get("loadedAt") ?? 0);
+  if (!Number.isFinite(loadedAt) || Date.now() - loadedAt < MIN_DWELL_MS) {
+    return {
+      ok: false,
+      message:
+        "That submitted too quickly. Take a breath and try again — we'd love to actually read what you wrote.",
+    };
+  }
+
   const raw = Object.fromEntries(formData.entries());
   const parsed = applicationSchema.safeParse(raw);
 

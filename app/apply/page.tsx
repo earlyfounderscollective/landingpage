@@ -13,7 +13,7 @@ export default function ApplyPage() {
   return (
     <>
       <Header />
-      <main className="pt-[140px] md:pt-[180px] bg-ivory grain">
+      <main className="pt-[160px] md:pt-[200px] bg-ivory grain">
         <section className="py-12 md:py-20">
           <div className="container-page">
             <div className="max-w-narrow mx-auto text-center mb-16 md:mb-20">

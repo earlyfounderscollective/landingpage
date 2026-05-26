@@ -93,13 +93,13 @@ export function Footer() {
           </p>
           <div className="flex items-center gap-6 text-[12px] uppercase tracking-[0.28em] text-ivory/55">
             <Link
-              href="/#faq"
+              href="/privacy"
               className="hover:text-ivory transition-colors"
             >
               Privacy
             </Link>
             <Link
-              href="/#faq"
+              href="/terms"
               className="hover:text-ivory transition-colors"
             >
               Terms

@@ -43,7 +43,7 @@ export function Header() {
             : "bg-transparent border-b border-transparent"
         }`}
       >
-        <div className="container-page flex h-[78px] md:h-[86px] items-center justify-between">
+        <div className="container-page relative flex h-[96px] md:h-[112px] items-center justify-center sm:justify-between">
           <Wordmark size="small" />
 
           <nav className="hidden lg:flex items-center gap-9">
@@ -58,25 +58,23 @@ export function Header() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-3">
-            <Link
-              href="/apply"
-              className="hidden sm:inline-flex rounded-full bg-forest text-ivory text-[13px] font-medium tracking-[0.02em] px-6 py-2.5 transition-all duration-500 ease-editorial hover:bg-ink"
-            >
-              Apply Now
-            </Link>
+          <Link
+            href="/apply"
+            className="hidden sm:inline-flex items-center rounded-full bg-forest text-ivory text-[13px] font-medium tracking-[0.02em] px-6 py-2.5 transition-all duration-500 ease-editorial hover:bg-ink"
+          >
+            Apply Now
+          </Link>
 
-            <button
-              type="button"
-              aria-label="Open menu"
-              aria-expanded={open}
-              onClick={() => setOpen(true)}
-              className="lg:hidden h-10 w-10 inline-flex flex-col items-center justify-center gap-1.5"
-            >
-              <span className="block h-[1.5px] w-5 bg-forest" />
-              <span className="block h-[1.5px] w-5 bg-forest" />
-            </button>
-          </div>
+          <button
+            type="button"
+            aria-label="Open menu"
+            aria-expanded={open}
+            onClick={() => setOpen(true)}
+            className="lg:hidden absolute right-6 md:right-10 top-1/2 -translate-y-1/2 sm:static sm:translate-y-0 sm:ml-3 h-10 w-10 inline-flex flex-col items-center justify-center gap-1.5"
+          >
+            <span className="block h-[1.5px] w-5 bg-forest" />
+            <span className="block h-[1.5px] w-5 bg-forest" />
+          </button>
         </div>
       </header>
 
@@ -91,7 +89,7 @@ export function Header() {
       >
         <div className="flex flex-col h-full">
           {/* Menu top bar */}
-          <div className="container-page flex h-[78px] md:h-[86px] items-center justify-between border-b border-line/40 shrink-0">
+          <div className="container-page flex h-[96px] md:h-[112px] items-center justify-between border-b border-line/40 shrink-0">{/* mobile menu top bar */}
             <Wordmark size="small" />
             <button
               type="button"

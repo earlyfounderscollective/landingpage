@@ -10,7 +10,7 @@ export default function CancelPage() {
   return (
     <>
       <Header />
-      <main className="pt-[160px] md:pt-[200px] pb-28 md:pb-40 bg-ivory grain">
+      <main className="pt-[180px] md:pt-[220px] pb-28 md:pb-40 bg-ivory grain">
         <div className="container-page">
           <div className="max-w-narrow mx-auto text-center">
             <span className="eyebrow">Checkout Cancelled</span>

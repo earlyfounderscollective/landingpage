@@ -4,7 +4,7 @@ import { FounderVideo } from "./FounderVideo";
 export function Hero() {
   return (
     <section className="relative bg-ivory overflow-hidden grain">
-      <div className="container-page pt-[100px] sm:pt-[120px] md:pt-[150px] pb-12 md:pb-16 relative z-10">
+      <div className="container-page pt-[120px] sm:pt-[140px] md:pt-[170px] pb-12 md:pb-16 relative z-10">
         <div className="max-w-[820px] mx-auto text-center">
           <h1 className="font-serif text-[26px] sm:text-[34px] md:text-[46px] lg:text-[54px] leading-[1.08] tracking-[-0.018em] text-forest text-balance">
             Grow your business with more clarity, consistency, and momentum
