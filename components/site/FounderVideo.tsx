@@ -18,7 +18,7 @@ type Props = {
  */
 export function FounderVideo({
   src = "/founder.mp4",
-  poster = "/media/founder-headshot.jpg",
+  poster = "/founder-poster.jpg",
   label = "A note from the founder.",
   className = "",
 }: Props) {

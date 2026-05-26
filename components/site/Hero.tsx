@@ -19,7 +19,7 @@ export function Hero() {
         >
           <FounderVideo
             label="Ogechukwu Madu, a note from the founder"
-            poster="/media/founder-headshot.jpg"
+            poster="/founder-poster.jpg"
           />
         </div>
 
