@@ -67,7 +67,7 @@ export function ApplicationForm() {
           Thank you, {submitted.name.split(" ")[0]}.
         </h2>
         <p className="mt-6 max-w-xl mx-auto text-[16.5px] leading-[1.65] text-ink/75">
-          Your application has been received and will be reviewed manually. If it looks like a strong fit, you&rsquo;ll hear from us shortly with next steps. In the meantime &mdash; keep building.
+          Your application has been received and will be reviewed manually. If it looks like a strong fit, you&rsquo;ll hear from us shortly with next steps. In the meantime, keep building.
         </p>
         {submitted.id && (
           <p className="mt-5 text-[11px] uppercase tracking-[0.28em] text-ink/45 font-medium">
@@ -162,7 +162,7 @@ export function ApplicationForm() {
             name="socialLink"
             error={errors.socialLink}
             span={2}
-            help="Twitter / Instagram / LinkedIn / personal site — wherever you show up."
+            help="Twitter, Instagram, LinkedIn, personal site, wherever you show up."
           >
             <input
               type="text"
@@ -175,7 +175,7 @@ export function ApplicationForm() {
         </Grid>
       </Section>
 
-      <Section index="02" title="What you're building" subtitle="The honest version — not the pitch deck version.">
+      <Section index="02" title="What you're building" subtitle="The honest version, not the pitch deck version.">
         <Grid>
           <Field
             label="What are you currently building?"
@@ -188,7 +188,7 @@ export function ApplicationForm() {
               rows={4}
               required
               className="editorial-textarea"
-              placeholder="The honest, specific version — what it is, who it's for, where it's at."
+              placeholder="The honest, specific version. What it is, who it's for, where it's at."
             />
           </Field>
 

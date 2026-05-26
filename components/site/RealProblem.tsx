@@ -20,8 +20,8 @@ export function RealProblem() {
             </h2>
             <p className="mt-8 text-[16px] md:text-[16.5px] leading-[1.6] text-ink/70 max-w-sm">
               You don&rsquo;t have an ambition problem. You have a structure
-              problem &mdash; too many open loops, too many directions, and no
-              clear way to operate the week.
+              problem: too many open loops, too many directions, and no clear
+              way to operate the week.
             </p>
           </div>
 

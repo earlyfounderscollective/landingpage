@@ -25,7 +25,7 @@ export async function submitApplication(formData: FormData): Promise<SubmitResul
     return {
       ok: false,
       message:
-        "That submitted too quickly. Take a breath and try again — we'd love to actually read what you wrote.",
+        "That submitted too quickly. Take a breath and try again. We'd love to actually read what you wrote.",
     };
   }
 
@@ -72,7 +72,7 @@ export async function submitApplication(formData: FormData): Promise<SubmitResul
       return {
         ok: false,
         message:
-          "Something went wrong saving your application. Please email contact@earlyfounderscollective.com — we'll take it from there.",
+          "Something went wrong saving your application. Please email contact@earlyfounderscollective.com and we'll take it from there.",
       };
     }
     id = inserted?.id ?? null;

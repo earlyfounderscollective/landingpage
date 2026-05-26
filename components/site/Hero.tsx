@@ -8,8 +8,8 @@ export function Hero() {
         <div className="max-w-[820px] mx-auto text-center">
           <h1 className="font-serif text-[26px] sm:text-[34px] md:text-[46px] lg:text-[54px] leading-[1.08] tracking-[-0.018em] text-forest text-balance">
             Grow your business with more clarity, consistency, and momentum
-            over the next 180 days &mdash; without trying to figure everything
-            out alone.
+            over the next 180 days, without trying to figure everything out
+            alone.
           </h1>
         </div>
 
@@ -18,7 +18,7 @@ export function Hero() {
           className="mt-7 sm:mt-8 md:mt-10 max-w-5xl mx-auto scroll-mt-32"
         >
           <FounderVideo
-            label="Ogechukwu Madu — A note from the founder"
+            label="Ogechukwu Madu, a note from the founder"
             poster="/media/founder-headshot.jpg"
           />
         </div>

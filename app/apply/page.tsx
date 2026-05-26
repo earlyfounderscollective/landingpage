@@ -6,7 +6,7 @@ import { ApplicationForm } from "./ApplicationForm";
 export const metadata = {
   title: "Apply for Access",
   description:
-    "Apply to join Early Founders Collective — a private community for early-stage business owners built around clarity, accountability, and momentum.",
+    "Apply to join Early Founders Collective, a private community for early-stage business owners built around clarity, accountability, and momentum.",
 };
 
 export default function ApplyPage() {
@@ -31,8 +31,8 @@ export default function ApplyPage() {
                 Tell us what you&rsquo;re actually building.
               </h1>
               <p className="mt-7 text-[17px] leading-[1.65] text-ink/70 max-w-xl mx-auto">
-                We read every application by hand. Be honest, be specific
-                &mdash; that&rsquo;s how we figure out if the room is the right
+                We read every application by hand. Be honest, be specific.
+                That&rsquo;s how we figure out if the room is the right
                 fit for the work you&rsquo;re doing.
               </p>
               <ul className="mt-10 inline-flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-[12px] uppercase tracking-[0.28em] text-forest/55">

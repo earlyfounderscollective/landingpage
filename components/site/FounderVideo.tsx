@@ -19,7 +19,7 @@ type Props = {
 export function FounderVideo({
   src = "/founder.mp4",
   poster = "/media/founder-headshot.jpg",
-  label = "A note from the founder",
+  label = "A note from the founder.",
   className = "",
 }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);

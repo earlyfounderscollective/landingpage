@@ -27,7 +27,7 @@ export function Possibility() {
           <p className="mt-10 font-serif italic text-[18px] md:text-[20px] leading-[1.5] text-ink/70 max-w-2xl mx-auto text-balance">
             Most early-stage business owners aren&rsquo;t short on effort.
             They&rsquo;re scattered across too many decisions, too much
-            information, and no clear priorities &mdash; moving reactively
+            information, and no clear priorities. They move reactively
             instead of operationally.
           </p>
         </div>
@@ -41,7 +41,7 @@ export function Possibility() {
           {/* Without structure */}
           <div>
             <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-forest/55 mb-3">
-              01 &mdash; Without structure
+              01 · Without structure
             </p>
             <p className="font-serif italic text-[15px] text-ink/55 mb-9">
               Reaction mode.
@@ -62,7 +62,7 @@ export function Possibility() {
           {/* With structure */}
           <div>
             <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-forest mb-3">
-              02 &mdash; With structure
+              02 · With structure
             </p>
             <p className="font-serif italic text-[15px] text-brass mb-9">
               Operating mode.

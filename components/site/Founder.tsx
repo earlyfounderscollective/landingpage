@@ -8,84 +8,6 @@ const ventures = [
   "Worked on real estate redevelopment projects transforming tear-down properties into beautiful homes",
 ];
 
-type Tile =
-  | { kind: "image"; src: string; alt: string; span?: string }
-  | { kind: "label"; label: string; sub?: string; tone: "dark" | "brand"; span?: string };
-
-const tiles: Tile[] = [
-  {
-    kind: "image",
-    src: "/media/founder-headshot.jpg",
-    alt: "Ogechukwu Madu",
-    span: "row-span-2",
-  },
-  {
-    kind: "image",
-    src: "/media/run-club.jpg",
-    alt: "Run club community in Houston",
-  },
-  {
-    kind: "label",
-    label: "BUILT\nDIFFERENT",
-    sub: "Supplements",
-    tone: "dark",
-  },
-  {
-    kind: "image",
-    src: "/media/speaking.jpg",
-    alt: "Inside the room — founder conversation",
-  },
-  {
-    kind: "label",
-    label: "PAINT HTX",
-    sub: "Residential",
-    tone: "brand",
-  },
-  {
-    kind: "image",
-    src: "/media/real-estate.jpg",
-    alt: "Real estate project — rebuilt home",
-  },
-];
-
-function GridTile({ tile }: { tile: Tile }) {
-  if (tile.kind === "image") {
-    return (
-      <figure
-        className={`relative aspect-square w-full overflow-hidden rounded-card bg-forest/95 shadow-card ${
-          tile.span ?? ""
-        }`}
-        style={tile.span === "row-span-2" ? { aspectRatio: "1 / 2" } : undefined}
-      >
-        <img
-          src={tile.src}
-          alt={tile.alt}
-          className="absolute inset-0 h-full w-full object-cover"
-          loading="lazy"
-        />
-      </figure>
-    );
-  }
-  return (
-    <div
-      className={`relative aspect-square w-full overflow-hidden rounded-card shadow-card flex items-center justify-center text-center grain ${
-        tile.tone === "dark" ? "bg-ink text-ivory" : "bg-forest text-ivory"
-      } ${tile.span ?? ""}`}
-    >
-      <div className="px-4">
-        <p className="font-serif text-[22px] md:text-[26px] leading-[1.0] tracking-[0.02em] whitespace-pre-line">
-          {tile.label}
-        </p>
-        {tile.sub && (
-          <p className="mt-3 text-[10px] uppercase tracking-[0.28em] text-ivory/65">
-            {tile.sub}
-          </p>
-        )}
-      </div>
-    </div>
-  );
-}
-
 export function Founder() {
   return (
     <section id="founder" className="bg-bone py-20 md:py-28 grain">
@@ -107,7 +29,7 @@ export function Founder() {
               <p>
                 Over the years, I&rsquo;ve built across multiple industries
                 including real estate, ecommerce, community, hospitality, and
-                service-based businesses &mdash; generating 6 and 7 figures in
+                service-based businesses, generating 6 and 7 figures in
                 revenue while learning firsthand how difficult it can be to
                 stay consistent when everything feels important at the same
                 time.
@@ -144,7 +66,7 @@ export function Founder() {
             </p>
 
             <p className="mt-10 hand text-[30px] leading-none text-forest/85 rotate-[-2deg]">
-              &mdash; Oge
+              Oge
             </p>
           </div>
 

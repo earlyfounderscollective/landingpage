@@ -16,12 +16,11 @@ export default function CancelPage() {
             <span className="eyebrow">Checkout Cancelled</span>
             <div className="rule mt-6 mb-10 mx-auto" aria-hidden />
             <h1 className="font-serif text-display-lg text-forest text-balance">
-              No worries &mdash; your seat is still held.
+              No worries. Your seat is still held.
             </h1>
             <p className="mt-7 text-[17px] leading-[1.65] text-ink/70 max-w-xl mx-auto">
               Your checkout didn&rsquo;t go through and nothing was charged. If
-              you&rsquo;d like to pick it back up later, you can &mdash; or
-              email{" "}
+              you&rsquo;d like to pick it back up later, you can. Or email{" "}
               <a
                 href="mailto:contact@earlyfounderscollective.com"
                 className="link-underline text-forest"

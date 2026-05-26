@@ -68,7 +68,7 @@ export function Fit() {
           <span className="eyebrow">Is This For You?</span>
           <div className="rule mt-6 mb-10 mx-auto" aria-hidden />
           <h2 className="font-serif text-display-lg text-forest text-balance">
-            Honest expectations matter more than perfect fit.
+            Who this room is for.
           </h2>
         </div>
 

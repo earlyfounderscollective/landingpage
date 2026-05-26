@@ -102,18 +102,18 @@ export default function PrivacyPage() {
                 </p>
                 <ul className="space-y-2.5 list-disc pl-5 marker:text-brass">
                   <li>
-                    <strong>Supabase</strong> — stores your application and
+                    <strong>Supabase</strong> stores your application and
                     membership data.
                   </li>
                   <li>
-                    <strong>Stripe</strong> — processes payments and stores
+                    <strong>Stripe</strong> processes payments and stores
                     payment methods.
                   </li>
                   <li>
-                    <strong>Resend</strong> — delivers our transactional emails.
+                    <strong>Resend</strong> delivers our transactional emails.
                   </li>
                   <li>
-                    <strong>Vercel</strong> — hosts the website and routes the
+                    <strong>Vercel</strong> hosts the website and routes the
                     traffic.
                   </li>
                 </ul>

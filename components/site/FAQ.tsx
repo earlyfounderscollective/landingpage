@@ -9,7 +9,7 @@ const faqs = [
   },
   {
     q: "Who is this for?",
-    a: "Early-stage business owners who are tired of trying to figure everything out themselves — people running real products, services, software, communities, or brands. You don't need a polished company. You need a genuine commitment to execute consistently.",
+    a: "Early-stage business owners who are tired of trying to figure everything out themselves. People running real products, services, software, communities, or brands. You don't need a polished company. You need a genuine commitment to execute consistently.",
   },
   {
     q: "Do I need revenue already?",
@@ -21,15 +21,15 @@ const faqs = [
   },
   {
     q: "How much time should I commit?",
-    a: "Plan on a few focused hours each week — enough to show up to the live call, share progress, and meaningfully participate. The rhythm is what makes the room work.",
+    a: "Plan on a few focused hours each week. Enough to show up to the live call, share progress, and meaningfully participate. The rhythm is what makes the room work.",
   },
   {
     q: "Is this online or in person?",
-    a: "The core community is online — that's where the weekly conversations, accountability, and execution support live. In-person mastermind gatherings are offered separately as optional experiences at an additional cost, so the people who want a deeper in-room moment can opt in without it being bundled into the base membership.",
+    a: "The core community is online. That's where the weekly conversations, accountability, and execution support live. In-person mastermind gatherings are offered separately as optional experiences at an additional cost, so the people who want a deeper in-room moment can opt in without it being bundled into the base membership.",
   },
   {
     q: "What if I'm still at the idea stage?",
-    a: "That's welcome — as long as you're genuinely trying to build, not just thinking about it. The earliest stages are often where the room helps the most.",
+    a: "That's welcome, as long as you're genuinely trying to build, not just thinking about it. The earliest stages are often where the room helps the most.",
   },
   {
     q: "How does payment work?",
@@ -37,7 +37,7 @@ const faqs = [
   },
   {
     q: "Can I cancel?",
-    a: "Yes. Membership is month-to-month — you can step away when the season calls for it. This is a room, not a contract.",
+    a: "Yes. Membership is month-to-month, so you can step away when the season calls for it. This is a room, not a contract.",
   },
 ];
 

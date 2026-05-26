@@ -7,9 +7,9 @@ export const metadata = {
 };
 
 const steps = [
-  { n: "01", t: "Manual review", d: "Every application is read by hand — no automation, no shortcuts." },
+  { n: "01", t: "Manual review", d: "Every application is read by hand. No automation, no shortcuts." },
   { n: "02", t: "Reply in 5 business days", d: "You'll hear back either way, with honest feedback." },
-  { n: "03", t: "Onboarding if it's a fit", d: "Payment and access details follow — only after acceptance." },
+  { n: "03", t: "Onboarding if it's a fit", d: "Payment and access details follow, only after acceptance." },
 ];
 
 export default function ThankYouPage() {
@@ -32,7 +32,7 @@ export default function ThankYouPage() {
             <p className="mt-7 text-[17px] leading-[1.65] text-ink/70 max-w-xl mx-auto">
               Your application has been received and will be reviewed manually.
               If it looks like a strong fit, you&rsquo;ll receive next steps
-              shortly. In the meantime &mdash; keep building.
+              shortly. In the meantime, keep building.
             </p>
 
             <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-5 text-left">

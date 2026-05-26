@@ -24,7 +24,7 @@ const statusFor: Record<Action, string> = {
 };
 
 const headlineFor: Record<Action, string> = {
-  accept: "Accepted — payment link sent",
+  accept: "Accepted. Payment link sent",
   decline: "Application declined",
   waitlist: "Moved to waitlist",
 };
