@@ -41,6 +41,14 @@ export const metadata: Metadata = {
     description:
       "Grow your business with more clarity, consistency, and momentum over the next 180 days. A private community for early-stage business owners built around structure, accountability, and execution.",
     url: "https://earlyfounderscollective.com",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Early Founders Collective",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -48,6 +56,7 @@ export const metadata: Metadata = {
       "Early Founders Collective — A Private Community for Early-Stage Builders",
     description:
       "Grow your business with more clarity, consistency, and momentum over the next 180 days.",
+    images: ["/og-image.jpg"],
   },
   icons: {
     icon: [
