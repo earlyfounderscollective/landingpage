@@ -51,7 +51,7 @@ export function FAQ() {
           <span className="eyebrow">Questions</span>
           <div className="rule mt-6 mb-10 mx-auto" aria-hidden />
           <h2 className="font-serif text-display-lg text-forest text-balance">
-            A few honest answers.
+            Frequently asked questions.
           </h2>
           <p className="mt-6 text-[15.5px] leading-[1.65] text-ink/65">
             Still curious? Reach out at{" "}
