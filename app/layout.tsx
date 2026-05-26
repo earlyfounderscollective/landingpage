@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://earlyfounderscollective.com"),
   title: {
     default:
-      "Early Founders Collective — A Private Community for Early-Stage Builders",
+      "Early Founders Collective — A Private Community for Early-Stage Business Owners",
     template: "%s · Early Founders Collective",
   },
   description:
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "Early Founders Collective",
     title:
-      "Early Founders Collective — A Private Community for Early-Stage Builders",
+      "Early Founders Collective — A Private Community for Early-Stage Business Owners",
     description:
       "Grow your business with more clarity, consistency, and momentum over the next 180 days. A private community for early-stage business owners built around structure, accountability, and execution.",
     url: "https://earlyfounderscollective.com",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title:
-      "Early Founders Collective — A Private Community for Early-Stage Builders",
+      "Early Founders Collective — A Private Community for Early-Stage Business Owners",
     description:
       "Grow your business with more clarity, consistency, and momentum over the next 180 days.",
     images: ["/og-image.jpg"],
