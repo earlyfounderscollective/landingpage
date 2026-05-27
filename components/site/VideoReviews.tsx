@@ -17,7 +17,7 @@ const reviews: Review[] = [
     name: "Ryan",
     role: "Co-founder, community events",
     quote:
-      "He laid the blueprint. Two sold-out events down, partnerships with Lululemon and Fatletics, and our first paid sponsorship coming up.",
+      "Oge walked us through every single step. Community, structure, accountability, and the next moves to actually grow.",
   },
 ];
 
@@ -100,8 +100,8 @@ function ReviewTile({ review }: { review: Review }) {
         )}
       </div>
 
-      <figcaption className="mt-5 px-1">
-        <p className="font-serif text-[17px] md:text-[18px] leading-[1.4] text-forest text-balance">
+      <figcaption className="mt-5 w-full">
+        <p className="font-serif text-[17px] md:text-[18px] leading-[1.45] text-forest">
           &ldquo;{review.quote}&rdquo;
         </p>
       </figcaption>
@@ -113,7 +113,7 @@ export function VideoReviews() {
   const len = reviews.length;
   const layoutClass =
     len === 1
-      ? "max-w-sm mx-auto"
+      ? "max-w-md mx-auto"
       : len === 2
         ? "grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-3xl mx-auto"
         : "grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto";
