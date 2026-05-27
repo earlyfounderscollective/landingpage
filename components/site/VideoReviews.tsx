@@ -15,7 +15,7 @@ const reviews: Review[] = [
     src: "/media/review-ryan.mp4",
     poster: "/media/review-ryan-poster.jpg",
     name: "Ryan",
-    role: "Co-founder, community events",
+    role: "Co-founder, Off the Clock | nursing community events",
     quote:
       "Oge laid out the blueprint. Now we have hosted events of over 175 people and have worked with brands like Lululemon, Fabletics & Figs.",
   },

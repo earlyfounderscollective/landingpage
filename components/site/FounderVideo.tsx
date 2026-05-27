@@ -93,15 +93,15 @@ export function FounderVideo({
           aria-label="Play founder video"
           className="group absolute inset-0 z-10 flex flex-col items-center justify-center text-ivory"
         >
-          <span className="relative inline-flex h-20 w-20 md:h-24 md:w-24 items-center justify-center rounded-full bg-ivory/95 text-forest transition-all duration-500 ease-editorial group-hover:scale-105 group-hover:bg-ivory shadow-card">
-            <span className="absolute inset-0 rounded-full bg-ivory/40 animate-ping opacity-30" />
+          <span className="relative inline-flex h-20 w-20 md:h-24 md:w-24 items-center justify-center rounded-full bg-ivory/25 backdrop-blur-md border border-ivory/60 text-ivory transition-all duration-500 ease-editorial group-hover:scale-105 group-hover:bg-ivory/35">
+            <span className="absolute inset-0 rounded-full bg-ivory/20 animate-ping opacity-20" />
             <svg
-              width="24"
-              height="24"
+              width="26"
+              height="26"
               viewBox="0 0 24 24"
               fill="none"
               aria-hidden
-              className="relative ml-1"
+              className="relative ml-1 drop-shadow-md"
             >
               <path d="M6 4L20 12L6 20V4Z" fill="currentColor" />
             </svg>
