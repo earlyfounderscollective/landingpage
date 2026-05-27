@@ -17,7 +17,7 @@ const reviews: Review[] = [
     name: "Ryan",
     role: "Co-founder, community events",
     quote:
-      "Oge walked us through every single step. Community, structure, accountability, and the next moves to actually grow.",
+      "Oge laid out the blueprint. Now we have hosted events of over 175 people and have worked with brands like Lululemon, Fabletics & Figs.",
   },
 ];
 
