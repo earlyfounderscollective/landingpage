@@ -175,7 +175,7 @@ export function ApplicationForm() {
         </Grid>
       </Section>
 
-      <Section index="02" title="What you're building" subtitle="The honest version, not the pitch deck version.">
+      <Section index="02" title="What you're building" subtitle="The real version, not the pitch deck version.">
         <Grid>
           <Field
             label="What are you currently building?"
@@ -188,7 +188,7 @@ export function ApplicationForm() {
               rows={4}
               required
               className="editorial-textarea"
-              placeholder="The honest, specific version. What it is, who it's for, where it's at."
+              placeholder="The specific version. What it is, who it's for, where it's at."
             />
           </Field>
 
@@ -227,7 +227,7 @@ export function ApplicationForm() {
               rows={4}
               required
               className="editorial-textarea"
-              placeholder="Be honest. Patterns matter more than excuses."
+              placeholder="Be direct. Patterns matter more than excuses."
             />
           </Field>
 
@@ -270,7 +270,7 @@ export function ApplicationForm() {
             name="participateWeekly"
             error={errors.participateWeekly}
             span={2}
-            help="The room only works when people show up. Honest answers only."
+            help="The room only works when people show up. Real answers only."
           >
             <div className="flex gap-2 pt-2">
               {participationOptions.map((p) => (

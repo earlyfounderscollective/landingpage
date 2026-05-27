@@ -31,8 +31,8 @@ export default function ApplyPage() {
                 Tell us what you&rsquo;re actually building.
               </h1>
               <p className="mt-7 text-[17px] leading-[1.65] text-ink/70 max-w-xl mx-auto">
-                We read every application by hand. Be honest, be specific.
-                That&rsquo;s how we figure out if our room is the right
+                We read every application by hand. The more specific you can
+                be, the easier it is to figure out if our room is the right
                 fit for the work you&rsquo;re doing.
               </p>
               <ul className="mt-10 inline-flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-[12px] uppercase tracking-[0.28em] text-forest/55">

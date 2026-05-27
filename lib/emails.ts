@@ -19,8 +19,7 @@ const wrap = (inner: string) => `
     <tr><td align="center" style="padding:40px 16px;">
       <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background:#FFFFFF;border:1px solid rgba(17,17,17,0.06);border-radius:16px;padding:48px 40px;">
         <tr><td>
-          <p style="font-family:'Fraunces',Georgia,serif;font-size:14px;font-weight:500;letter-spacing:0.04em;color:#9B7A4A;margin:0 0 4px 0;">Early Founders</p>
-          <p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:rgba(35,53,45,0.6);margin:0 0 36px 0;">Collective</p>
+          <img src="${env.siteUrl}/email-logo.png" width="180" height="87" alt="Early Founders Collective" style="display:block;width:180px;height:auto;margin:0 0 36px 0;border:0;outline:none;text-decoration:none;" />
           ${inner}
           <hr style="border:none;border-top:1px solid rgba(17,17,17,0.08);margin:40px 0 20px 0;"/>
           <p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(17,17,17,0.4);margin:0;">
