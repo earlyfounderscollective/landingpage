@@ -168,7 +168,7 @@ export async function sendAcceptanceEmail(
   const benefits = `
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 28px 0;">
       ${[
-        "The private community of early-stage business owners (real people, real businesses, no fluff)",
+        "The private community of early-stage business owners building alongside you",
         "Weekly live calls with Oge and the room",
         "Accountability, structure, and execution support whenever you need it",
         "Founding-member pricing, locked for the life of your membership",
