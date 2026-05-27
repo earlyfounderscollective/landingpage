@@ -32,13 +32,13 @@ export default function ApplyPage() {
               </h1>
               <p className="mt-7 text-[17px] leading-[1.65] text-ink/70 max-w-xl mx-auto">
                 We read every application by hand. Be honest, be specific.
-                That&rsquo;s how we figure out if the room is the right
+                That&rsquo;s how we figure out if our room is the right
                 fit for the work you&rsquo;re doing.
               </p>
               <ul className="mt-10 inline-flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-[12px] uppercase tracking-[0.28em] text-forest/55">
                 {[
                   "Takes 8–12 minutes",
-                  "Reviewed within 5 days",
+                  "Reviewed in 2-3 days",
                   "Payment only after acceptance",
                 ].map((s, i) => (
                   <li key={s} className="inline-flex items-center gap-3">

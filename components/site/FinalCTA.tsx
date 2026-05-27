@@ -33,7 +33,7 @@ export function FinalCTA() {
               Apply Now
             </Link>
             <p className="mt-6 text-[12px] uppercase tracking-[0.28em] text-ivory/55">
-              Applications reviewed manually &middot; Reply within 5 business days
+              Applications reviewed manually &middot; Reply within 2-3 days
             </p>
           </div>
         </div>

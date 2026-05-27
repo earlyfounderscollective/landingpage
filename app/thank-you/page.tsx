@@ -8,7 +8,7 @@ export const metadata = {
 
 const steps = [
   { n: "01", t: "Manual review", d: "Every application is read by hand. No automation, no shortcuts." },
-  { n: "02", t: "Reply in 5 business days", d: "You'll hear back either way, with honest feedback." },
+  { n: "02", t: "Reply in 2-3 days", d: "You'll hear back either way, with honest feedback." },
   { n: "03", t: "Onboarding if it's a fit", d: "Payment and access details follow, only after acceptance." },
 ];
 

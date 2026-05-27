@@ -81,8 +81,8 @@ export function Footer() {
               contact@earlyfounderscollective.com
             </a>
             <p className="mt-6 text-[13px] text-ivory/65 leading-[1.6] max-w-xs">
-              Applications are reviewed manually. Replies typically within 5
-              business days.
+              Applications are reviewed manually. Replies typically within
+              2-3 days.
             </p>
           </div>
         </div>

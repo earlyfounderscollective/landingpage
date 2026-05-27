@@ -295,7 +295,7 @@ export function ApplicationForm() {
 
       <div className="pt-8 border-t border-line/70 flex flex-col sm:flex-row sm:items-center justify-between gap-5">
         <p className="text-[13.5px] text-ink/60 max-w-sm leading-relaxed">
-          Applications are reviewed manually. Replies usually arrive within 5 business days.
+          Applications are reviewed manually. Replies usually arrive within 2-3 days.
         </p>
         <button type="submit" disabled={pending} className="btn-primary disabled:opacity-60 disabled:pointer-events-none">
           {pending ? "Sending…" : "Submit Application"}

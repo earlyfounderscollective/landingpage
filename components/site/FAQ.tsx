@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     q: "What happens after I apply?",
-    a: "Every application is reviewed manually. If it looks like a strong fit, you'll receive next steps with payment and onboarding within 5 business days. If not, you'll still hear back either way.",
+    a: "Every application is reviewed manually. If it looks like a strong fit, you'll receive next steps with payment and onboarding within 2-3 days. If not, you'll still hear back either way.",
   },
   {
     q: "How much time should I commit?",

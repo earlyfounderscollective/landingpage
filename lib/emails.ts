@@ -44,7 +44,7 @@ export async function sendApplicantConfirmation(input: ApplicationInput) {
       ${input.fullName.split(" ")[0]}, thanks for applying to Early Founders Collective.
     </p>
     <p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;color:rgba(17,17,17,0.78);margin:0 0 16px 0;line-height:1.65;">
-      Every application is read by hand. If it looks like a strong fit for the room, you'll hear from us shortly with next steps — typically within 5 business days.
+      Every application is read by hand. If it looks like a strong fit for our room, you'll hear from us shortly with next steps, typically within 2-3 days.
     </p>
     <p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;color:rgba(17,17,17,0.78);margin:0 0 28px 0;line-height:1.65;">
       In the meantime, keep building.
