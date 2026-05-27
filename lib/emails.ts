@@ -19,7 +19,11 @@ const wrap = (inner: string) => `
     <tr><td align="center" style="padding:40px 16px;">
       <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background:#FFFFFF;border:1px solid rgba(17,17,17,0.06);border-radius:16px;padding:48px 40px;">
         <tr><td>
-          <img src="${env.siteUrl}/email-logo.png" width="180" height="87" alt="Early Founders Collective" style="display:block;width:180px;height:auto;margin:0 0 36px 0;border:0;outline:none;text-decoration:none;" />
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 36px 0;">
+            <tr><td align="center">
+              <img src="${env.siteUrl}/email-logo.png" width="180" height="87" alt="Early Founders Collective" style="display:block;width:180px;height:auto;border:0;outline:none;text-decoration:none;margin:0 auto;" />
+            </td></tr>
+          </table>
           ${inner}
           <hr style="border:none;border-top:1px solid rgba(17,17,17,0.08);margin:40px 0 20px 0;"/>
           <p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(17,17,17,0.4);margin:0;">
@@ -161,26 +165,54 @@ export async function sendAcceptanceEmail(
       We'll send your secure payment link in a separate note shortly.
     </p>`;
 
+  const benefits = `
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 28px 0;">
+      ${[
+        "The private community of early-stage business owners (real people, real businesses, no fluff)",
+        "Weekly live calls with Oge and the room",
+        "Accountability, structure, and execution support whenever you need it",
+        "Founding-member pricing, locked for the life of your membership",
+      ]
+        .map(
+          (item) => `
+        <tr>
+          <td valign="top" width="22" style="padding:6px 0;font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;color:#9B7A4A;">&bull;</td>
+          <td style="padding:6px 0;font-family:ui-sans-serif,system-ui,sans-serif;font-size:15.5px;color:rgba(17,17,17,0.8);line-height:1.55;">${escapeHtml(item)}</td>
+        </tr>`,
+        )
+        .join("")}
+    </table>`;
+
   const inner = `
     <h1 style="font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:30px;line-height:1.18;color:#23352D;margin:0 0 24px 0;letter-spacing:-0.015em;">
-      You're in${first ? `, ${escapeHtml(first)}` : ""}.
+      Congratulations${first ? `, ${escapeHtml(first)}` : ""}. You're in.
     </h1>
     <p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;color:rgba(17,17,17,0.78);margin:0 0 16px 0;line-height:1.65;">
-      We read your application carefully and want you in the room. The next step is short: confirm your seat.
+      We read your application, and we're excited to start this part of your journey with you.
     </p>
+    <p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;color:rgba(17,17,17,0.78);margin:0 0 24px 0;line-height:1.65;">
+      You're exactly the kind of person this room was built for, and we want you inside it.
+    </p>
+    <p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;color:rgba(17,17,17,0.78);margin:0 0 16px 0;line-height:1.65;">
+      Here's what's next. Confirming your seat gets you access to:
+    </p>
+    ${benefits}
     ${button}
     <p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;color:rgba(17,17,17,0.78);margin:0 0 28px 0;line-height:1.65;">
-      Once that's done, you'll receive onboarding details and your weekly rhythm. Looking forward to seeing what you build.
+      The moment your payment goes through, your welcome email and onboarding details land in your inbox, and you're officially in.
+    </p>
+    <p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;color:rgba(17,17,17,0.78);margin:0 0 28px 0;line-height:1.65;">
+      Looking forward to seeing what you build.
     </p>
     <p style="font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:17px;color:rgba(35,53,45,0.85);margin:0;">
-      — Oge
+      Oge
     </p>
   `;
 
   return c.emails.send({
     from: `Early Founders Collective <${env.resendFromEmail}>`,
     to: applicant.email,
-    subject: "You're in — Early Founders Collective",
+    subject: `Congratulations${first ? `, ${first}` : ""} — welcome to Early Founders Collective`,
     html: wrap(inner),
   });
 }
@@ -267,7 +299,7 @@ export async function sendWelcomeEmail(email: string, fullName?: string) {
       ${fullName ? `${fullName.split(" ")[0]}, you're officially in.` : "You're officially in."}
     </p>
     <p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;color:rgba(17,17,17,0.78);margin:0 0 28px 0;line-height:1.65;">
-      Onboarding details, your weekly rhythm, and access information will be sent shortly. Glad to have you in the room.
+      Onboarding details and access information will be sent shortly. Glad to have you in the room.
     </p>
     <p style="font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:17px;color:rgba(35,53,45,0.85);margin:0;">
       — Early Founders Collective
