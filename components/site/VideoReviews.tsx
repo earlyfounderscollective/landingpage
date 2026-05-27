@@ -12,25 +12,12 @@ type Review = {
 
 const reviews: Review[] = [
   {
-    src: "/media/review-1.mp4",
-    poster: "/media/speaking.jpg",
-    name: "Member",
-    role: "Service business owner",
-    quote: "The first room where I actually finish what I start.",
-  },
-  {
-    src: "/media/review-2.mp4",
-    poster: "/media/run-club.jpg",
-    name: "Member",
-    role: "Community builder",
-    quote: "Honest feedback, real conversations, real momentum.",
-  },
-  {
-    src: "/media/review-3.mp4",
-    poster: "/media/speaking-2.jpg",
-    name: "Member",
-    role: "Product business owner",
-    quote: "Less noise, more clarity. Exactly what I needed.",
+    src: "/media/review-ryan.mp4",
+    poster: "/media/review-ryan-poster.jpg",
+    name: "Ryan",
+    role: "Co-founder, community events",
+    quote:
+      "He laid the blueprint. Two sold-out events down, partnerships with Lululemon and Fatletics, and our first paid sponsorship coming up.",
   },
 ];
 
@@ -123,6 +110,14 @@ function ReviewTile({ review }: { review: Review }) {
 }
 
 export function VideoReviews() {
+  const len = reviews.length;
+  const layoutClass =
+    len === 1
+      ? "max-w-sm mx-auto"
+      : len === 2
+        ? "grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-3xl mx-auto"
+        : "grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto";
+
   return (
     <section className="bg-ivory pt-2 pb-20 md:pb-28 grain">
       <div className="container-page">
@@ -132,7 +127,7 @@ export function VideoReviews() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
+        <div className={layoutClass}>
           {reviews.map((r) => (
             <ReviewTile key={r.poster} review={r} />
           ))}
