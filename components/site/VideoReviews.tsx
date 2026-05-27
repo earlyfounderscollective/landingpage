@@ -121,9 +121,14 @@ export function VideoReviews() {
   return (
     <section className="bg-ivory pt-2 pb-20 md:pb-28 grain">
       <div className="container-page">
-        <div className="max-w-3xl mx-auto text-center mb-12 md:mb-14">
-          <h2 className="font-serif text-[28px] md:text-[36px] leading-[1.12] tracking-[-0.018em] text-forest text-balance">
-            What changes when you stop building alone.
+        <div className="max-w-3xl mx-auto text-center mb-14 md:mb-16">
+          <h2 className="flex flex-col items-center">
+            <span className="font-serif text-[34px] md:text-[44px] leading-[1.05] tracking-[-0.02em] text-forest">
+              Early Founders
+            </span>
+            <span className="hand text-[52px] md:text-[68px] leading-none text-brass mt-1 rotate-[-3deg]">
+              Success Stories
+            </span>
           </h2>
         </div>
 
