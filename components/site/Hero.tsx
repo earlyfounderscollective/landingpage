@@ -14,8 +14,8 @@ export function Hero() {
             <span className="block text-[26px] sm:text-[34px] md:text-[46px] lg:text-[52px] leading-[1.08] tracking-[-0.018em]">
               Grow your business with more
             </span>
-            <span className="block hand text-[32px] sm:text-[42px] md:text-[52px] lg:text-[58px] leading-[0.95] text-brass mt-1 sm:mt-2 -rotate-[2deg] sm:whitespace-nowrap">
-              clarity, consistency &amp;&nbsp;momentum
+            <span className="block hand text-[42px] sm:text-[52px] md:text-[68px] lg:text-[78px] leading-[0.95] text-brass mt-1 sm:mt-2 -rotate-[2deg]">
+              clarity, consistency &amp; momentum
             </span>
             <span className="block mt-2 sm:mt-3 text-[18px] sm:text-[22px] md:text-[26px] leading-[1.15] tracking-[-0.014em] text-forest/85">
               over the next 180 days.
