@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { EmailGate } from "@/components/plan/EmailGate";
 
 type ModuleCard = {
   n: string;
@@ -200,6 +201,8 @@ export default function PlanDashboard() {
           </button>
         </aside>
       </div>
+
+      <EmailGate />
 
       {/* Modules */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
