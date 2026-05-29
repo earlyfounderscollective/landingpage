@@ -31,7 +31,7 @@ const modules: ModuleCard[] = [
     desc: "Who you're really for. Who else is there. Where the opening is.",
     questions: 7,
     tasks: 4,
-    status: "locked",
+    status: "open",
   },
   {
     n: "03",
@@ -40,7 +40,7 @@ const modules: ModuleCard[] = [
     desc: "What you actually sell. What it solves. Why it's different.",
     questions: 11,
     tasks: 6,
-    status: "locked",
+    status: "open",
   },
   {
     n: "04",
@@ -49,7 +49,7 @@ const modules: ModuleCard[] = [
     desc: "The operating doc. Vision, goals, money, team, risk.",
     questions: 10,
     tasks: 6,
-    status: "locked",
+    status: "open",
   },
   {
     n: "05",
@@ -58,7 +58,7 @@ const modules: ModuleCard[] = [
     desc: "Where you'll be found. Two channels done well beats five done badly.",
     questions: 7,
     tasks: 6,
-    status: "locked",
+    status: "open",
   },
   {
     n: "06",
@@ -67,7 +67,7 @@ const modules: ModuleCard[] = [
     desc: "The path from stranger to customer. Top, middle, bottom of funnel.",
     questions: 8,
     tasks: 6,
-    status: "locked",
+    status: "open",
   },
   {
     n: "07",
@@ -76,7 +76,7 @@ const modules: ModuleCard[] = [
     desc: "Onboarding, support, the referral loop that compounds.",
     questions: 9,
     tasks: 6,
-    status: "locked",
+    status: "open",
   },
 ];
 
