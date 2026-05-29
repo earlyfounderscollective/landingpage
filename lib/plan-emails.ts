@@ -42,43 +42,252 @@ function escapeHtml(s: string) {
     .replace(/'/g, "&#39;");
 }
 
-export async function sendPlanWelcomeEmail(email: string, name: string) {
-  const c = client();
-  if (!c) return { skipped: true as const };
+function firstNameOf(name: string): string {
+  return name ? escapeHtml(name.trim().split(/\s+/)[0]) : "";
+}
 
-  const first = name ? escapeHtml(name.split(" ")[0]) : "";
-  const greeting = first ? `${first}, your Plan is open.` : "Your Plan is open.";
+const H1 = (text: string) =>
+  `<h1 style="font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:30px;line-height:1.18;color:#23352D;margin:0 0 24px 0;letter-spacing:-0.015em;">${text}</h1>`;
+
+const P = (text: string, last = false) =>
+  `<p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;color:rgba(17,17,17,0.78);margin:0 0 ${last ? "28px" : "16px"} 0;line-height:1.65;">${text}</p>`;
+
+const BTN = (href: string, label: string) =>
+  `<div style="margin:8px 0 32px 0;">
+    <a href="${href}" style="display:inline-block;background:#23352D;color:#F7F2EA;font-family:ui-sans-serif,system-ui,sans-serif;font-size:13.5px;font-weight:500;letter-spacing:0.02em;text-decoration:none;padding:14px 26px;border-radius:9999px;">
+      ${label}
+    </a>
+  </div>`;
+
+const SIG = `<p style="font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:17px;color:rgba(35,53,45,0.85);margin:0;">Oge</p>`;
+
+export type Rendered = { subject: string; html: string };
+
+export type ModuleInfo = { slug: string; title: string };
+
+export type ProgressInfo = {
+  questionsDone: number;
+  questionsTotal: number;
+  tasksDone: number;
+  tasksTotal: number;
+};
+
+function progressPhrase(p: ProgressInfo): string {
+  if (p.questionsDone + p.tasksDone === 0) return "haven't started yet";
+  return `${p.questionsDone} of ${p.questionsTotal} questions in`;
+}
+
+// ───────────────────────────────────────
+// 0. Welcome (sent on /api/plan/start)
+// ───────────────────────────────────────
+export function renderPlanWelcome(opts: { name: string }): Rendered {
+  const first = firstNameOf(opts.name);
+  const subject = "your Plan is saved";
 
   const inner = `
-    <h1 style="font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:30px;line-height:1.18;color:#23352D;margin:0 0 24px 0;letter-spacing:-0.015em;">
-      ${greeting}
-    </h1>
-    <p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;color:rgba(17,17,17,0.78);margin:0 0 16px 0;line-height:1.65;">
-      Seven modules. Real questions. A clean operating plan at the end of it.
-    </p>
-    <p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;color:rgba(17,17,17,0.78);margin:0 0 16px 0;line-height:1.65;">
-      Every answer is saved as you go. Come back any time and pick up where you left off.
-    </p>
-    <p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;color:rgba(17,17,17,0.78);margin:0 0 28px 0;line-height:1.65;">
-      Most members finish in 6 to 8 weeks. No rush. The work compounds.
-    </p>
-    <div style="margin:0 0 32px 0;">
-      <a href="${env.siteUrl}/plan/01-your-brand" style="display:inline-block;background:#23352D;color:#F7F2EA;font-family:ui-sans-serif,system-ui,sans-serif;font-size:13.5px;font-weight:500;letter-spacing:0.02em;text-decoration:none;padding:14px 26px;border-radius:9999px;">
-        Open Module 01 →
-      </a>
-    </div>
-    <p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:14px;color:rgba(17,17,17,0.6);margin:0 0 24px 0;line-height:1.6;">
-      Start with <strong style="color:#23352D;font-weight:500;">Your Brand</strong>. Mission, customer, values, name. The foundation everything else builds on.
-    </p>
-    <p style="font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:17px;color:rgba(35,53,45,0.85);margin:0;">
-      Oge
-    </p>
+    ${H1(first ? `Hey ${first},` : "Hey,")}
+    ${P("Just wanted to say your Plan is saved. Anything you put in stays there, even if you close the tab.")}
+    ${P("There's seven modules. Don't try to do them all at once. Pick at it over a few weeks.")}
+    ${P("Module 01 is Your Brand. That's the place to start.", true)}
+    ${BTN(`${env.siteUrl}/plan/01-your-brand`, "Open Your Brand")}
+    ${SIG}
   `;
+  return { subject, html: wrap(inner) };
+}
 
+// ───────────────────────────────────────
+// 1. Inactive 24h (paused mid-module)
+// ───────────────────────────────────────
+export function renderPlanInactive24h(opts: {
+  name: string;
+  module: ModuleInfo;
+  progress: ProgressInfo;
+}): Rendered {
+  const first = firstNameOf(opts.name);
+  const m = escapeHtml(opts.module.title);
+  const subject = `your ${m} draft is saved`;
+  const phrase = progressPhrase(opts.progress);
+  const progressNote =
+    opts.progress.questionsDone + opts.progress.tasksDone === 0
+      ? `You opened ${m} yesterday but didn't fill anything in yet. Just making sure you knew it was set up.`
+      : `You're ${phrase} on ${m}. Wanted to make sure you knew it was all saved.`;
+
+  const inner = `
+    ${H1(first ? `Hey ${first},` : "Hey,")}
+    ${P(progressNote)}
+    ${P("Come back when you have a few minutes. No pressure.", true)}
+    ${BTN(`${env.siteUrl}/plan/${opts.module.slug}`, `Pick ${m} back up`)}
+    ${SIG}
+  `;
+  return { subject, html: wrap(inner) };
+}
+
+// ───────────────────────────────────────
+// 2. Inactive 72h (a tactical nudge from Oge)
+// ───────────────────────────────────────
+export function renderPlanInactive72h(opts: {
+  name: string;
+  module: ModuleInfo;
+  progress: ProgressInfo;
+  tip: string;
+}): Rendered {
+  const first = firstNameOf(opts.name);
+  const m = escapeHtml(opts.module.title);
+  const subject = `stuck on ${m}?`;
+  const phrase = progressPhrase(opts.progress);
+
+  const inner = `
+    ${H1(first ? `${first},` : "Hey,")}
+    ${P(`A lot of people get stuck on ${m}. You're not alone there.`)}
+    ${P(`If I were sitting next to you, here's what I'd say: ${escapeHtml(opts.tip)}`)}
+    ${P(`You're ${phrase} if you want to jump back in.`, true)}
+    ${BTN(`${env.siteUrl}/plan/${opts.module.slug}`, `Open ${m}`)}
+    ${SIG}
+  `;
+  return { subject, html: wrap(inner) };
+}
+
+// ───────────────────────────────────────
+// 3. Inactive 7d (bring it to the room)
+// ───────────────────────────────────────
+export function renderPlanInactive7d(opts: {
+  name: string;
+  module: ModuleInfo;
+  progress: ProgressInfo;
+}): Rendered {
+  const first = firstNameOf(opts.name);
+  const m = escapeHtml(opts.module.title);
+  const subject = "checking in";
+  const phrase = progressPhrase(opts.progress);
+
+  const inner = `
+    ${H1(first ? `Hey ${first},` : "Hey,")}
+    ${P(`It's been about a week since you touched ${m}. No judgement, just checking in.`)}
+    ${P(`If it helps: finish a rough version this week and drop it in the community. Other people in there are working on the same stuff, and the feedback's usually better than mine alone.`)}
+    ${P(`You're ${phrase}. Not far.`, true)}
+    ${BTN(`${env.siteUrl}/plan/${opts.module.slug}`, `Open ${m}`)}
+    ${SIG}
+  `;
+  return { subject, html: wrap(inner) };
+}
+
+// ───────────────────────────────────────
+// 4. Module complete
+// ───────────────────────────────────────
+export function renderPlanModuleComplete(opts: {
+  name: string;
+  completed: ModuleInfo;
+  next: ModuleInfo | null;
+  modulesProgress: { done: number; total: number };
+}): Rendered {
+  const first = firstNameOf(opts.name);
+  const done = escapeHtml(opts.completed.title);
+  const subject = `${done} done`;
+  const mp = opts.modulesProgress;
+
+  const inner = `
+    ${H1(first ? `${first},` : "")}
+    ${P(`Just saw you wrapped ${done}. Nice work.`)}
+    ${
+      opts.next
+        ? P(
+            `${escapeHtml(opts.next.title)} is next when you want to keep going. Or take a break. Your work's saved either way.`,
+          )
+        : P(
+            "That was the last module. You can export the full Plan as a PDF when you're ready.",
+          )
+    }
+    ${P(
+      mp.done >= mp.total
+        ? `All ${mp.total} modules done.`
+        : `${mp.done} of ${mp.total} down.`,
+      true,
+    )}
+    ${
+      opts.next
+        ? BTN(`${env.siteUrl}/plan/${opts.next.slug}`, `Open ${escapeHtml(opts.next.title)}`)
+        : BTN(`${env.siteUrl}/plan`, "Back to dashboard")
+    }
+    ${SIG}
+  `;
+  return { subject, html: wrap(inner) };
+}
+
+// ───────────────────────────────────────
+// Sender (used by API routes + cron)
+// ───────────────────────────────────────
+async function send(to: string, r: Rendered) {
+  const c = client();
+  if (!c) return { skipped: true as const };
   return c.emails.send({
     from: `Early Founders Collective <${env.resendFromEmail}>`,
-    to: email,
-    subject: first ? `${first}, your Plan is saved` : "Your Plan is saved",
-    html: wrap(inner),
+    to,
+    subject: r.subject,
+    html: r.html,
   });
 }
+
+export async function sendPlanWelcomeEmail(email: string, name: string) {
+  return send(email, renderPlanWelcome({ name }));
+}
+
+export async function sendPlanInactive24h(
+  email: string,
+  name: string,
+  module: ModuleInfo,
+  progress: ProgressInfo,
+) {
+  return send(email, renderPlanInactive24h({ name, module, progress }));
+}
+
+export async function sendPlanInactive72h(
+  email: string,
+  name: string,
+  module: ModuleInfo,
+  progress: ProgressInfo,
+  tip: string,
+) {
+  return send(email, renderPlanInactive72h({ name, module, progress, tip }));
+}
+
+export async function sendPlanInactive7d(
+  email: string,
+  name: string,
+  module: ModuleInfo,
+  progress: ProgressInfo,
+) {
+  return send(email, renderPlanInactive7d({ name, module, progress }));
+}
+
+export async function sendPlanModuleComplete(
+  email: string,
+  name: string,
+  completed: ModuleInfo,
+  next: ModuleInfo | null,
+  modulesProgress: { done: number; total: number },
+) {
+  return send(
+    email,
+    renderPlanModuleComplete({ name, completed, next, modulesProgress }),
+  );
+}
+
+// ───────────────────────────────────────
+// Module-specific 72h tips (Oge's voice)
+// ───────────────────────────────────────
+export const MODULE_TIPS: Record<string, string> = {
+  "01-your-brand":
+    "Don't write the mission for investors. Write it the way you'd say it out loud to a friend at dinner. That's usually closer to the real one.",
+  "02-your-market":
+    "Forget the market sizing math for now. Just go have five real conversations with people you think would buy this. What they actually say back is the only thing that matters.",
+  "03-your-offer":
+    "Read your offer out loud. If it takes more than a sentence to explain what someone gets, it's not ready yet. Keep cutting until it's clear.",
+  "04-your-plan":
+    "Before anything else, figure out your runway. How many months can you keep going without new income? Once that number's honest, every other number means something.",
+  "05-your-reach":
+    "Pick one platform. The one your customers are already on. Show up there every week without missing. Spreading yourself across five channels is how people burn out.",
+  "06-your-funnel":
+    "Write down the five reasons someone won't buy from you, and answer each one in a sentence. That's basically your sales page.",
+  "07-your-retention":
+    "The first 24 hours after someone pays you is when they decide if they trust you. Get the welcome email out fast. Don't make them wait.",
+};
