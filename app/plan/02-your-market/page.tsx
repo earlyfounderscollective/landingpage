@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { usePlanAutoSave } from "@/lib/use-plan-auto-save";
+import { SaveStatus } from "@/components/plan/SaveStatus";
 import {
   Example,
   Field,
@@ -238,16 +240,25 @@ export default function ModuleTwo() {
     update("conversations", next);
   };
 
+  const { status, savedAt } = usePlanAutoSave({
+    moduleSlug: "02-your-market",
+    answers: a,
+    setAnswers: setA,
+  });
+
   return (
     <div className="grid lg:grid-cols-[1.05fr_1fr] min-h-screen">
       {/* LEFT */}
       <div className="px-6 md:px-12 py-10 md:py-12 lg:border-r border-line">
-        <Link
-          href="/plan"
-          className="text-[12px] text-brass hover:text-forest mb-5 inline-block"
-        >
-          ← All modules
-        </Link>
+        <div className="flex items-center justify-between mb-5">
+          <Link
+            href="/plan"
+            className="text-[12px] text-brass hover:text-forest"
+          >
+            ← All modules
+          </Link>
+          <SaveStatus status={status} savedAt={savedAt} />
+        </div>
 
         <header className="mb-7">
           <p className="font-serif text-[14px] text-brass tracking-[0.04em] mb-2">
