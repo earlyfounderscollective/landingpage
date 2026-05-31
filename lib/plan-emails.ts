@@ -65,18 +65,6 @@ export type Rendered = { subject: string; html: string };
 
 export type ModuleInfo = { slug: string; title: string };
 
-export type ProgressInfo = {
-  questionsDone: number;
-  questionsTotal: number;
-  tasksDone: number;
-  tasksTotal: number;
-};
-
-function progressPhrase(p: ProgressInfo): string {
-  if (p.questionsDone + p.tasksDone === 0) return "haven't started yet";
-  return `${p.questionsDone} of ${p.questionsTotal} questions in`;
-}
-
 // ───────────────────────────────────────
 // 0. Welcome (sent on /api/plan/start)
 // ───────────────────────────────────────
@@ -101,20 +89,14 @@ export function renderPlanWelcome(opts: { name: string }): Rendered {
 export function renderPlanInactive24h(opts: {
   name: string;
   module: ModuleInfo;
-  progress: ProgressInfo;
 }): Rendered {
   const first = firstNameOf(opts.name);
   const m = escapeHtml(opts.module.title);
   const subject = `your ${m} draft is saved`;
-  const phrase = progressPhrase(opts.progress);
-  const progressNote =
-    opts.progress.questionsDone + opts.progress.tasksDone === 0
-      ? `You opened ${m} yesterday but didn't fill anything in yet. Just making sure you knew it was set up.`
-      : `You're ${phrase} on ${m}. Wanted to make sure you knew it was all saved.`;
 
   const inner = `
     ${H1(first ? `Hey ${first},` : "Hey,")}
-    ${P(progressNote)}
+    ${P(`You started ${m} yesterday and didn't finish. Just making sure you knew everything's saved.`)}
     ${P("Come back when you have a few minutes. No pressure.", true)}
     ${BTN(`${env.siteUrl}/plan/${opts.module.slug}`, `Pick ${m} back up`)}
     ${SIG}
@@ -128,19 +110,17 @@ export function renderPlanInactive24h(opts: {
 export function renderPlanInactive72h(opts: {
   name: string;
   module: ModuleInfo;
-  progress: ProgressInfo;
   tip: string;
 }): Rendered {
   const first = firstNameOf(opts.name);
   const m = escapeHtml(opts.module.title);
   const subject = `stuck on ${m}?`;
-  const phrase = progressPhrase(opts.progress);
 
   const inner = `
     ${H1(first ? `${first},` : "Hey,")}
     ${P(`A lot of people get stuck on ${m}. You're not alone there.`)}
     ${P(`If I were sitting next to you, here's what I'd say: ${escapeHtml(opts.tip)}`)}
-    ${P(`You're ${phrase} if you want to jump back in.`, true)}
+    ${P("Pick it back up when you have a few minutes.", true)}
     ${BTN(`${env.siteUrl}/plan/${opts.module.slug}`, `Open ${m}`)}
     ${SIG}
   `;
@@ -153,18 +133,15 @@ export function renderPlanInactive72h(opts: {
 export function renderPlanInactive7d(opts: {
   name: string;
   module: ModuleInfo;
-  progress: ProgressInfo;
 }): Rendered {
   const first = firstNameOf(opts.name);
   const m = escapeHtml(opts.module.title);
   const subject = "checking in";
-  const phrase = progressPhrase(opts.progress);
 
   const inner = `
     ${H1(first ? `Hey ${first},` : "Hey,")}
     ${P(`It's been about a week since you touched ${m}. No judgement, just checking in.`)}
-    ${P(`If it helps: finish a rough version this week and drop it in the community. Other people in there are working on the same stuff, and the feedback's usually better than mine alone.`)}
-    ${P(`You're ${phrase}. Not far.`, true)}
+    ${P("If it helps: finish a rough version this week and drop it in the community. Other people in there are working on the same stuff, and the feedback's usually better than mine alone.", true)}
     ${BTN(`${env.siteUrl}/plan/${opts.module.slug}`, `Open ${m}`)}
     ${SIG}
   `;
@@ -235,28 +212,25 @@ export async function sendPlanInactive24h(
   email: string,
   name: string,
   module: ModuleInfo,
-  progress: ProgressInfo,
 ) {
-  return send(email, renderPlanInactive24h({ name, module, progress }));
+  return send(email, renderPlanInactive24h({ name, module }));
 }
 
 export async function sendPlanInactive72h(
   email: string,
   name: string,
   module: ModuleInfo,
-  progress: ProgressInfo,
   tip: string,
 ) {
-  return send(email, renderPlanInactive72h({ name, module, progress, tip }));
+  return send(email, renderPlanInactive72h({ name, module, tip }));
 }
 
 export async function sendPlanInactive7d(
   email: string,
   name: string,
   module: ModuleInfo,
-  progress: ProgressInfo,
 ) {
-  return send(email, renderPlanInactive7d({ name, module, progress }));
+  return send(email, renderPlanInactive7d({ name, module }));
 }
 
 export async function sendPlanModuleComplete(

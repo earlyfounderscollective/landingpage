@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { usePlanAutoSave } from "@/lib/use-plan-auto-save";
 import { SaveStatus } from "@/components/plan/SaveStatus";
+import { MarkCompleteButton } from "@/components/plan/MarkCompleteButton";
 import {
   Example,
   Field,
@@ -532,17 +533,10 @@ export default function ModuleTwo() {
         </Step>
 
         <div className="mt-9 pt-6 border-t border-dashed border-line flex items-center justify-between gap-4">
-          <p className="text-[13px] text-mute">
-            <strong className="text-forest">0 of 4</strong> tasks done · 0 of 7
-            answers filled
+          <p className="text-[13px] text-mute max-w-[260px] leading-[1.5]">
+            When you're ready, mark this done. You can always come back and edit.
           </p>
-          <button
-            type="button"
-            disabled
-            className="bg-bone text-mute px-7 py-3 rounded-full text-[14px] font-medium tracking-[0.01em] cursor-not-allowed"
-          >
-            Mark module complete
-          </button>
+          <MarkCompleteButton moduleSlug="02-your-market" />
         </div>
 
         <div className="flex justify-between mt-8">

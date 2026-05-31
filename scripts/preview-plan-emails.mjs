@@ -73,11 +73,11 @@ const samples = [
   },
   {
     file: "02-inactive-24h.html",
-    label: "24h paused (example: Your Brand, 3 of 7 questions in)",
+    label: "24h paused (example: Your Brand)",
     subject: "your Your Brand draft is saved".replace("your Your", "your"),
     inner: `
       ${H1(`Hey ${first},`)}
-      ${P("You're 3 of 7 questions in on Your Brand. Wanted to make sure you knew it was all saved.")}
+      ${P("You started Your Brand yesterday and didn't finish. Just making sure you knew everything's saved.")}
       ${P("Come back when you have a few minutes. No pressure.", true)}
       ${BTN(`${SITE}/plan/01-your-brand`, "Pick Your Brand back up")}
       ${SIG}
@@ -85,26 +85,25 @@ const samples = [
   },
   {
     file: "03-inactive-72h.html",
-    label: "72h paused (example: Your Plan, 5 of 10 questions in)",
+    label: "72h paused (example: Your Plan, with runway tip)",
     subject: "stuck on Your Plan?",
     inner: `
       ${H1(`${first},`)}
       ${P("A lot of people get stuck on Your Plan. You're not alone there.")}
       ${P("If I were sitting next to you, here's what I'd say: Before anything else, figure out your runway. How many months can you keep going without new income? Once that number's honest, every other number means something.")}
-      ${P("You're 5 of 10 questions in if you want to jump back in.", true)}
+      ${P("Pick it back up when you have a few minutes.", true)}
       ${BTN(`${SITE}/plan/04-your-plan`, "Open Your Plan")}
       ${SIG}
     `,
   },
   {
     file: "04-inactive-7d.html",
-    label: "7d paused (example: Your Funnel, 6 of 8 questions in)",
+    label: "7d paused (example: Your Funnel)",
     subject: "checking in",
     inner: `
       ${H1(`Hey ${first},`)}
       ${P("It's been about a week since you touched Your Funnel. No judgement, just checking in.")}
-      ${P("If it helps: finish a rough version this week and drop it in the community. Other people in there are working on the same stuff, and the feedback's usually better than mine alone.")}
-      ${P("You're 6 of 8 questions in. Not far.", true)}
+      ${P("If it helps: finish a rough version this week and drop it in the community. Other people in there are working on the same stuff, and the feedback's usually better than mine alone.", true)}
       ${BTN(`${SITE}/plan/06-your-funnel`, "Open Your Funnel")}
       ${SIG}
     `,

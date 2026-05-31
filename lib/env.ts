@@ -22,4 +22,8 @@ export const env = {
   // the admin notification email. Set to any long random string in production.
   adminActionSecret:
     optional("ADMIN_ACTION_SECRET") ?? "dev-only-change-me-in-production",
+
+  // Verifies Vercel cron requests for /api/cron/plan-drips. Without it, the
+  // route refuses to run (fail loud rather than silently send to everyone).
+  cronSecret: optional("CRON_SECRET"),
 };
