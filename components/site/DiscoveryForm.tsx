@@ -253,8 +253,7 @@ export function DiscoveryForm() {
         <div className="max-w-[640px] mx-auto">
           {/* Header */}
           <header className="mb-14 md:mb-16">
-            <Eyebrow>Early Founders Collective</Eyebrow>
-            <h1 className="mt-5 font-serif text-[36px] md:text-[48px] lg:text-[54px] leading-[1.04] tracking-[-0.022em] text-forest text-balance">
+            <h1 className="font-serif text-[36px] md:text-[48px] lg:text-[54px] leading-[1.04] tracking-[-0.022em] text-forest text-balance">
               Discovery Call Application
             </h1>
             <div className="mt-8 space-y-4 text-[15.5px] md:text-[16.5px] leading-[1.65] text-ink/72">
