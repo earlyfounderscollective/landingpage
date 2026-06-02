@@ -12,19 +12,17 @@ export function Hero() {
 
           <h1 className="mt-5 sm:mt-7 font-serif text-forest">
             <span className="block text-[26px] sm:text-[34px] md:text-[46px] lg:text-[52px] leading-[1.08] tracking-[-0.018em]">
-              Grow your business with more
+              Build the structure
             </span>
             <span className="block hand text-[42px] sm:text-[52px] md:text-[68px] lg:text-[78px] leading-[0.95] text-brass mt-1 sm:mt-2 -rotate-[2deg]">
-              clarity, consistency &amp; momentum
-            </span>
-            <span className="block mt-2 sm:mt-3 text-[18px] sm:text-[22px] md:text-[26px] leading-[1.15] tracking-[-0.014em] text-forest/85">
-              over the next 180 days.
+              that gets you customers.
             </span>
           </h1>
 
-          <p className="mt-6 sm:mt-7 max-w-[460px] mx-auto text-[14px] sm:text-[15px] leading-[1.55] text-ink/70">
-            <span className="font-semibold text-forest">Without</span> burning
-            out, second-guessing yourself, or starting over every month.
+          <p className="mt-7 sm:mt-8 max-w-[580px] mx-auto text-[14.5px] sm:text-[15.5px] leading-[1.6] text-ink/72">
+            Early Founders Collective helps early-stage business owners clarify
+            what they sell, get more visible, build simple sales and follow-up
+            systems, and stay consistent with people who are actually building.
           </p>
         </div>
 
@@ -38,13 +36,19 @@ export function Hero() {
           />
         </div>
 
-        <div className="mt-7 sm:mt-8 md:mt-10 flex justify-center">
+        <div className="mt-7 sm:mt-8 md:mt-10 flex flex-col items-center gap-3.5">
           <Link
             href="/apply"
             className="inline-flex items-center justify-center rounded-full bg-forest text-ivory text-[14px] sm:text-[15px] font-medium tracking-[0.02em] px-9 sm:px-10 py-4 sm:py-[18px] transition-all duration-500 ease-editorial hover:bg-ink hover:-translate-y-[1px]"
           >
             Apply Now
           </Link>
+          <a
+            href="#checklist"
+            className="text-[13px] sm:text-[13.5px] font-medium text-forest/75 hover:text-forest underline underline-offset-[6px] decoration-brass/60 decoration-1 transition-colors"
+          >
+            Download the Founder Sales &amp; Systems Checklist
+          </a>
         </div>
       </div>
     </section>

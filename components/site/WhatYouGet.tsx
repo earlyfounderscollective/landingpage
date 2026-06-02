@@ -1,33 +1,33 @@
 const pillars = [
   {
     n: "01",
-    title: "Weekly Accountability",
-    body: "Stay focused and keep moving forward consistently even when motivation fades.",
+    title: "Offer Clarity",
+    body: "Simplify what you sell, who it is for, and why people should care.",
   },
   {
     n: "02",
-    title: "Live Coaching & Support",
-    body: "Get feedback, direction, and clarity when you feel stuck or overwhelmed.",
+    title: "Visibility & Content",
+    body: "Learn how to show up consistently so people actually understand what you do.",
   },
   {
     n: "03",
-    title: "Execution Systems",
-    body: "Simple frameworks and systems that help you organize your business and simplify your next steps.",
+    title: "Sales & Follow-Up",
+    body: "Build a simple process for capturing leads, following up, and turning interest into customers.",
   },
   {
     n: "04",
-    title: "A Real Community",
-    body: "Build alongside other early-stage business owners who understand what this journey actually feels like.",
+    title: "Execution Systems",
+    body: "Create workflows that help you operate the business instead of constantly reacting.",
   },
   {
     n: "05",
-    title: "Momentum Tracking",
-    body: "Measure progress without obsessing over perfection.",
+    title: "Weekly Accountability",
+    body: "Stay focused on the actions that actually move the business forward.",
   },
   {
     n: "06",
-    title: "Simplified Strategy",
-    body: "Cut through the noise and focus on what actually moves your business forward.",
+    title: "Founder Community",
+    body: "Build around other early-stage business owners who understand the pressure, uncertainty, and ambition of the season you're in.",
   },
 ];
 
@@ -39,7 +39,7 @@ export function WhatYouGet() {
           <span className="eyebrow">Inside the Community</span>
           <div className="rule mt-6 mb-10 mx-auto" aria-hidden />
           <h2 className="font-serif text-display-lg text-forest text-balance">
-            A structure designed to help you keep moving forward.
+            What we actually work on together.
           </h2>
         </div>
 

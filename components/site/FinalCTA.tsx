@@ -10,18 +10,18 @@ export function FinalCTA() {
           </p>
 
           <h2 className="mt-10 md:mt-14 font-serif text-display-xl text-ivory text-balance">
-            Stop trying to figure everything out alone.
+            Stop building without a clear path to customers.
           </h2>
 
           <div className="mt-12 max-w-xl mx-auto space-y-5 text-[17px] md:text-[18px] leading-[1.72] text-ivory/80">
             <p>You already have the ambition.</p>
             <p>
-              Now you need clarity, structure, accountability, and the right
-              environment to execute consistently.
+              Now you need clarity, structure, visibility, follow-up, and the
+              right room to help you keep building.
             </p>
             <p className="font-serif italic text-ivory">
-              If this feels like the kind of environment you have been needing,
-              apply for access below.
+              If this feels like the kind of room you have been needing, apply
+              for access below.
             </p>
           </div>
 

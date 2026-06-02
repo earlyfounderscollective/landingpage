@@ -1,10 +1,10 @@
 import Link from "next/link";
 
 const shifts = [
-  { before: "Consuming more information", after: "Deciding what to ignore" },
-  { before: "Reacting to your inbox", after: "Running one priority per week" },
-  { before: "Pivoting every project", after: "Finishing what you committed to" },
-  { before: "Building on instinct", after: "Operating from a simple model" },
+  { before: "Posting without a goal", after: "Pointing every post at one offer" },
+  { before: "Hoping leads come back", after: "Following up so they don’t slip" },
+  { before: "Changing the offer every month", after: "Letting one offer earn its test" },
+  { before: "Reacting to whatever’s loudest", after: "Running the week around what creates customers" },
 ];
 
 export function RealProblem() {
@@ -16,12 +16,12 @@ export function RealProblem() {
           <div className="lg:col-span-5">
             <span className="eyebrow">The Honest Part</span>
             <h2 className="mt-6 font-serif text-[36px] md:text-[48px] lg:text-[56px] leading-[1.04] tracking-[-0.022em] text-forest text-balance">
-              You need a simpler way to operate.
+              You need a clearer path to customers.
             </h2>
             <p className="mt-8 text-[16px] md:text-[16.5px] leading-[1.6] text-ink/70 max-w-sm">
-              You don&rsquo;t have an ambition problem. You have a structure
-              problem: too many open loops, too many directions, and no clear
-              way to operate the week.
+              You&rsquo;re not short on effort. You&rsquo;re short on a simple
+              system that captures interest, follows up consistently, and turns
+              it into customers.
             </p>
           </div>
 
@@ -32,7 +32,7 @@ export function RealProblem() {
                 Instead of
               </p>
               <span aria-hidden className="text-forest/30 text-[14px]">
-                →
+                &rarr;
               </span>
               <p className="text-[10.5px] font-medium uppercase tracking-[0.28em] text-forest">
                 Do this
@@ -53,7 +53,7 @@ export function RealProblem() {
                     {s.before}
                   </span>
                   <span aria-hidden className="text-forest/25 text-[12px]">
-                    →
+                    &rarr;
                   </span>
                   <span className="font-serif text-[18px] md:text-[20px] leading-[1.3] text-forest text-balance">
                     {s.after}

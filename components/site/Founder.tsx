@@ -54,15 +54,15 @@ export function Founder() {
             <div className="mt-8 space-y-4 text-[15px] md:text-[15.5px] leading-[1.6] text-ink/78 max-w-prose">
               <p>
                 My role inside Early Founders Collective is to help you simplify
-                what feels complicated, focus on what actually moves your
-                business forward, and create enough structure and
-                accountability to keep building consistently.
+                what feels complicated, clarify what you sell, identify what is
+                stopping customers from saying yes, and build the structure to
+                keep moving consistently.
               </p>
             </div>
 
             <p className="mt-7 font-serif text-[17px] md:text-[18.5px] leading-[1.45] text-forest text-balance">
-              It&rsquo;s about building with more clarity, intention,
-              consistency, and momentum.
+              It&rsquo;s about building with more clarity, customers, and
+              consistency.
             </p>
 
             <p className="mt-10 hand text-[30px] leading-none text-forest/85 rotate-[-2deg]">
