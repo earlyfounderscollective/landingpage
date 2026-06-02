@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { Resend } from "resend";
 import { env } from "./env";
 
@@ -7,6 +9,19 @@ function client(): Resend | null {
   if (!env.resendApiKey) return null;
   resend = new Resend(env.resendApiKey);
   return resend;
+}
+
+let cachedPdf: Buffer | null = null;
+function loadChecklistPdf(): Buffer | null {
+  if (cachedPdf) return cachedPdf;
+  try {
+    const path = join(process.cwd(), "public", "Founder_Sales_Systems_Checklist.pdf");
+    cachedPdf = readFileSync(path);
+    return cachedPdf;
+  } catch (err) {
+    console.error("Could not load checklist PDF:", err);
+    return null;
+  }
 }
 
 const wrap = (inner: string) => `
@@ -66,50 +81,13 @@ export async function sendChecklistEmail(email: string, name: string) {
       ${greeting}
     </h1>
     <p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;color:rgba(17,17,17,0.78);margin:0 0 16px 0;line-height:1.65;">
-      Here's the Founder Sales &amp; Systems Checklist. Read through it once. Then go back and be honest about which boxes you can actually check.
+      Your Founder Sales &amp; Systems Checklist is attached.
     </p>
-    <p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;color:rgba(17,17,17,0.78);margin:0 0 24px 0;line-height:1.65;">
-      Wherever you can't check 80% of the boxes is where your business is actually stuck. Start there.
+    <p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;color:rgba(17,17,17,0.78);margin:0 0 16px 0;line-height:1.65;">
+      Read through it once. Then go back and be honest about which boxes you can actually check. Wherever you can't check most of them is where the business is stuck. Start there.
     </p>
-
-    ${SECTION_TITLE("01", "Clarity")}
-    ${SECTION_PROMPT("Can you say your offer in one sentence?")}
-    ${CHECK_ITEM("I know exactly what I sell.")}
-    ${CHECK_ITEM("I know exactly who it's for.")}
-    ${CHECK_ITEM("I know the one outcome they get from buying.")}
-
-    ${SECTION_TITLE("02", "Visibility")}
-    ${SECTION_PROMPT("Where do customers actually see you?")}
-    ${CHECK_ITEM("I know the one platform my customer spends time on.")}
-    ${CHECK_ITEM("I've shown up there at least once this week.")}
-    ${CHECK_ITEM("My bio makes the offer clear in one read.")}
-
-    ${SECTION_TITLE("03", "Sales process")}
-    ${SECTION_PROMPT("What happens when someone is interested?")}
-    ${CHECK_ITEM("Every post or conversation points to one clear next step.")}
-    ${CHECK_ITEM("I have a way to capture their email or contact.")}
-    ${CHECK_ITEM("I follow up within 48 hours.")}
-
-    ${SECTION_TITLE("04", "Follow-up")}
-    ${SECTION_PROMPT("Are leads slipping through?")}
-    ${CHECK_ITEM("I keep track of every lead in one place.")}
-    ${CHECK_ITEM("I follow up at least twice before assuming it's a no.")}
-    ${CHECK_ITEM("I have a script for the objections that come up most.")}
-
-    ${SECTION_TITLE("05", "Systems")}
-    ${SECTION_PROMPT("What's the weekly rhythm?")}
-    ${CHECK_ITEM("There's a recurring time block where I talk to customers.")}
-    ${CHECK_ITEM("There's a recurring time block where I create content.")}
-    ${CHECK_ITEM("I review one number every week (leads, sales, or conversations).")}
-
-    ${SECTION_TITLE("06", "Consistency")}
-    ${SECTION_PROMPT("What keeps you showing up?")}
-    ${CHECK_ITEM("I have at least one person or room that holds me accountable.")}
-    ${CHECK_ITEM("I know what I'm working on this week, not just this quarter.")}
-    ${CHECK_ITEM("I'm building one thing at a time, not five.")}
-
-    <p style="font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:18px;color:#23352D;border-left:3px solid #9B7A4A;padding:6px 0 6px 18px;margin:36px 0 28px 0;line-height:1.5;">
-      Wherever you can't check 80% of the boxes is where your business is actually stuck. Start there.
+    <p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;color:rgba(17,17,17,0.78);margin:0 0 28px 0;line-height:1.65;">
+      If you're building this season and want a room of founders working through the same things, applications to Early Founders Collective are open.
     </p>
 
     <div style="margin:0 0 32px 0;">
@@ -123,10 +101,25 @@ export async function sendChecklistEmail(email: string, name: string) {
     </p>
   `;
 
+  const pdf = loadChecklistPdf();
+  const attachments = pdf
+    ? [
+        {
+          filename: "Founder_Sales_Systems_Checklist.pdf",
+          content: pdf,
+        },
+      ]
+    : undefined;
+
   return c.emails.send({
     from: `Early Founders Collective <${env.resendFromEmail}>`,
     to: email,
     subject: "Your Founder Sales & Systems Checklist",
     html: wrap(inner),
+    attachments,
   });
 }
+
+// The HTML helper constants below stay exported in case we want them again
+// later (a richer fallback email, an in-app preview, etc).
+export const __unused = { SECTION_TITLE, SECTION_PROMPT, CHECK_ITEM };

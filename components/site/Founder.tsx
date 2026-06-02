@@ -1,11 +1,9 @@
 const ventures = [
-  "Generated 7 figures in hospitality revenue while owning and operating a cocktail bar",
-  "Built a six-figure residential painting company in under 6 months",
-  "Built a six-figure supplement brand",
-  "Built a stock investment club that grew to six figures in assets",
-  "Co-founded one of Houston's largest run clubs with major brand sponsorships and partnerships",
-  "Developed operational systems and CRM tools for service businesses",
-  "Worked on real estate redevelopment projects transforming tear-down properties into beautiful homes",
+  "Founder of Paint HTX, a Houston-based painting company that grew to six figures in its first year",
+  "Built Phēnyx into a six-figure supplement brand",
+  "Helped build a six-figure investment club focused on wealth creation and financial education",
+  "Co-founded SoleTies Run Club, one of Houston's largest running communities, with hundreds of runners and partnerships with major brands",
+  "Experience across mortgage lending, real estate investing, renovation consulting, community building, and software development",
 ];
 
 export function Founder() {
@@ -18,26 +16,23 @@ export function Founder() {
             <p className="hand text-[34px] md:text-[40px] leading-[0.9] rotate-[-3deg] text-brass">
               Clarity creates
               <br />
-              momentum.
+              customers.
             </p>
 
             <h2 className="mt-8 font-serif text-[32px] md:text-[40px] leading-[1.08] tracking-[-0.018em] text-forest text-balance">
-              My name is Ogechukwu Madu.
+              Meet Oge Madu.
             </h2>
 
             <div className="mt-7 space-y-4 text-[15px] md:text-[15.5px] leading-[1.6] text-ink/78 max-w-prose">
               <p>
-                Over the years, I&rsquo;ve built across multiple industries
-                including real estate, ecommerce, community, hospitality, and
-                service-based businesses, generating 6 and 7 figures in
-                revenue while learning firsthand how difficult it can be to
-                stay consistent when everything feels important at the same
-                time.
+                Oge Madu is a founder, operator, and community builder who has
+                spent the last decade building businesses across service,
+                product, community, real estate, and technology.
               </p>
             </div>
 
             <p className="mt-8 text-[13px] font-semibold uppercase tracking-[0.18em] text-forest">
-              Over that time, I&rsquo;ve:
+              A few of the builds:
             </p>
             <ul className="mt-4 space-y-2.5">
               {ventures.map((v) => (
@@ -53,17 +48,14 @@ export function Founder() {
 
             <div className="mt-8 space-y-4 text-[15px] md:text-[15.5px] leading-[1.6] text-ink/78 max-w-prose">
               <p>
-                My role inside Early Founders Collective is to help you simplify
-                what feels complicated, clarify what you sell, identify what is
-                stopping customers from saying yes, and build the structure to
-                keep moving consistently.
+                Across every business, one lesson has remained consistent:
+              </p>
+              <p className="font-serif italic text-[17px] md:text-[18.5px] leading-[1.45] text-forest text-balance">
+                Most founders do not need more information. They need more
+                clarity, better systems, stronger relationships, and a clear
+                path to customers.
               </p>
             </div>
-
-            <p className="mt-7 font-serif text-[17px] md:text-[18.5px] leading-[1.45] text-forest text-balance">
-              It&rsquo;s about building with more clarity, customers, and
-              consistency.
-            </p>
 
             <p className="mt-10 hand text-[30px] leading-none text-forest/85 rotate-[-2deg]">
               Oge
