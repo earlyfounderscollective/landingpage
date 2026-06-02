@@ -6,11 +6,7 @@ export function Hero() {
     <section className="relative bg-ivory overflow-hidden grain">
       <div className="container-page pt-[110px] sm:pt-[130px] md:pt-[160px] pb-12 md:pb-16 relative z-10">
         <div className="max-w-[820px] mx-auto text-center">
-          <p className="text-[11px] sm:text-[12px] font-semibold uppercase tracking-[0.28em] text-brass">
-            For early-stage business owners
-          </p>
-
-          <h1 className="mt-5 sm:mt-7 font-serif text-forest">
+          <h1 className="font-serif text-forest">
             <span className="block text-[26px] sm:text-[34px] md:text-[46px] lg:text-[52px] leading-[1.08] tracking-[-0.018em]">
               Build the structure
             </span>
@@ -19,10 +15,9 @@ export function Hero() {
             </span>
           </h1>
 
-          <p className="mt-7 sm:mt-8 max-w-[580px] mx-auto text-[14.5px] sm:text-[15.5px] leading-[1.6] text-ink/72">
-            Early Founders Collective helps early-stage business owners clarify
-            what they sell, get more visible, build simple sales and follow-up
-            systems, and stay consistent with people who are actually building.
+          <p className="mt-7 sm:mt-8 max-w-[600px] mx-auto text-[15px] sm:text-[16px] leading-[1.6] text-ink/72">
+            A founder community for early-stage business owners who want more
+            customers, better systems, and consistent momentum.
           </p>
         </div>
 
