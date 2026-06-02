@@ -252,11 +252,11 @@ export function DiscoveryForm() {
       <div className="container-page py-20 md:py-28">
         <div className="max-w-[640px] mx-auto">
           {/* Header */}
-          <header className="mb-14 md:mb-16">
+          <header className="mb-14 md:mb-16 text-center">
             <h1 className="font-serif text-[36px] md:text-[48px] lg:text-[54px] leading-[1.04] tracking-[-0.022em] text-forest text-balance">
               Discovery Call Application
             </h1>
-            <div className="mt-8 space-y-4 text-[15.5px] md:text-[16.5px] leading-[1.65] text-ink/72">
+            <div className="mt-8 space-y-4 text-[15.5px] md:text-[16.5px] leading-[1.65] text-ink/72 max-w-[520px] mx-auto">
               <p>Complete this application before scheduling a discovery call.</p>
               <p>
                 This helps us understand your business, identify where you&rsquo;re
