@@ -53,6 +53,16 @@ const REVENUES = [
   "$100,000+",
 ] as const;
 
+const BUDGETS = [
+  "Under $1,000",
+  "$1,000–$2,500",
+  "$2,500–$5,000",
+  "$5,000–$10,000",
+  "$10,000–$25,000",
+  "$25,000+",
+  "Not sure yet",
+] as const;
+
 type State = {
   fullName: string;
   email: string;
@@ -65,6 +75,7 @@ type State = {
   businessType: string;
   businessAge: string;
   monthlyRevenue: string;
+  budget: string;
   biggestBottleneck: string;
   triedSolutions: string;
   whatsWorking: string;
@@ -86,6 +97,7 @@ const initial: State = {
   businessType: "",
   businessAge: "",
   monthlyRevenue: "",
+  budget: "",
   biggestBottleneck: "",
   triedSolutions: "",
   whatsWorking: "",
@@ -506,6 +518,30 @@ export function DiscoveryForm() {
                   {REVENUES.map((r) => (
                     <option key={r} value={r}>
                       {r}
+                    </option>
+                  ))}
+                </select>
+                <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-mute">
+                  ▾
+                </span>
+              </div>
+            </Field>
+            <Field
+              label="Approximate budget for this engagement"
+              required
+              help="Rough range is fine. Helps us suggest the right fit."
+              error={errors.budget}
+            >
+              <div className="relative">
+                <select
+                  className={selectCls}
+                  value={s.budget}
+                  onChange={(e) => set("budget", e.target.value)}
+                >
+                  <option value="">Select one</option>
+                  {BUDGETS.map((b) => (
+                    <option key={b} value={b}>
+                      {b}
                     </option>
                   ))}
                 </select>

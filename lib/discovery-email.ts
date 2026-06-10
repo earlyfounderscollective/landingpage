@@ -68,6 +68,7 @@ export type DiscoveryInput = {
   businessType: string;
   businessAge: string;
   monthlyRevenue: string;
+  budget: string;
   biggestBottleneck: string;
   triedSolutions: string;
   whatsWorking: string;
@@ -177,6 +178,7 @@ export async function sendDiscoveryAdminNotification(
       ${row("Business type", input.businessType)}
       ${row("Time in business", input.businessAge)}
       ${row("Monthly revenue", input.monthlyRevenue)}
+      ${row("Budget", input.budget)}
       ${row("Biggest bottleneck", input.biggestBottleneck)}
       ${row("Already tried", input.triedSolutions)}
       ${row("What's working", input.whatsWorking)}

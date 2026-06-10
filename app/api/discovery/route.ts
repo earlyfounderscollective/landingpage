@@ -48,6 +48,15 @@ const REVENUES = new Set([
   "$50,000–$100,000",
   "$100,000+",
 ]);
+const BUDGETS = new Set([
+  "Under $1,000",
+  "$1,000–$2,500",
+  "$2,500–$5,000",
+  "$5,000–$10,000",
+  "$10,000–$25,000",
+  "$25,000+",
+  "Not sure yet",
+]);
 
 function trim(v: unknown, max = 2000): string {
   return String(v ?? "").trim().slice(0, max);
@@ -97,6 +106,7 @@ export async function POST(req: Request) {
   const businessType = trim(body.businessType, 60);
   const businessAge = trim(body.businessAge, 60);
   const monthlyRevenue = trim(body.monthlyRevenue, 60);
+  const budget = trim(body.budget, 60);
   const biggestBottleneck = trim(body.biggestBottleneck, 4000);
   const triedSolutions = trim(body.triedSolutions, 4000);
   const whatsWorking = trim(body.whatsWorking, 4000);
@@ -117,6 +127,7 @@ export async function POST(req: Request) {
   if (!TYPES.has(businessType)) errors.businessType = "Required";
   if (!AGES.has(businessAge)) errors.businessAge = "Required";
   if (!REVENUES.has(monthlyRevenue)) errors.monthlyRevenue = "Required";
+  if (!BUDGETS.has(budget)) errors.budget = "Required";
   if (!biggestBottleneck) errors.biggestBottleneck = "Required";
   if (!consent) errors.consent = "Required";
 
@@ -141,6 +152,7 @@ export async function POST(req: Request) {
         business_type: businessType,
         business_age: businessAge,
         monthly_revenue: monthlyRevenue,
+        budget,
         biggest_bottleneck: biggestBottleneck,
         tried_solutions: triedSolutions || null,
         whats_working: whatsWorking || null,
@@ -170,6 +182,7 @@ export async function POST(req: Request) {
     businessType,
     businessAge,
     monthlyRevenue,
+    budget,
     biggestBottleneck,
     triedSolutions,
     whatsWorking,
