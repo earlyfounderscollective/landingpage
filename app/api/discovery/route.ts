@@ -50,12 +50,10 @@ const REVENUES = new Set([
 ]);
 const BUDGETS = new Set([
   "Under $1,000",
-  "$1,000–$2,500",
-  "$2,500–$5,000",
+  "$1,000–$3,000",
+  "$3,000–$5,000",
   "$5,000–$10,000",
-  "$10,000–$25,000",
-  "$25,000+",
-  "Not sure yet",
+  "$10,000+",
 ]);
 
 function trim(v: unknown, max = 2000): string {

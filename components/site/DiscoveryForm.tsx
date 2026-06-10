@@ -55,12 +55,10 @@ const REVENUES = [
 
 const BUDGETS = [
   "Under $1,000",
-  "$1,000–$2,500",
-  "$2,500–$5,000",
+  "$1,000–$3,000",
+  "$3,000–$5,000",
   "$5,000–$10,000",
-  "$10,000–$25,000",
-  "$25,000+",
-  "Not sure yet",
+  "$10,000+",
 ] as const;
 
 type State = {
@@ -527,27 +525,38 @@ export function DiscoveryForm() {
               </div>
             </Field>
             <Field
-              label="Approximate budget for this engagement"
+              label="Estimated project budget"
               required
               help="Rough range is fine. Helps us suggest the right fit."
               error={errors.budget}
             >
-              <div className="relative">
-                <select
-                  className={selectCls}
-                  value={s.budget}
-                  onChange={(e) => set("budget", e.target.value)}
-                >
-                  <option value="">Select one</option>
-                  {BUDGETS.map((b) => (
-                    <option key={b} value={b}>
+              <div className="mt-1 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                {BUDGETS.map((b) => {
+                  const checked = s.budget === b;
+                  return (
+                    <button
+                      type="button"
+                      key={b}
+                      onClick={() => set("budget", b)}
+                      className={`flex items-center gap-3 px-4 py-3 rounded-md border text-left text-[14px] transition-colors ${
+                        checked
+                          ? "bg-forest text-ivory border-forest"
+                          : "bg-white text-forest border-line hover:border-forest/40"
+                      }`}
+                    >
+                      <span
+                        className={`inline-flex h-[18px] w-[18px] items-center justify-center rounded-full border ${
+                          checked ? "bg-ivory border-ivory" : "bg-white border-line"
+                        }`}
+                      >
+                        {checked && (
+                          <span className="h-[8px] w-[8px] rounded-full bg-forest" />
+                        )}
+                      </span>
                       {b}
-                    </option>
-                  ))}
-                </select>
-                <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-mute">
-                  ▾
-                </span>
+                    </button>
+                  );
+                })}
               </div>
             </Field>
           </Group>
