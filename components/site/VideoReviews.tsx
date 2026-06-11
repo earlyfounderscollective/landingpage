@@ -19,6 +19,22 @@ const reviews: Review[] = [
     quote:
       "Oge laid out the blueprint. Now we have hosted events of over 175 people and have worked with brands like Lululemon, Fabletics & Figs.",
   },
+  {
+    src: "/media/review-jasmine.mp4",
+    poster: "/media/review-jasmine-poster.jpg",
+    name: "Jasmine Terry",
+    role: "Founder, Holistic Roots Skincare",
+    quote:
+      "As a creative, having the idea isn't the hard part. It's knowing how to launch it. Oge helped me build the systems and framework to turn ideas into execution.",
+  },
+  {
+    src: "/media/review-tiffany.mp4",
+    poster: "/media/review-tiffany-poster.jpg",
+    name: "Tiffany",
+    role: "Founder, Ladies of Richmond",
+    quote:
+      "Oge gave me clarity on how to approach partnerships and collaborations, helping me better position my community for growth.",
+  },
 ];
 
 function ReviewTile({ review }: { review: Review }) {
