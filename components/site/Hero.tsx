@@ -36,11 +36,14 @@ export function Hero() {
             href="/apply"
             className="inline-flex items-center justify-center rounded-full bg-forest text-ivory text-[14px] sm:text-[15px] font-medium tracking-[0.02em] px-9 sm:px-10 py-4 sm:py-[18px] transition-all duration-500 ease-editorial hover:bg-ink hover:-translate-y-[1px]"
           >
-            Apply Now
+            Apply for Access
           </Link>
+          <p className="font-serif italic text-[12.5px] sm:text-[13px] text-brass/90 tracking-[0.01em]">
+            Month-to-month membership
+          </p>
           <a
             href="#checklist"
-            className="text-[13px] sm:text-[13.5px] font-medium text-forest/75 hover:text-forest underline underline-offset-[6px] decoration-brass/60 decoration-1 transition-colors"
+            className="mt-1 text-[13px] sm:text-[13.5px] font-medium text-forest/75 hover:text-forest underline underline-offset-[6px] decoration-brass/60 decoration-1 transition-colors"
           >
             Download the Founder Sales &amp; Systems Checklist
           </a>

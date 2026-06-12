@@ -30,9 +30,12 @@ export function FinalCTA() {
               href="/apply"
               className="inline-flex items-center justify-center gap-2 rounded-full bg-ivory text-forest px-10 py-[20px] text-[14.5px] font-medium tracking-[0.02em] transition-all duration-500 ease-editorial hover:bg-bone hover:-translate-y-[1px]"
             >
-              Apply Now
+              Apply for Access
             </Link>
-            <p className="mt-6 text-[12px] uppercase tracking-[0.28em] text-ivory/55">
+            <p className="mt-5 font-serif italic text-[13.5px] text-brass">
+              Month-to-month membership
+            </p>
+            <p className="mt-3 text-[12px] uppercase tracking-[0.28em] text-ivory/55">
               Applications reviewed manually &middot; Reply within 2-3 days
             </p>
           </div>

@@ -65,13 +65,16 @@ export function RealProblem() {
         </div>
 
         {/* CTA — centered under the full section */}
-        <div className="mt-16 md:mt-24 flex justify-center">
+        <div className="mt-16 md:mt-24 flex flex-col items-center gap-3">
           <Link
             href="/apply"
             className="inline-flex items-center justify-center rounded-full bg-forest text-ivory text-[14px] font-medium tracking-[0.02em] px-10 py-[18px] transition-all duration-500 ease-editorial hover:bg-ink hover:-translate-y-[1px]"
           >
-            Apply Now
+            Apply for Access
           </Link>
+          <p className="font-serif italic text-[13px] text-brass/90">
+            Month-to-month membership
+          </p>
         </div>
       </div>
     </section>

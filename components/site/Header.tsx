@@ -62,7 +62,7 @@ export function Header() {
             href="/apply"
             className="hidden sm:inline-flex items-center rounded-full bg-forest text-ivory text-[13px] font-medium tracking-[0.02em] px-6 py-2.5 transition-all duration-500 ease-editorial hover:bg-ink"
           >
-            Apply Now
+            Apply
           </Link>
 
           <button
@@ -120,7 +120,7 @@ export function Header() {
               onClick={() => setOpen(false)}
               className="btn-primary self-start mt-6"
             >
-              Apply Now
+              Apply for Access
             </Link>
 
             <div className="mt-auto pt-10 text-[12px] uppercase tracking-[0.28em] text-forest/55">

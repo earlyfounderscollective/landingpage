@@ -18,7 +18,7 @@ export function Footer() {
               href="/apply"
               className="mt-9 inline-flex items-center justify-center gap-2 rounded-full bg-ivory text-forest px-8 py-[18px] text-[14px] font-medium tracking-[0.02em] transition-all duration-500 ease-editorial hover:bg-bone"
             >
-              Apply Now
+              Apply for Access
             </Link>
           </div>
 
