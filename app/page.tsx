@@ -12,12 +12,13 @@ import { Fit } from "@/components/site/Fit";
 import { FAQ } from "@/components/site/FAQ";
 import { FinalCTA } from "@/components/site/FinalCTA";
 import { Footer } from "@/components/site/Footer";
+import { StickyApplyButton } from "@/components/site/StickyApplyButton";
 
 export default function HomePage() {
   return (
     <>
       <Header />
-      <main>
+      <main className="pb-[100px] md:pb-0">
         <Hero />
         <VideoReviews />
         <LeadMagnet />
@@ -32,6 +33,7 @@ export default function HomePage() {
         <FinalCTA />
       </main>
       <Footer />
+      <StickyApplyButton />
     </>
   );
 }
