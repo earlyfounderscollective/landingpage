@@ -241,6 +241,7 @@ export async function sendDiscoveryAcceptanceEmail(applicant: {
   return c.emails.send({
     from: `Early Founders Collective <${env.resendFromEmail}>`,
     to: applicant.email,
+    cc: ["contact@earlyfounderscollective.com"],
     subject: "Your discovery call is ready to book",
     html: wrap(inner),
   });
