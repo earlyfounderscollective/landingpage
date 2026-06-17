@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { Resend } from "resend";
 import { env } from "./env";
+import { signChecklistUnsubscribeToken } from "./signing";
 
 let resend: Resend | null = null;
 function client(): Resend | null {
@@ -123,3 +124,113 @@ export async function sendChecklistEmail(email: string, name: string) {
 // The HTML helper constants below stay exported in case we want them again
 // later (a richer fallback email, an in-app preview, etc).
 export const __unused = { SECTION_TITLE, SECTION_PROMPT, CHECK_ITEM };
+
+// ─────────────────────────────────────────────────────────────────────────
+// Nurture sequence — Day 3 / Day 7 / Day 14 after checklist download.
+// Sent only to subscribers who haven't applied or booked a discovery call.
+// Daily Vercel cron at /api/cron/checklist-drips fires these.
+// ─────────────────────────────────────────────────────────────────────────
+
+function unsubUrl(email: string): string {
+  const token = signChecklistUnsubscribeToken(email);
+  return `${env.siteUrl}/api/checklist/unsubscribe?email=${encodeURIComponent(email)}&token=${token}`;
+}
+
+const UNSUB_FOOTER = (email: string) => `
+  <p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:11px;color:rgba(17,17,17,0.42);margin:36px 0 0 0;line-height:1.55;">
+    Don't want these check-ins? <a href="${unsubUrl(email)}" style="color:rgba(17,17,17,0.5);text-decoration:underline;">Unsubscribe</a>. The checklist you downloaded is still yours to keep.
+  </p>
+`;
+
+const P = (text: string, last = false) =>
+  `<p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;color:rgba(17,17,17,0.78);margin:0 0 ${last ? "28px" : "16px"} 0;line-height:1.65;">${text}</p>`;
+
+const H1 = (text: string) =>
+  `<h1 style="font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:30px;line-height:1.18;color:#23352D;margin:0 0 24px 0;letter-spacing:-0.015em;">${text}</h1>`;
+
+const BTN = (href: string, label: string) =>
+  `<div style="margin:8px 0 32px 0;">
+    <a href="${href}" style="display:inline-block;background:#23352D;color:#F7F2EA;font-family:ui-sans-serif,system-ui,sans-serif;font-size:13.5px;font-weight:500;letter-spacing:0.02em;text-decoration:none;padding:14px 26px;border-radius:9999px;">${label}</a>
+  </div>`;
+
+const SIG = `<p style="font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:17px;color:rgba(35,53,45,0.85);margin:0;">Oge</p>`;
+
+function firstNameOf(name: string): string {
+  if (!name) return "";
+  return escapeHtml(name.trim().split(/\s+/)[0]);
+}
+
+// ─── Day 3 ───────────────────────────────────────────────────────────────
+export async function sendChecklistNurture1(email: string, name: string) {
+  const c = client();
+  if (!c) return { skipped: true as const };
+
+  const first = firstNameOf(name);
+  const inner = `
+    ${H1(first ? `Hey ${first},` : "Hey,")}
+    ${P("Did you make it through the checklist? No worries if not. Most people print it, set it aside, and forget.")}
+    ${P(`If you only have ten minutes, here's the one I'd start with: <strong style="color:#23352D;font-weight:500;">section 03, Sales process.</strong>`)}
+    ${P("Specifically, what happens when someone says \"tell me more\"? Most early-stage businesses lose the sale there, not at the offer. Walk through that section and be honest with the boxes.")}
+    ${P("Reply if anything jumped out.", true)}
+    ${SIG}
+    ${UNSUB_FOOTER(email)}
+  `;
+
+  return c.emails.send({
+    from: `Early Founders Collective <${env.resendFromEmail}>`,
+    to: email,
+    subject: "did you go through it?",
+    html: wrap(inner),
+  });
+}
+
+// ─── Day 7 ───────────────────────────────────────────────────────────────
+export async function sendChecklistNurture2(email: string, name: string) {
+  const c = client();
+  if (!c) return { skipped: true as const };
+
+  const first = firstNameOf(name);
+  const inner = `
+    ${H1(first ? `Hey ${first},` : "Hey,")}
+    ${P("A week in. Here's the pattern I see most often when I sit with early-stage founders:")}
+    ${P("The offer is fine. The visibility is fine. The follow-up is what's actually broken. Someone reaches out, says \"tell me more,\" and the founder takes two weeks to reply. By then, the lead's moved on.")}
+    ${P("If that hit, you're not alone. It's the most common bottleneck I see in this season.")}
+    ${P("Inside Early Founders we build the simple systems that close that gap. If you want a room of people working on the same thing, applications are open.", true)}
+    ${BTN(`${env.siteUrl}/apply`, "Apply for Access")}
+    ${SIG}
+    ${UNSUB_FOOTER(email)}
+  `;
+
+  return c.emails.send({
+    from: `Early Founders Collective <${env.resendFromEmail}>`,
+    to: email,
+    subject: "the most common gap I see",
+    html: wrap(inner),
+  });
+}
+
+// ─── Day 14 ──────────────────────────────────────────────────────────────
+export async function sendChecklistNurture3(email: string, name: string) {
+  const c = client();
+  if (!c) return { skipped: true as const };
+
+  const first = firstNameOf(name);
+  const inner = `
+    ${H1(first ? `Hey ${first},` : "Hey,")}
+    ${P("Two weeks since you grabbed the checklist. I'm going to assume one of three things is true:")}
+    ${P("One: you went through it, found what's stuck, fixed it, and you're moving. If that's you, nice.")}
+    ${P("Two: you went through it, found what's stuck, and you're still figuring out how to fix it.")}
+    ${P("Three: you haven't opened it.")}
+    ${P("If you're in two or three, that's what the room is for. Or if you'd rather just talk it through, the discovery call is 15 minutes and we'll work on whatever's loudest in the business right now.", true)}
+    ${BTN(`${env.siteUrl}/discoverycall`, "Book a discovery call")}
+    ${SIG}
+    ${UNSUB_FOOTER(email)}
+  `;
+
+  return c.emails.send({
+    from: `Early Founders Collective <${env.resendFromEmail}>`,
+    to: email,
+    subject: "are you stuck on one of these?",
+    html: wrap(inner),
+  });
+}

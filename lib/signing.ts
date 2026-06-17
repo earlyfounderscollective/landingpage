@@ -51,3 +51,27 @@ export function verifyDiscoveryDecisionToken(
     return false;
   }
 }
+
+/**
+ * One-click unsubscribe links embedded in checklist nurture emails. Signs
+ * the lowercased email so the link can't be guessed or replayed against
+ * another address.
+ */
+export function signChecklistUnsubscribeToken(email: string): string {
+  return createHmac("sha256", env.adminActionSecret)
+    .update(`checklist_unsub:${email.toLowerCase()}`)
+    .digest("hex");
+}
+
+export function verifyChecklistUnsubscribeToken(
+  email: string,
+  token: string,
+): boolean {
+  const expected = signChecklistUnsubscribeToken(email);
+  if (expected.length !== token.length) return false;
+  try {
+    return timingSafeEqual(Buffer.from(expected), Buffer.from(token));
+  } catch {
+    return false;
+  }
+}
