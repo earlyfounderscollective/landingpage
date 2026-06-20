@@ -38,9 +38,9 @@ export function UpgradeCTA({ email, name }: { email: string; name: string }) {
         type="button"
         onClick={onClick}
         disabled={loading || !email}
-        className="inline-flex items-center justify-center rounded-full bg-forest text-ivory text-[15px] font-medium tracking-[0.02em] px-10 sm:px-12 py-[16px] shadow-[0_18px_40px_-16px_rgba(35,53,45,0.55)] hover:bg-ink hover:-translate-y-[1px] transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+        className="flex w-full max-w-[420px] items-center justify-center rounded-full bg-brass text-ivory text-[14.5px] md:text-[15px] font-semibold tracking-[0.02em] px-8 py-[18px] shadow-[0_22px_50px_-18px_rgba(155,122,74,0.7)] hover:bg-[#8a6c3f] hover:-translate-y-[1px] transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0 uppercase"
       >
-        {loading ? "Loading checkout…" : "Add lifetime access for $17"}
+        {loading ? "Loading checkout…" : "Click here to upgrade to VIP for $17"}
       </button>
       {error && (
         <p className="mt-3 text-[12.5px] text-[#a13a1a]" role="alert">
