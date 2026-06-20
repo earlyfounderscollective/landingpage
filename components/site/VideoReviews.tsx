@@ -125,7 +125,7 @@ function ReviewTile({ review }: { review: Review }) {
   );
 }
 
-export function VideoReviews() {
+export function VideoReviews({ showHeading = true }: { showHeading?: boolean } = {}) {
   const len = reviews.length;
   const layoutClass =
     len === 1
@@ -135,8 +135,9 @@ export function VideoReviews() {
         : "grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto";
 
   return (
-    <section className="bg-ivory pt-2 pb-20 md:pb-28 grain">
+    <section className={`bg-ivory ${showHeading ? "pt-2" : "pt-8"} pb-20 md:pb-28 grain`}>
       <div className="container-page">
+        {showHeading && (
         <div className="max-w-3xl mx-auto text-center mb-14 md:mb-16">
           <h2 className="flex flex-col items-center">
             <span className="font-serif text-[34px] md:text-[44px] leading-[1.05] tracking-[-0.02em] text-forest">
@@ -147,6 +148,7 @@ export function VideoReviews() {
             </span>
           </h2>
         </div>
+        )}
 
         <div className={layoutClass}>
           {reviews.map((r) => (

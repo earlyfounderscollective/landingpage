@@ -122,14 +122,29 @@ export default async function TrainingPage() {
         {/* SOCIAL PROOF — REAL VIDEO REVIEWS */}
         <section className="bg-ivory pt-12 md:pt-16 pb-2">
           <div className="container-page">
-            <div className="max-w-[760px] mx-auto text-center mb-2">
-              <p className="text-[10.5px] font-semibold tracking-[0.28em] uppercase text-brass">
-                Founders Oge has worked with
+            <div className="max-w-[760px] mx-auto text-center">
+              <div className="flex items-center justify-center gap-1.5 mb-3">
+                {[0, 1, 2, 3, 4].map((i) => (
+                  <svg
+                    key={i}
+                    width="18"
+                    height="18"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className="text-brass"
+                    aria-hidden
+                  >
+                    <path d="M10 1.5L12.36 7.04L18.39 7.56L13.83 11.43L15.18 17.32L10 14.14L4.82 17.32L6.17 11.43L1.61 7.56L7.64 7.04L10 1.5Z" />
+                  </svg>
+                ))}
+              </div>
+              <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-forest">
+                Multiple 5-Star Reviews
               </p>
             </div>
           </div>
         </section>
-        <VideoReviews />
+        <VideoReviews showHeading={false} />
 
         {/* IN THIS LIVE TRAINING */}
         <section className="bg-bone py-16 md:py-20">
