@@ -77,3 +77,59 @@ export function CountdownTimer({
     </div>
   );
 }
+
+/**
+ * Inline single-line countdown — matches Hormozi's "EVENT STARTS IN: D:H:M:S"
+ * pattern. Centered. Compact. Sits inline with the hero CTA.
+ */
+export function InlineCountdown({ targetIso }: { targetIso: string }) {
+  const target = new Date(targetIso).getTime();
+  const [t, setT] = useState(() => diff(target));
+
+  useEffect(() => {
+    const id = setInterval(() => setT(diff(target)), 1000);
+    return () => clearInterval(id);
+  }, [target]);
+
+  if (t.done) {
+    return (
+      <p className="text-[12px] uppercase tracking-[0.18em] text-brass font-semibold">
+        The training has started.
+      </p>
+    );
+  }
+
+  return (
+    <div className="inline-flex items-center gap-2 text-ivory">
+      <span aria-hidden className="text-[#d23a3a] text-[14px]">⚠</span>
+      <span className="text-[10.5px] sm:text-[11px] font-semibold tracking-[0.22em] uppercase text-ivory/75">
+        Event Starts In:
+      </span>
+      <div className="inline-flex items-baseline gap-1.5 ml-1">
+        {[
+          { v: t.days, l: "D" },
+          { v: t.hours, l: "H" },
+          { v: t.minutes, l: "M" },
+          { v: t.seconds, l: "S" },
+        ].map((c, i, arr) => (
+          <span key={c.l} className="inline-flex items-baseline">
+            <span className="font-serif text-[16px] sm:text-[18px] text-ivory tabular-nums tracking-[-0.012em]">
+              {String(c.v).padStart(2, "0")}
+            </span>
+            <span className="ml-0.5 text-[10px] uppercase tracking-[0.12em] text-ivory/55">
+              {c.l}
+            </span>
+            {i < arr.length - 1 && (
+              <span
+                className="mx-1.5 text-ivory/40 font-serif text-[14px]"
+                aria-hidden
+              >
+                :
+              </span>
+            )}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
