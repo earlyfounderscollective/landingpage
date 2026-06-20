@@ -184,8 +184,8 @@ export default async function TrainingPage() {
               <figure className="mx-auto md:mx-0 w-full max-w-[280px] md:max-w-none">
                 <div className="relative aspect-[4/5] w-full overflow-hidden rounded-card bg-forest/15 shadow-card">
                   <img
-                    src="/media/speaking.jpg"
-                    alt="Oge Madu speaking at a SoleTies event"
+                    src="/media/founder-portrait.jpg"
+                    alt="Oge Madu"
                     className="absolute inset-0 h-full w-full object-cover"
                     loading="eager"
                   />
