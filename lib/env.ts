@@ -26,4 +26,8 @@ export const env = {
   // Verifies Vercel cron requests for /api/cron/plan-drips. Without it, the
   // route refuses to run (fail loud rather than silently send to everyone).
   cronSecret: optional("CRON_SECRET"),
+
+  // Password for the /admin/* pages. Set in Vercel env. If unset, admin
+  // routes refuse to log anyone in.
+  adminPassword: optional("ADMIN_PASSWORD"),
 };
