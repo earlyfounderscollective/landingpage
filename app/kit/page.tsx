@@ -11,6 +11,8 @@ import {
   PlaybookMockup,
   LeadTrackerMockup,
 } from "@/components/funnel/KitMockups";
+import { FAQAccordion } from "@/components/funnel/FAQAccordion";
+import { GuaranteeBadge } from "@/components/funnel/GuaranteeBadge";
 import { getSupabaseAdmin } from "@/lib/supabase";
 
 export const metadata: Metadata = {
@@ -202,28 +204,6 @@ export default async function KitPage({
           </div>
         </section>
 
-        {/* RESULTS BAR */}
-        <section className="bg-bone py-10 md:py-12 border-y border-line/60">
-          <div className="container-page">
-            <div className="max-w-[820px] mx-auto text-center">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-brass">
-                Results from real founders Oge has worked with
-              </p>
-              <div className="mt-5 flex flex-wrap justify-center items-center gap-x-8 gap-y-2 font-serif text-[16px] md:text-[18px] text-forest">
-                <span>Paint HTX</span>
-                <span className="text-mute/50">·</span>
-                <span>Phēnyx</span>
-                <span className="text-mute/50">·</span>
-                <span>SoleTies Run Club</span>
-                <span className="text-mute/50">·</span>
-                <span>Holistic Roots Skincare</span>
-                <span className="text-mute/50">·</span>
-                <span>Ladies of Richmond</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* WHAT'S INSIDE — INTRO */}
         <section className="bg-ivory pt-16 md:pt-24 pb-4">
           <div className="container-page">
@@ -232,10 +212,10 @@ export default async function KitPage({
                 What's actually inside
               </p>
               <h2 className="mt-5 font-serif text-[32px] md:text-[44px] leading-[1.06] tracking-[-0.02em] text-forest">
-                Six tools. One weekend. Done.
+                The six tools.
               </h2>
               <p className="mt-6 text-[15.5px] md:text-[16.5px] leading-[1.65] text-ink/72">
-                Each one solves a specific bottleneck. Walk through them in order and you'll have a real business set up by Monday morning.
+                Each one solves a specific bottleneck. Walk through them in order. The structure is the same one I use across every business I build.
               </p>
             </div>
           </div>
@@ -396,60 +376,98 @@ export default async function KitPage({
         {/* GUARANTEE */}
         <section className="bg-ivory py-14 md:py-16">
           <div className="container-page">
-            <div className="max-w-[560px] mx-auto text-center">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-brass">
-                The guarantee
-              </p>
-              <p className="mt-6 font-serif italic text-[20px] md:text-[22px] leading-[1.5] text-forest">
-                "Walk through the kit. If it doesn't give you a clear next step on your business inside 14 days, email us for a refund. We don't argue."
-              </p>
-              <p className="mt-5 font-serif italic text-[15px] text-mute">— Oge</p>
+            <div className="max-w-[760px] mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-8 md:gap-12 items-center">
+                <div className="flex justify-center md:justify-start">
+                  <GuaranteeBadge />
+                </div>
+                <div className="text-center md:text-left">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-brass">
+                    The guarantee
+                  </p>
+                  <p className="mt-4 font-serif italic text-[19px] md:text-[22px] leading-[1.5] text-forest">
+                    "Walk through the kit. If it doesn't give you a clear next step on your business inside 14 days, email us for a refund. We don't argue."
+                  </p>
+                  <p className="mt-4 font-serif italic text-[15px] text-mute">— Oge</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* INCLUDED SUMMARY */}
+        {/* VALUE STACK */}
         <section className="bg-bone py-14 md:py-20">
           <div className="container-page">
-            <div className="max-w-[820px] mx-auto">
+            <div className="max-w-[680px] mx-auto">
               <div className="text-center mb-10 md:mb-12">
                 <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-brass">
-                  What's included
+                  What you get
                 </p>
                 <h2 className="mt-5 font-serif text-[28px] md:text-[36px] leading-[1.1] tracking-[-0.018em] text-forest">
-                  Everything you get when you check out.
+                  Everything in one checkout.
                 </h2>
               </div>
 
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {MODULES.map((m) => (
-                  <li
-                    key={m.n}
-                    className="bg-ivory border border-line/60 rounded-[10px] p-4 flex items-start gap-3"
-                  >
-                    <span className="font-serif text-[18px] text-brass tabular-nums leading-none pt-1 shrink-0">
-                      {m.n}
-                    </span>
+              <div className="bg-ivory border border-line/60 rounded-2xl p-6 md:p-8 shadow-[0_24px_60px_-30px_rgba(35,53,45,0.25)]">
+                <ul className="divide-y divide-line/60">
+                  {MODULES.map((m) => (
+                    <li
+                      key={m.n}
+                      className="py-4 grid grid-cols-[auto_1fr_auto] items-center gap-4"
+                    >
+                      <span className="font-serif text-[18px] text-brass tabular-nums leading-none">
+                        {m.n}
+                      </span>
+                      <div>
+                        <p className="font-serif text-[15.5px] md:text-[16.5px] text-forest leading-[1.25]">
+                          {m.title}
+                        </p>
+                        <p className="text-[12.5px] text-mute mt-0.5 italic">{m.tag}</p>
+                      </div>
+                      <span className="text-[11px] font-semibold tracking-[0.18em] uppercase text-brass">
+                        Included
+                      </span>
+                    </li>
+                  ))}
+                  <li className="py-4 grid grid-cols-[auto_1fr_auto] items-center gap-4">
+                    <span className="font-serif text-[18px] text-brass tabular-nums leading-none">+</span>
                     <div>
-                      <p className="font-serif text-[16px] text-forest leading-[1.25]">
-                        {m.title}
+                      <p className="font-serif text-[15.5px] md:text-[16.5px] text-forest leading-[1.25]">
+                        Future updates · forever
                       </p>
-                      <p className="text-[12.5px] text-mute mt-1 italic">{m.tag}</p>
+                      <p className="text-[12.5px] text-mute mt-0.5 italic">
+                        Anything I add to the kit shows up in your access at no extra cost.
+                      </p>
                     </div>
+                    <span className="text-[11px] font-semibold tracking-[0.18em] uppercase text-brass">
+                      Included
+                    </span>
                   </li>
-                ))}
-                <li className="md:col-span-2 bg-forest text-ivory rounded-[10px] p-4 flex items-start gap-3">
-                  <span className="font-serif text-[18px] text-brass tabular-nums leading-none pt-1 shrink-0">+</span>
-                  <div>
-                    <p className="font-serif text-[16px] text-ivory leading-[1.25]">
-                      Premium Sales & Systems Checklist · Order bump
-                    </p>
-                    <p className="text-[12.5px] text-ivory/70 mt-1 italic">
-                      Scripts, objection library, negotiation templates. +$17 at checkout.
-                    </p>
-                  </div>
-                </li>
-              </ul>
+                  <li className="py-4 grid grid-cols-[auto_1fr_auto] items-center gap-4">
+                    <span className="font-serif text-[18px] text-brass tabular-nums leading-none">★</span>
+                    <div>
+                      <p className="font-serif text-[15.5px] md:text-[16.5px] text-forest leading-[1.25]">
+                        Premium Sales & Systems Checklist
+                      </p>
+                      <p className="text-[12.5px] text-mute mt-0.5 italic">
+                        Scripts, objection library, negotiation templates. Optional add-on at checkout.
+                      </p>
+                    </div>
+                    <span className="text-[11px] font-semibold tracking-[0.18em] uppercase text-forest">
+                      +$17
+                    </span>
+                  </li>
+                </ul>
+
+                <div className="mt-6 pt-6 border-t border-line/60 flex items-end justify-between">
+                  <p className="text-[12px] uppercase tracking-[0.22em] text-mute font-semibold">
+                    Your price today
+                  </p>
+                  <p className="font-serif text-[36px] md:text-[44px] leading-none text-forest tracking-[-0.018em]">
+                    ${priceCents / 100}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -461,8 +479,11 @@ export default async function KitPage({
               <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-brass text-center">
                 Frequently asked questions
               </p>
-              <ul className="mt-10 space-y-7 md:space-y-8">
-                {[
+              <h2 className="mt-5 font-serif text-[28px] md:text-[34px] leading-[1.1] tracking-[-0.018em] text-forest text-center mb-10">
+                Click any to expand.
+              </h2>
+              <FAQAccordion
+                items={[
                   {
                     q: "I haven't started yet. Is this for me?",
                     a: "Yes. Half of the kit is structured for people who have an idea but haven't done anything yet. The other half kicks in once you have a few customers.",
@@ -495,17 +516,8 @@ export default async function KitPage({
                     q: "What if I bought the training VIP?",
                     a: "You already have lifetime training access. The kit is a separate purchase — it covers the implementation side, not the strategy walkthrough.",
                   },
-                ].map((item) => (
-                  <li key={item.q}>
-                    <p className="font-serif text-[18px] md:text-[20px] leading-[1.3] text-forest">
-                      {item.q}
-                    </p>
-                    <p className="mt-3 text-[15px] md:text-[15.5px] leading-[1.65] text-ink/72">
-                      {item.a}
-                    </p>
-                  </li>
-                ))}
-              </ul>
+                ]}
+              />
             </div>
           </div>
         </section>
