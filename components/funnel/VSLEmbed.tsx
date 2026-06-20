@@ -3,18 +3,38 @@ import { detectVideoEmbed } from "@/lib/training";
 export function VSLEmbed({ url }: { url: string | null | undefined }) {
   const embed = detectVideoEmbed(url);
 
-  // No video set yet — show a clean placeholder so the hero doesn't collapse.
+  // No video set yet — show Oge's speaking photo as the placeholder
+  // so the hero has her face in the same slot Hormozi's hero has his.
   if (embed.type === "none" || embed.type === "unknown") {
     return (
-      <div className="relative aspect-video w-full max-w-3xl mx-auto rounded-2xl overflow-hidden bg-forest/40 border border-ivory/15 flex items-center justify-center">
-        <div className="text-center px-6">
-          <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-ivory/95 text-forest shadow-card mb-4">
-            <svg width="22" height="22" viewBox="0 0 14 14" fill="none" aria-hidden>
+      <div className="relative aspect-video w-full max-w-3xl mx-auto rounded-2xl overflow-hidden bg-forest shadow-[0_24px_60px_-30px_rgba(0,0,0,0.6)]">
+        <img
+          src="/media/speaking.jpg"
+          alt="Oge Madu"
+          className="absolute inset-0 h-full w-full object-cover object-center"
+          loading="eager"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-forest/85 via-forest/20 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="inline-flex h-16 w-16 md:h-20 md:w-20 items-center justify-center rounded-full bg-ivory/95 text-forest shadow-[0_18px_40px_-12px_rgba(0,0,0,0.6)]">
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 14 14"
+              fill="none"
+              aria-hidden
+              className="ml-1"
+            >
               <path d="M3 2L12 7L3 12V2Z" fill="currentColor" />
             </svg>
           </div>
-          <p className="font-serif text-[18px] text-ivory/85">
-            Training video unlocks when registration opens.
+        </div>
+        <div className="absolute bottom-5 left-6 right-6 text-ivory">
+          <p className="font-serif text-[16px] md:text-[18px] leading-[1.3]">
+            A quick message from Oge
+          </p>
+          <p className="mt-1 text-[11px] uppercase tracking-[0.22em] text-ivory/65">
+            Video unlocks at registration
           </p>
         </div>
       </div>
