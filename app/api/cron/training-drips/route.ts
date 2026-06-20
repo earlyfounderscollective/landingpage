@@ -82,26 +82,30 @@ export async function GET(req: Request) {
 
     for (const reg of regs) {
       if (!reg.email) continue;
+      // Daily cron — windows are 24h wide so we catch everyone exactly once
+      // regardless of when in the day the cron fires.
       const tasks: { kind: Kind; trigger: boolean }[] = [
         {
           kind: "reminder_24h",
-          // Send if event starts in 22-26 hours
-          trigger: startsMs - now <= 26 * 3600_000 && startsMs - now >= 22 * 3600_000,
+          // Send if the event is between 12 and 36 hours away (next-day reminder)
+          trigger: startsMs - now <= 36 * 3600_000 && startsMs - now >= 12 * 3600_000,
         },
         {
           kind: "reminder_1h",
-          // Send if event starts in 30-90 minutes
-          trigger: startsMs - now <= 90 * 60_000 && startsMs - now >= 30 * 60_000,
+          // "Same-day" morning reminder — event is later today (0-12h away).
+          // (True 1h-before requires a Pro-plan hourly cron — this is the
+          // hobby-compatible substitute.)
+          trigger: startsMs - now <= 12 * 3600_000 && startsMs - now >= 0,
         },
         {
           kind: "replay_delivery",
-          // Send 15-75 minutes after event ends
-          trigger: now - endsMs >= 15 * 60_000 && now - endsMs <= 75 * 60_000,
+          // Send within 24h after event ends
+          trigger: now - endsMs >= 0 && now - endsMs <= 24 * 3600_000,
         },
         {
           kind: "kit_pitch",
-          // Send 23-25 hours after event ends
-          trigger: now - endsMs >= 23 * 3600_000 && now - endsMs <= 25 * 3600_000,
+          // Send 24-48h after event ends
+          trigger: now - endsMs >= 24 * 3600_000 && now - endsMs <= 48 * 3600_000,
         },
       ];
 
