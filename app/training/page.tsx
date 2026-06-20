@@ -53,20 +53,20 @@ export default async function TrainingPage() {
       <main className="pb-[100px] md:pb-0">
         {/* HERO — FOREST */}
         <section className="relative bg-forest text-ivory overflow-hidden">
-          <div className="container-page pt-10 sm:pt-12 md:pt-14 pb-12 md:pb-16">
-            {/* Logo — prominent center-top */}
+          <div className="container-page pt-8 sm:pt-10 md:pt-12 pb-10 md:pb-12">
+            {/* Logo — center top */}
             <div className="flex justify-center">
               <Link href="/" aria-label="Early Founders Collective — Home">
                 <img
                   src="/logo.png"
                   alt="Early Founders Collective"
-                  className="h-12 md:h-16 w-auto brightness-0 invert opacity-95"
+                  className="h-11 md:h-14 w-auto brightness-0 invert opacity-95"
                   loading="eager"
                 />
               </Link>
             </div>
 
-            <div className="max-w-[820px] mx-auto text-center mt-10 md:mt-12">
+            <div className="max-w-[820px] mx-auto text-center mt-6 md:mt-8">
               {/* Event pill */}
               <div className="inline-flex items-center gap-2 bg-forest/60 border border-ivory/20 rounded-full px-4 py-1.5">
                 <span className="inline-block h-2 w-2 rounded-full bg-[#d23a3a] animate-pulse" />
@@ -75,35 +75,32 @@ export default async function TrainingPage() {
                 </span>
               </div>
 
-              {/* H1 */}
-              <h1 className="mt-7 sm:mt-8 font-serif text-ivory">
-                <span className="block text-[28px] sm:text-[38px] md:text-[48px] lg:text-[54px] leading-[1.06] tracking-[-0.018em]">
-                  <span className="text-brass/90">“</span>
-                  The difference between a side hustle
-                  <br className="hidden sm:block" /> and a real business
-                  <span className="hand text-[44px] sm:text-[58px] md:text-[68px] leading-[0.95] text-brass mx-1 -rotate-[2deg] inline-block align-baseline">
-                    isn't talent.
-                  </span>
-                  <span className="text-brass/90">”</span>
+              {/* H1 — single style, hand-letter on its own line */}
+              <h1 className="mt-5 sm:mt-6 font-serif text-ivory">
+                <span className="block text-[28px] sm:text-[38px] md:text-[46px] lg:text-[52px] leading-[1.08] tracking-[-0.018em]">
+                  The difference between a side hustle and a real business
+                </span>
+                <span className="block hand text-[40px] sm:text-[54px] md:text-[64px] leading-[0.95] text-brass mt-2 sm:mt-3 -rotate-[2deg]">
+                  isn't talent.
                 </span>
               </h1>
 
-              <p className="mt-7 font-serif italic text-[18px] sm:text-[20px] md:text-[22px] leading-[1.4] text-ivory/85">
+              <p className="mt-5 sm:mt-6 font-serif italic text-[17px] sm:text-[19px] md:text-[20px] leading-[1.4] text-ivory/85">
                 It's knowing how to build it.
               </p>
 
-              <p className="mt-7 max-w-[520px] mx-auto text-[15px] sm:text-[16px] leading-[1.6] text-ivory/72">
+              <p className="mt-5 max-w-[520px] mx-auto text-[14.5px] sm:text-[15.5px] leading-[1.6] text-ivory/72">
                 If you've ever been paid for what you're good at, you're probably closer than you think. This training will show you what to do next.
               </p>
             </div>
 
             {/* VSL */}
-            <div className="mt-10 md:mt-12">
+            <div className="mt-7 md:mt-9">
               <VSLEmbed url={event?.video_url} />
             </div>
 
             {/* CTA */}
-            <div className="mt-10 md:mt-12 max-w-[520px] mx-auto text-center">
+            <div className="mt-7 md:mt-9 max-w-[520px] mx-auto text-center">
               <TrainingForm
                 mode={mode}
                 ctaLabel={ctaLabel}
@@ -115,7 +112,7 @@ export default async function TrainingPage() {
 
             {/* Inline countdown — single row */}
             {isUpcoming && event?.starts_at && (
-              <div className="mt-8 md:mt-10 flex justify-center">
+              <div className="mt-6 flex justify-center">
                 <InlineCountdown targetIso={event.starts_at} />
               </div>
             )}
@@ -172,8 +169,8 @@ export default async function TrainingPage() {
               <figure className="mx-auto md:mx-0 max-w-[280px] md:max-w-[320px] w-full">
                 <div className="relative aspect-[4/5] w-full overflow-hidden rounded-card bg-forest/10 shadow-card">
                   <img
-                    src="/media/founder-portrait.jpg"
-                    alt="Oge Madu"
+                    src="/media/speaking.jpg"
+                    alt="Oge Madu speaking at a SoleTies event"
                     className="absolute inset-0 h-full w-full object-cover"
                     loading="lazy"
                   />
