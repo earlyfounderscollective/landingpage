@@ -9,11 +9,13 @@ export function TrainingForm({
   ctaLabel,
   helperText,
   variant = "modal",
+  fullWidth = false,
 }: {
   mode: Mode;
   ctaLabel: string;
   helperText?: string;
   variant?: "modal" | "inline";
+  fullWidth?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
@@ -138,7 +140,11 @@ export function TrainingForm({
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="inline-flex items-center justify-center rounded-full bg-brass text-ivory text-[14px] sm:text-[15px] font-medium tracking-[0.02em] px-10 sm:px-12 py-4 sm:py-[18px] shadow-[0_18px_40px_-16px_rgba(155,122,74,0.55)] hover:bg-[#8a6c3f] hover:-translate-y-[1px] transition-all duration-300"
+          className={
+            fullWidth
+              ? "flex w-full items-center justify-center rounded-full bg-brass text-ivory text-[14.5px] font-medium tracking-[0.02em] py-[15px] shadow-[0_18px_40px_-16px_rgba(155,122,74,0.55)] hover:bg-[#8a6c3f] transition-all duration-300"
+              : "inline-flex items-center justify-center rounded-full bg-brass text-ivory text-[14px] sm:text-[15px] font-medium tracking-[0.02em] px-10 sm:px-12 py-4 sm:py-[18px] shadow-[0_18px_40px_-16px_rgba(155,122,74,0.55)] hover:bg-[#8a6c3f] hover:-translate-y-[1px] transition-all duration-300"
+          }
         >
           {ctaLabel}
         </button>

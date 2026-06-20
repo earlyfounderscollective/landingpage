@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { FunnelHeader, FunnelFooter } from "@/components/funnel/FunnelChrome";
 import { TrainingForm } from "@/components/funnel/TrainingForm";
 import { VSLEmbed } from "@/components/funnel/VSLEmbed";
+import { StickyTrainingCTA } from "@/components/funnel/StickyTrainingCTA";
 import {
   getActiveTrainingEvent,
   formatTrainingDateLine,
@@ -40,7 +41,7 @@ export default async function TrainingPage() {
   return (
     <>
       <FunnelHeader tone="light" />
-      <main>
+      <main className="pb-[100px] md:pb-0">
         {/* HERO */}
         <section className="relative bg-forest text-ivory overflow-hidden">
           <div className="container-page pt-[120px] sm:pt-[140px] md:pt-[160px] pb-12 md:pb-16">
@@ -84,27 +85,12 @@ export default async function TrainingPage() {
           </div>
         </section>
 
-        {/* TRUST STRIP */}
-        <section className="bg-ivory border-b border-line/50">
-          <div className="container-page py-10 md:py-12">
-            <p className="text-[10.5px] font-medium tracking-[0.28em] uppercase text-mute text-center mb-6">
-              Hosted by an operator with six- and seven-figure builds
-            </p>
-            <ul className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 md:gap-x-14 text-forest">
-              <li className="font-serif text-[18px] md:text-[20px] tracking-[-0.012em]">Paint HTX</li>
-              <li className="font-serif text-[18px] md:text-[20px] tracking-[-0.012em]">Phēnyx</li>
-              <li className="font-serif text-[18px] md:text-[20px] tracking-[-0.012em]">SoleTies Run Club</li>
-              <li className="font-serif text-[18px] md:text-[20px] tracking-[-0.012em]">Early Founders Collective</li>
-            </ul>
-          </div>
-        </section>
-
-        {/* IN 40 MINUTES */}
+        {/* IN THIS LIVE TRAINING */}
         <section className="bg-bone py-16 md:py-20">
           <div className="container-page">
             <div className="max-w-[680px] mx-auto">
               <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-brass text-center">
-                In 40 Minutes You'll Learn
+                In This Live Training You'll Learn
               </p>
 
               <ul className="mt-10 space-y-7 md:space-y-8">
@@ -174,6 +160,7 @@ export default async function TrainingPage() {
         </section>
       </main>
       <FunnelFooter />
+      <StickyTrainingCTA mode={mode} ctaLabel={ctaLabel} helperText={helperText} />
     </>
   );
 }
