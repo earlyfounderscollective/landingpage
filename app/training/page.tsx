@@ -121,27 +121,21 @@ export default async function TrainingPage() {
           <div className="container-page">
             <div className="max-w-[920px] mx-auto grid grid-cols-1 md:grid-cols-[auto_1fr] gap-10 md:gap-14 items-center">
               <figure className="mx-auto md:mx-0 max-w-[280px] md:max-w-[320px] w-full">
-                <div className="relative aspect-[3/4] w-full overflow-hidden rounded-card bg-forest/10 shadow-card">
+                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-card bg-forest/10 shadow-card">
                   <img
-                    src="/media/run-club.jpg"
-                    alt="Oge Madu at a SoleTies Run Club event with Lululemon"
+                    src="/media/founder-portrait.jpg"
+                    alt="Oge Madu"
                     className="absolute inset-0 h-full w-full object-cover"
                     loading="lazy"
                   />
                 </div>
-                <figcaption className="mt-3 text-[10.5px] uppercase tracking-[0.24em] text-mute text-center md:text-left">
-                  SoleTies Run Club · Lululemon partnership
-                </figcaption>
               </figure>
 
               <div className="text-center md:text-left">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-brass">
                   Hosted by Oge Madu
                 </p>
-                <h2 className="mt-3 font-serif text-[24px] md:text-[28px] leading-[1.25] tracking-[-0.012em] text-forest">
-                  Builder of Paint HTX, SoleTies, Phēnyx.
-                </h2>
-                <div className="mt-5 space-y-4 text-[15.5px] md:text-[16px] leading-[1.7] text-ink/78">
+                <div className="mt-7 space-y-4 text-[16px] md:text-[16.5px] leading-[1.7] text-ink/78">
                   <p>
                     Over the last decade, I've built businesses across different industries and learned that successful businesses may look different, but they usually have the same foundation.
                   </p>
