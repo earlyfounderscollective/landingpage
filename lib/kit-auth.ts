@@ -1,6 +1,7 @@
 import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 import { cookies } from "next/headers";
 import { env } from "./env";
+import { isAdmin } from "./admin-auth";
 import { getSupabaseAdmin } from "./supabase";
 
 const COOKIE_NAME = "efc_kit_session";
@@ -35,6 +36,10 @@ export function buildKitSessionCookie(email: string): {
 }
 
 export function getKitSessionEmail(): string | null {
+  // Owner bypass: if signed in to /admin, treat them as the admin email.
+  // Lets the site operator preview /kit/access without buying or magic links.
+  if (isAdmin()) return env.adminEmail.toLowerCase();
+
   const store = cookies();
   const cookie = store.get(COOKIE_NAME);
   if (!cookie?.value) return null;
