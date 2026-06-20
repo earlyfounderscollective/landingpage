@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FunnelFooter } from "@/components/funnel/FunnelChrome";
 import { StatusBanner } from "@/components/funnel/StatusBanner";
 import { getStripe } from "@/lib/stripe";
+import { createMagicToken } from "@/lib/kit-auth";
 
 export const metadata: Metadata = {
   title: "You're in · Build Your Business Kit",
@@ -19,6 +20,7 @@ export default async function KitWelcomePage({
   const sessionId = (searchParams.session_id ?? "").trim();
   let firstName = "";
   let bumpIncluded = false;
+  let email = "";
 
   // Pull customer details from Stripe if a session_id is present
   if (sessionId) {
@@ -29,10 +31,19 @@ export default async function KitWelcomePage({
         const name = session.metadata?.name || session.customer_details?.name || "";
         if (name) firstName = String(name).split(/\s+/)[0];
         bumpIncluded = session.metadata?.bump_included === "true";
+        email = (session.customer_details?.email ?? session.customer_email ?? "").toLowerCase();
       } catch {
         // ignore
       }
     }
+  }
+
+  // Generate an instant-access magic token so they can click straight into the
+  // kit without waiting for the email to arrive.
+  let accessHref = "/kit/access/login";
+  if (email) {
+    const token = await createMagicToken(email);
+    if (token) accessHref = `/api/kit/access/verify?token=${token}`;
   }
 
   return (
@@ -62,7 +73,10 @@ export default async function KitWelcomePage({
               </div>
             )}
 
-            <div className="mt-12 bg-forest text-ivory rounded-2xl p-7 md:p-9 text-left">
+            <Link
+              href={accessHref}
+              className="mt-12 block bg-forest text-ivory rounded-2xl p-7 md:p-9 text-left hover:bg-ink transition-colors group"
+            >
               <p className="text-[10.5px] font-semibold tracking-[0.28em] uppercase text-brass">
                 What to do first
               </p>
@@ -72,7 +86,11 @@ export default async function KitWelcomePage({
               <p className="mt-4 text-[15px] leading-[1.65] text-ivory/80">
                 Don't try to do everything in one sitting. Start with the offer. If you can lock that down this weekend, the rest of the kit moves twice as fast.
               </p>
-            </div>
+              <p className="mt-5 inline-flex items-center gap-2 text-[12.5px] font-semibold tracking-[0.16em] uppercase text-brass group-hover:gap-3 transition-all">
+                Open my kit
+                <span aria-hidden>→</span>
+              </p>
+            </Link>
 
             <p className="mt-12 text-[14px] text-mute">
               Need anything?{" "}

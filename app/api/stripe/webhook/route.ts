@@ -4,6 +4,8 @@ import { getStripe } from "@/lib/stripe";
 import { env } from "@/lib/env";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { sendWelcomeEmail } from "@/lib/emails";
+import { createMagicToken } from "@/lib/kit-auth";
+import { sendKitWelcomeEmail } from "@/lib/kit-emails";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -38,7 +40,7 @@ export async function POST(req: Request) {
         session.customer_details?.email ?? session.customer_email ?? null;
       const metaType = session.metadata?.type || null;
 
-      // Kit order — record in kit_orders + send welcome email later
+      // Kit order — record in kit_orders + send welcome email with magic link
       if (metaType === "kit_order") {
         if (supabase && email) {
           const kitPrice = Number(session.metadata?.kit_price_cents ?? 0);
@@ -59,6 +61,14 @@ export async function POST(req: Request) {
             source: session.metadata?.source || null,
             status: "completed",
           });
+
+          // Send the welcome email with a sign-in link to the kit dashboard
+          const token = await createMagicToken(email);
+          if (token) {
+            const magicLink = `${env.siteUrl}/api/kit/access/verify?token=${token}`;
+            const name = session.metadata?.name || session.customer_details?.name || "";
+            await sendKitWelcomeEmail(email, name, magicLink).catch(() => null);
+          }
         }
         return NextResponse.json({ received: true });
       }
