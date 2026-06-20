@@ -14,6 +14,7 @@ type FormState = {
   duration_minutes: number;
   zoom_url: string;
   replay_url: string;
+  video_url: string;
   status: Status;
 };
 
@@ -48,6 +49,7 @@ export function TrainingEditor({ initial }: { initial: TrainingEvent }) {
     duration_minutes: initial.duration_minutes,
     zoom_url: initial.zoom_url ?? "",
     replay_url: initial.replay_url ?? "",
+    video_url: initial.video_url ?? "",
     status: initial.status,
   });
   const [saving, setSaving] = useState(false);
@@ -175,6 +177,20 @@ export function TrainingEditor({ initial }: { initial: TrainingEvent }) {
             type="text"
             value={state.title}
             onChange={(e) => update("title", e.target.value)}
+            className="w-full px-3.5 py-3 bg-white border border-line rounded-md text-[14.5px] focus:outline-none focus:border-forest"
+          />
+        </Section>
+
+        {/* Video URL — for the VSL embed on /training */}
+        <Section
+          label="Training video URL"
+          help="YouTube, Vimeo, Loom, or a direct .mp4 link. Embeds on the /training page above the CTA. Leave blank to show the placeholder."
+        >
+          <input
+            type="url"
+            value={state.video_url}
+            onChange={(e) => update("video_url", e.target.value)}
+            placeholder="https://www.youtube.com/watch?v=..."
             className="w-full px-3.5 py-3 bg-white border border-line rounded-md text-[14.5px] focus:outline-none focus:border-forest"
           />
         </Section>

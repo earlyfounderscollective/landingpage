@@ -25,6 +25,7 @@ export async function PATCH(req: Request) {
   const durationMinutes = Number(body.duration_minutes) || 40;
   const zoomUrl = String(body.zoom_url ?? "").trim();
   const replayUrl = String(body.replay_url ?? "").trim();
+  const videoUrl = String(body.video_url ?? "").trim();
   const status = String(body.status ?? "between").trim();
 
   if (!title) return NextResponse.json({ error: "Title required" }, { status: 400 });
@@ -79,6 +80,7 @@ export async function PATCH(req: Request) {
       duration_minutes: durationMinutes,
       zoom_url: zoomUrl || null,
       replay_url: replayUrl || null,
+      video_url: videoUrl || null,
       status,
       updated_at: new Date().toISOString(),
     })

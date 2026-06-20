@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { FunnelHeader, FunnelFooter } from "@/components/funnel/FunnelChrome";
 import { TrainingForm } from "@/components/funnel/TrainingForm";
+import { VSLEmbed } from "@/components/funnel/VSLEmbed";
 import {
   getActiveTrainingEvent,
   formatTrainingDateLine,
@@ -17,8 +18,6 @@ export const dynamic = "force-dynamic";
 
 export default async function TrainingPage() {
   const event = await getActiveTrainingEvent();
-
-  // Default mode is "between" if no event row exists yet.
   const mode = event?.status ?? "between";
 
   let eyebrow = "FREE LIVE TRAINING · COMING SOON";
@@ -42,71 +41,66 @@ export default async function TrainingPage() {
     <>
       <FunnelHeader tone="light" />
       <main>
-        {/* HERO — Forest background for visual differentiation */}
+        {/* HERO */}
         <section className="relative bg-forest text-ivory overflow-hidden">
-          <div className="container-page pt-[140px] sm:pt-[160px] md:pt-[180px] pb-16 md:pb-24">
-            <div className="max-w-[760px] mx-auto text-center">
+          <div className="container-page pt-[120px] sm:pt-[140px] md:pt-[160px] pb-12 md:pb-16">
+            <div className="max-w-[820px] mx-auto text-center">
               <p className="text-[11px] sm:text-[12px] font-semibold uppercase tracking-[0.28em] text-brass">
                 {eyebrow}
               </p>
 
-              <h1 className="mt-7 font-serif text-ivory">
-                <span className="block text-[30px] sm:text-[40px] md:text-[50px] lg:text-[56px] leading-[1.08] tracking-[-0.018em]">
+              <h1 className="mt-6 sm:mt-7 font-serif text-ivory">
+                <span className="block text-[28px] sm:text-[38px] md:text-[48px] lg:text-[54px] leading-[1.06] tracking-[-0.018em]">
                   The difference between a
-                  <br />
-                  side hustle and a real business
+                  <br className="hidden sm:block" /> side hustle and a real business
                 </span>
-                <span className="block hand text-[42px] sm:text-[52px] md:text-[64px] leading-[0.95] text-brass mt-3 sm:mt-4 -rotate-[2deg]">
+                <span className="block hand text-[44px] sm:text-[58px] md:text-[68px] leading-[0.95] text-brass mt-3 sm:mt-4 -rotate-[2deg]">
                   isn't talent.
                 </span>
               </h1>
 
-              <p className="mt-8 font-serif italic text-[18px] sm:text-[20px] md:text-[22px] leading-[1.45] text-ivory/85">
+              <p className="mt-7 font-serif italic text-[18px] sm:text-[20px] md:text-[22px] leading-[1.4] text-ivory/85">
                 It's knowing how to build it.
               </p>
+            </div>
 
-              <p className="mt-7 max-w-[520px] mx-auto text-[15px] sm:text-[16px] leading-[1.6] text-ivory/70">
-                If you've ever been paid for what you're good at, you're
-                probably closer than you think. This training will show you
-                what to do next.
-              </p>
+            {/* VSL */}
+            <div className="mt-10 md:mt-12">
+              <VSLEmbed url={event?.video_url} />
+            </div>
 
-              <p className="mt-10 text-[14px] text-brass font-medium">
+            {/* CTA + date */}
+            <div className="mt-10 md:mt-12 text-center">
+              <TrainingForm
+                mode={mode}
+                ctaLabel={ctaLabel}
+                helperText={helperText}
+                variant="modal"
+              />
+              <p className="mt-5 text-[13px] md:text-[14px] text-brass font-medium">
                 {dateLine}
               </p>
-
-              <div className="mt-7">
-                <TrainingForm
-                  mode={mode}
-                  ctaLabel={ctaLabel}
-                  helperText={helperText}
-                />
-              </div>
             </div>
           </div>
         </section>
 
-        {/* HOSTED BY */}
-        <section className="bg-ivory py-20 md:py-24">
-          <div className="container-page">
-            <div className="max-w-[640px] mx-auto text-center">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-brass">
-                Hosted by Oge Madu
-              </p>
-              <div className="mt-7 space-y-4 text-[16px] md:text-[16.5px] leading-[1.7] text-ink/78">
-                <p>
-                  Over the last decade, I've built businesses across different
-                  industries and learned that successful businesses may look
-                  different, but they usually have the same foundation.
-                </p>
-                <p>This training is about helping you build yours.</p>
-              </div>
-            </div>
+        {/* TRUST STRIP */}
+        <section className="bg-ivory border-b border-line/50">
+          <div className="container-page py-10 md:py-12">
+            <p className="text-[10.5px] font-medium tracking-[0.28em] uppercase text-mute text-center mb-6">
+              Hosted by an operator with six- and seven-figure builds
+            </p>
+            <ul className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 md:gap-x-14 text-forest">
+              <li className="font-serif text-[18px] md:text-[20px] tracking-[-0.012em]">Paint HTX</li>
+              <li className="font-serif text-[18px] md:text-[20px] tracking-[-0.012em]">Phēnyx</li>
+              <li className="font-serif text-[18px] md:text-[20px] tracking-[-0.012em]">SoleTies Run Club</li>
+              <li className="font-serif text-[18px] md:text-[20px] tracking-[-0.012em]">Early Founders Collective</li>
+            </ul>
           </div>
         </section>
 
-        {/* IN 40 MINUTES YOU'LL LEARN */}
-        <section className="bg-bone py-20 md:py-24">
+        {/* IN 40 MINUTES */}
+        <section className="bg-bone py-16 md:py-20">
           <div className="container-page">
             <div className="max-w-[680px] mx-auto">
               <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-brass text-center">
@@ -125,10 +119,7 @@ export default async function TrainingPage() {
                     key={line}
                     className="grid grid-cols-[auto_1fr] items-baseline gap-4"
                   >
-                    <span
-                      className="mt-[12px] h-[1.5px] w-3 bg-brass shrink-0"
-                      aria-hidden
-                    />
+                    <span className="mt-[12px] h-[1.5px] w-3 bg-brass shrink-0" aria-hidden />
                     <span className="font-serif text-[18px] md:text-[20px] leading-[1.45] text-forest">
                       {line}
                     </span>
@@ -139,27 +130,43 @@ export default async function TrainingPage() {
           </div>
         </section>
 
-        {/* RE-PITCH CTA */}
-        <section className="bg-ivory py-20 md:py-24">
+        {/* HOSTED BY */}
+        <section className="bg-ivory py-16 md:py-20">
+          <div className="container-page">
+            <div className="max-w-[640px] mx-auto text-center">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-brass">
+                Hosted by Oge Madu
+              </p>
+              <div className="mt-7 space-y-4 text-[16px] md:text-[16.5px] leading-[1.7] text-ink/78">
+                <p>
+                  Over the last decade, I've built businesses across different industries and learned that successful businesses may look different, but they usually have the same foundation.
+                </p>
+                <p>This training is about helping you build yours.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* REPITCH */}
+        <section className="bg-forest text-ivory py-16 md:py-20">
           <div className="container-page">
             <div className="max-w-[560px] mx-auto text-center">
-              <h2 className="font-serif text-[28px] md:text-[36px] leading-[1.15] tracking-[-0.018em] text-forest">
+              <h2 className="font-serif text-[28px] md:text-[36px] leading-[1.15] tracking-[-0.018em] text-ivory">
                 {mode === "upcoming"
-                  ? "Reserve your seat. Watch live or catch the replay."
+                  ? "Reserve your seat."
                   : mode === "replay"
-                    ? "Watch the replay. On your schedule."
-                    : "Be first in line. Get notified when the next one drops."}
+                    ? "Watch the replay."
+                    : "Be first in line."}
               </h2>
-
-              <p className="mt-5 text-[14px] text-brass font-medium">
+              <p className="mt-4 text-[14px] text-brass font-medium">
                 {dateLine}
               </p>
-
-              <div className="mt-8">
+              <div className="mt-7">
                 <TrainingForm
                   mode={mode}
                   ctaLabel={ctaLabel}
                   helperText={helperText}
+                  variant="modal"
                 />
               </div>
             </div>
