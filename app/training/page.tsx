@@ -163,16 +163,16 @@ export default async function TrainingPage() {
         </section>
 
         {/* HOSTED BY */}
-        <section className="bg-ivory py-16 md:py-24">
+        <section className="bg-ivory py-14 md:py-20">
           <div className="container-page">
-            <div className="max-w-[920px] mx-auto grid grid-cols-1 md:grid-cols-[auto_1fr] gap-10 md:gap-14 items-center">
-              <figure className="mx-auto md:mx-0 max-w-[280px] md:max-w-[320px] w-full">
-                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-card bg-forest/10 shadow-card">
+            <div className="max-w-[920px] mx-auto grid grid-cols-1 md:grid-cols-[320px_1fr] gap-10 md:gap-14 items-center">
+              <figure className="mx-auto md:mx-0 w-full max-w-[280px] md:max-w-none">
+                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-card bg-forest/15 shadow-card">
                   <img
                     src="/media/speaking.jpg"
                     alt="Oge Madu speaking at a SoleTies event"
                     className="absolute inset-0 h-full w-full object-cover"
-                    loading="lazy"
+                    loading="eager"
                   />
                 </div>
               </figure>
@@ -192,8 +192,8 @@ export default async function TrainingPage() {
           </div>
         </section>
 
-        {/* DARK RE-CTA — matches Hormozi's bottom navy section */}
-        <section className="bg-[#1a2230] text-ivory py-16 md:py-20">
+        {/* DARK RE-CTA */}
+        <section className="bg-forest text-ivory py-16 md:py-20">
           <div className="container-page">
             <div className="max-w-[540px] mx-auto text-center">
               <h2 className="font-serif text-[24px] md:text-[28px] leading-[1.2] tracking-[-0.018em] text-ivory">
