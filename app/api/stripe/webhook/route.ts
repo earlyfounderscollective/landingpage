@@ -38,6 +38,31 @@ export async function POST(req: Request) {
         session.customer_details?.email ?? session.customer_email ?? null;
       const metaType = session.metadata?.type || null;
 
+      // Kit order — record in kit_orders + send welcome email later
+      if (metaType === "kit_order") {
+        if (supabase && email) {
+          const kitPrice = Number(session.metadata?.kit_price_cents ?? 0);
+          const bumpCents = Number(session.metadata?.bump_amount_cents ?? 0);
+          const bumpIncluded = session.metadata?.bump_included === "true";
+          const amountTotal = session.amount_total ?? kitPrice + bumpCents;
+          await supabase.from("kit_orders").insert({
+            email,
+            full_name: session.metadata?.name || null,
+            amount_cents: amountTotal,
+            bump_included: bumpIncluded,
+            bump_amount_cents: bumpIncluded ? bumpCents : null,
+            stripe_session_id: session.id,
+            stripe_payment_intent_id:
+              typeof session.payment_intent === "string"
+                ? session.payment_intent
+                : session.payment_intent?.id ?? null,
+            source: session.metadata?.source || null,
+            status: "completed",
+          });
+        }
+        return NextResponse.json({ received: true });
+      }
+
       // Training VIP purchase — separate handler
       if (metaType === "training_vip") {
         const eventId = session.metadata?.event_id || null;
