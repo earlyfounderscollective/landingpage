@@ -36,6 +36,30 @@ export async function POST(req: Request) {
       const customerId = idOrString(session.customer);
       const email =
         session.customer_details?.email ?? session.customer_email ?? null;
+      const metaType = session.metadata?.type || null;
+
+      // Training VIP purchase — separate handler
+      if (metaType === "training_vip") {
+        const eventId = session.metadata?.event_id || null;
+        const amountTotal = session.amount_total ?? 1700;
+        if (supabase && email && eventId) {
+          await supabase
+            .from("training_registrations")
+            .update({
+              vip: true,
+              vip_amount_cents: amountTotal,
+              vip_purchased_at: new Date().toISOString(),
+            })
+            .eq("email", email)
+            .eq("event_id", eventId);
+        }
+        // No additional welcome email here — /training/confirmed delivers
+        // the VIP confirmation. (Optionally we could send a receipt; Stripe
+        // already sends its own.)
+        return NextResponse.json({ received: true });
+      }
+
+      // EFC membership purchase (the existing path)
       const applicationId = session.metadata?.application_id || null;
 
       if (supabase) {

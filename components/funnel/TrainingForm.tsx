@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 type Mode = "upcoming" | "replay" | "between";
 
@@ -17,6 +18,7 @@ export function TrainingForm({
   variant?: "modal" | "inline";
   fullWidth?: boolean;
 }) {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -61,6 +63,16 @@ export function TrainingForm({
         throw new Error(data?.error || "Couldn't reserve. Try again.");
       }
       setStatus("sent");
+
+      // For upcoming + replay modes, route the new registrant straight to
+      // the VIP upgrade page. "between" mode has nothing to upgrade to.
+      if (mode === "upcoming" || mode === "replay") {
+        const params = new URLSearchParams({ email });
+        if (name) params.set("name", name);
+        setTimeout(() => {
+          router.push(`/training/upgrade?${params.toString()}`);
+        }, 700);
+      }
     } catch (err: unknown) {
       const msg =
         err instanceof Error ? err.message : "Couldn't reserve. Try again.";
