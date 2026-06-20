@@ -50,7 +50,7 @@ export default async function TrainingPage() {
 
   return (
     <>
-      <main className="pb-[100px] md:pb-0">
+      <main className="pb-[120px]">
         {/* HERO — FOREST */}
         <section className="relative bg-forest text-ivory overflow-hidden">
           <div className="container-page pt-8 sm:pt-10 md:pt-12 pb-10 md:pb-12">
@@ -229,7 +229,12 @@ export default async function TrainingPage() {
         </section>
       </main>
       <FunnelFooter />
-      <StickyTrainingCTA mode={mode} ctaLabel={ctaLabel} helperText={helperText} />
+      <StickyTrainingCTA
+        mode={mode}
+        ctaLabel={ctaLabel}
+        ctaSubline={ctaSubline}
+        helperText={helperText}
+      />
     </>
   );
 }
