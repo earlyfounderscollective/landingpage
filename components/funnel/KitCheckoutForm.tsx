@@ -94,7 +94,7 @@ export function KitCheckoutForm({
         className="mt-5 flex flex-col w-full items-center justify-center rounded-full bg-brass text-ivory px-6 py-[16px] shadow-[0_22px_50px_-18px_rgba(155,122,74,0.7)] hover:bg-[#8a6c3f] transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
       >
         <span className="text-[14.5px] sm:text-[15px] font-semibold tracking-[0.04em] uppercase leading-tight">
-          {loading ? "Loading checkout…" : "Get the kit"}
+          {loading ? "Loading checkout…" : "Get Build Your Business Kit"}
         </span>
         <span className="mt-1 text-[11.5px] tracking-[0.16em] uppercase text-ivory/85 leading-tight">
           ${totalCents / 100} · One-time

@@ -288,7 +288,7 @@ function KitPitchCard({ withTitle = true }: { withTitle?: boolean }) {
         </h3>
       )}
       <p className="mt-4 text-[15px] md:text-[16px] leading-[1.65] text-ivory/80">
-        The Build Your Business Kit is everything we just walked through —
+        Build Your Business Kit is everything we just walked through —
         the worksheets, templates, and the AI prompts I use, in one place.
         Yours to keep. $47 for the next 48 hours, $97 after that.
       </p>
@@ -296,7 +296,7 @@ function KitPitchCard({ withTitle = true }: { withTitle?: boolean }) {
         href="/kit"
         className="mt-7 inline-flex items-center justify-center rounded-full bg-brass text-ivory text-[14.5px] font-semibold tracking-[0.04em] uppercase px-8 py-[15px] hover:bg-[#8a6c3f] transition-colors"
       >
-        Get the kit →
+        Get Build Your Business Kit →
       </Link>
     </div>
   );

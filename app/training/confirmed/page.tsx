@@ -80,7 +80,7 @@ export default async function TrainingConfirmedPage({
                   className="block bg-brass text-ivory text-center py-5 px-6 rounded-2xl shadow-[0_22px_50px_-18px_rgba(155,122,74,0.6)] hover:bg-[#8a6c3f] transition-colors"
                 >
                   <p className="font-semibold text-[13px] md:text-[14px] tracking-[0.12em] uppercase">
-                    Want to go deeper? Get the kit.
+                    Want to go deeper? Get Build Your Business Kit.
                   </p>
                   <p className="mt-1 text-[12px] tracking-[0.1em] uppercase text-ivory/85">
                     Add to my order now →
@@ -220,6 +220,27 @@ export default async function TrainingConfirmedPage({
                     </div>
                   )}
                 </>
+              )}
+
+              {/* Kit pitch for everyone after training */}
+              {(mode === "replay" || mode === "between") && (
+                <div className="mt-12 bg-forest text-ivory rounded-2xl p-6 md:p-7 text-center">
+                  <p className="text-[11px] font-semibold tracking-[0.22em] uppercase text-brass">
+                    Next step
+                  </p>
+                  <p className="mt-3 font-serif text-[18px] md:text-[20px] leading-[1.3] text-ivory">
+                    Take what you just learned and run with it.
+                  </p>
+                  <p className="mt-3 text-[14px] text-ivory/75 leading-[1.55]">
+                    Build Your Business Kit has the worksheets, templates, and AI prompts to set up the business in a weekend.
+                  </p>
+                  <Link
+                    href={`/kit${email ? `?email=${encodeURIComponent(email)}` : ""}`}
+                    className="mt-5 inline-flex items-center justify-center rounded-full bg-brass text-ivory px-7 py-3 text-[13.5px] font-semibold tracking-[0.04em] uppercase hover:bg-[#8a6c3f] transition-colors"
+                  >
+                    Get Build Your Business Kit →
+                  </Link>
+                </div>
               )}
 
               <p className="mt-14 font-serif italic text-[17px] text-forest/80 text-center">

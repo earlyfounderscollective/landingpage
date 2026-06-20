@@ -50,15 +50,15 @@ export default async function KitPage({
           <div className="container-page pt-[120px] sm:pt-[140px] md:pt-[160px] pb-12 md:pb-16">
             <div className="max-w-[760px] mx-auto text-center">
               <p className="text-[11px] sm:text-[12px] font-semibold uppercase tracking-[0.28em] text-brass">
-                The Build Your Business Kit
+                One-time digital kit
               </p>
 
               <h1 className="mt-6 sm:mt-7 font-serif text-ivory">
-                <span className="block text-[30px] sm:text-[40px] md:text-[50px] lg:text-[54px] leading-[1.06] tracking-[-0.018em]">
-                  Set up the business side of your side hustle.
+                <span className="block text-[34px] sm:text-[46px] md:text-[58px] lg:text-[64px] leading-[1.04] tracking-[-0.022em]">
+                  Build Your Business Kit
                 </span>
-                <span className="block hand text-[40px] sm:text-[54px] md:text-[62px] leading-[0.95] text-brass mt-3 -rotate-[2deg]">
-                  in a weekend.
+                <span className="block hand text-[38px] sm:text-[48px] md:text-[56px] leading-[0.95] text-brass mt-4 -rotate-[2deg]">
+                  set up the business in a weekend.
                 </span>
               </h1>
 
@@ -253,7 +253,7 @@ export default async function KitPage({
           <div className="container-page">
             <div className="max-w-[540px] mx-auto text-center">
               <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-brass">
-                Get the kit
+                Get Build Your Business Kit
               </p>
               <h2 className="mt-5 font-serif text-[28px] md:text-[36px] leading-[1.15] tracking-[-0.018em] text-ivory">
                 Start the weekend with one. Finish it with a real business.
