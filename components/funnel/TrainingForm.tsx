@@ -8,12 +8,14 @@ type Mode = "upcoming" | "replay" | "between";
 export function TrainingForm({
   mode,
   ctaLabel,
+  ctaSubline,
   helperText,
   variant = "modal",
   fullWidth = false,
 }: {
   mode: Mode;
   ctaLabel: string;
+  ctaSubline?: string;
   helperText?: string;
   variant?: "modal" | "inline";
   fullWidth?: boolean;
@@ -154,11 +156,18 @@ export function TrainingForm({
           onClick={() => setOpen(true)}
           className={
             fullWidth
-              ? "flex w-full items-center justify-center rounded-full bg-brass text-ivory text-[14.5px] font-medium tracking-[0.02em] py-[15px] shadow-[0_18px_40px_-16px_rgba(155,122,74,0.55)] hover:bg-[#8a6c3f] transition-all duration-300"
-              : "inline-flex items-center justify-center rounded-full bg-brass text-ivory text-[14px] sm:text-[15px] font-medium tracking-[0.02em] px-10 sm:px-12 py-4 sm:py-[18px] shadow-[0_18px_40px_-16px_rgba(155,122,74,0.55)] hover:bg-[#8a6c3f] hover:-translate-y-[1px] transition-all duration-300"
+              ? "flex flex-col w-full items-center justify-center rounded-2xl bg-brass text-ivory px-6 py-4 shadow-[0_18px_40px_-16px_rgba(155,122,74,0.55)] hover:bg-[#8a6c3f] transition-all duration-300"
+              : "inline-flex flex-col items-center justify-center rounded-2xl bg-brass text-ivory px-8 sm:px-12 py-4 sm:py-[18px] shadow-[0_22px_50px_-18px_rgba(155,122,74,0.7)] hover:bg-[#8a6c3f] hover:-translate-y-[1px] transition-all duration-300 max-w-full"
           }
         >
-          {ctaLabel}
+          <span className="text-[14.5px] sm:text-[15px] font-semibold tracking-[0.04em] uppercase leading-tight">
+            {ctaLabel}
+          </span>
+          {ctaSubline && (
+            <span className="mt-1 text-[11px] sm:text-[11.5px] tracking-[0.16em] uppercase text-ivory/85 leading-tight">
+              {ctaSubline}
+            </span>
+          )}
         </button>
 
         {open && (
