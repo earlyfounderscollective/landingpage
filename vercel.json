@@ -7,6 +7,10 @@
     {
       "path": "/api/cron/checklist-drips",
       "schedule": "0 15 * * *"
+    },
+    {
+      "path": "/api/cron/training-drips",
+      "schedule": "0 * * * *"
     }
   ]
 }

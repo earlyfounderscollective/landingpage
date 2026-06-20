@@ -18,15 +18,14 @@ export function AdminGate({ children }: { children: React.ReactNode }) {
             Early Founders · Admin
           </Link>
           <nav className="flex items-center gap-6 text-[13px]">
+            <Link href="/admin" className="hover:text-brass">
+              Overview
+            </Link>
             <Link href="/admin/training" className="hover:text-brass">
               Training
             </Link>
-            <Link
-              href="/admin/sequences"
-              className="hover:text-brass opacity-50 cursor-not-allowed pointer-events-none"
-              aria-disabled="true"
-            >
-              Sequences
+            <Link href="/admin/applications" className="hover:text-brass">
+              Applications
             </Link>
             <form action="/api/admin/logout" method="POST">
               <button type="submit" className="hover:text-brass">

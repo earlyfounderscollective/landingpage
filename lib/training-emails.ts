@@ -44,6 +44,119 @@ function escapeHtml(s: string): string {
     .replace(/'/g, "&#39;");
 }
 
+const H1 = (text: string) =>
+  `<h1 style="font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:30px;line-height:1.18;color:#23352D;margin:0 0 24px 0;letter-spacing:-0.015em;">${text}</h1>`;
+
+const P = (text: string, last = false) =>
+  `<p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;color:rgba(17,17,17,0.78);margin:0 0 ${last ? "28px" : "16px"} 0;line-height:1.65;">${text}</p>`;
+
+const BTN = (href: string, label: string) =>
+  `<div style="margin:8px 0 32px 0;"><a href="${href}" style="display:inline-block;background:#23352D;color:#F7F2EA;font-family:ui-sans-serif,system-ui,sans-serif;font-size:13.5px;font-weight:500;letter-spacing:0.02em;text-decoration:none;padding:14px 26px;border-radius:9999px;">${label}</a></div>`;
+
+const SIG = `<p style="font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:17px;color:rgba(35,53,45,0.85);margin:0;">Oge</p>`;
+
+function firstOf(name: string): string {
+  return name ? escapeHtml(name.trim().split(/\s+/)[0]) : "";
+}
+
+async function send(to: string, subject: string, html: string) {
+  const c = client();
+  if (!c) return { skipped: true as const };
+  return c.emails.send({
+    from: `Early Founders Collective <${env.resendFromEmail}>`,
+    to,
+    subject,
+    html,
+  });
+}
+
+// ─────────────────────────────────────────────────────────
+// 24-hour reminder (sent ~24h before starts_at)
+// ─────────────────────────────────────────────────────────
+export async function sendTraining24hReminder(
+  email: string,
+  name: string,
+  event: TrainingEvent,
+) {
+  const first = firstOf(name);
+  const dateLine = formatTrainingDateLine(event);
+  const subject = first ? `Tomorrow, ${first}` : "Tomorrow";
+  const inner = `
+    ${H1(first ? `Hey ${first},` : "Hey,")}
+    ${P("Quick reminder — the training is tomorrow.")}
+    ${P(`<strong style="color:#23352D;">${escapeHtml(dateLine)}</strong>`)}
+    ${event.zoom_url ? `${P("Same Zoom link from your confirmation email — pasting it here so you don't have to dig:")}${P(`<a href="${event.zoom_url}" style="color:#23352D;text-decoration:underline;">${escapeHtml(event.zoom_url)}</a>`, true)}` : P("Show up live if you can. The replay window is 48 hours unless you've gone VIP.", true)}
+    ${BTN(`${env.siteUrl}/training/watch?email=${encodeURIComponent(email)}`, "Open the training room")}
+    ${SIG}
+  `;
+  return send(email, subject, wrap(inner));
+}
+
+// ─────────────────────────────────────────────────────────
+// 1-hour pre-event reminder
+// ─────────────────────────────────────────────────────────
+export async function sendTraining1hReminder(
+  email: string,
+  name: string,
+  event: TrainingEvent,
+) {
+  const first = firstOf(name);
+  const subject = first ? `Starting in an hour, ${first}` : "Starting in an hour";
+  const inner = `
+    ${H1("In an hour.")}
+    ${P("The training starts in about 60 minutes. Pour the coffee.")}
+    ${event.zoom_url ? P(`<a href="${event.zoom_url}" style="color:#23352D;text-decoration:underline;font-weight:500;">${escapeHtml(event.zoom_url)}</a>`, true) : ""}
+    ${BTN(`${env.siteUrl}/training/watch?email=${encodeURIComponent(email)}`, "Open the training room")}
+    ${P("Doors open 30 min before start.", true)}
+    ${SIG}
+  `;
+  return send(email, subject, wrap(inner));
+}
+
+// ─────────────────────────────────────────────────────────
+// Replay delivery (sent ~30 min after event ends)
+// ─────────────────────────────────────────────────────────
+export async function sendTrainingReplayDelivery(
+  email: string,
+  name: string,
+  event: TrainingEvent,
+  isVip: boolean,
+) {
+  const first = firstOf(name);
+  const subject = first ? `Replay's up, ${first}` : "Replay's up";
+  const replayHref = event.replay_url || `${env.siteUrl}/training/watch?email=${encodeURIComponent(email)}`;
+  const inner = `
+    ${H1("The replay is ready.")}
+    ${P(isVip ? "As a VIP, your replay is permanent. Come back to it anytime." : "Free access for the next 48 hours. After that the link closes.")}
+    ${BTN(replayHref, "Watch the replay")}
+    ${!isVip ? P(`<a href="${env.siteUrl}/training/upgrade?email=${encodeURIComponent(email)}" style="color:#23352D;text-decoration:underline;">Want lifetime access?</a> Upgrade to VIP for $17.`) : ""}
+    ${P("If you couldn't make it live, watching is still worth your time. The first 25 minutes are the part most people quote back to me later.", true)}
+    ${SIG}
+  `;
+  return send(email, subject, wrap(inner));
+}
+
+// ─────────────────────────────────────────────────────────
+// Kit pitch (sent 24h after event ends — for everyone)
+// ─────────────────────────────────────────────────────────
+export async function sendTrainingKitPitch(
+  email: string,
+  name: string,
+) {
+  const first = firstOf(name);
+  const subject = first ? `${first}, next step` : "Next step";
+  const inner = `
+    ${H1(first ? `${first},` : "Hey,")}
+    ${P("You've watched the training. The hardest part of building a real business isn't the theory — it's the boring setup work that nobody talks about.")}
+    ${P("Build Your Business Kit is what I'd hand you if you were sitting next to me. Six modules. Worksheets, templates, AI prompts. Most people get the offer, pricing, and entity setup done in a weekend.")}
+    ${P("Because you attended the training, you get it for $47 instead of $97. That's about as close to free as I can make it without giving it away.", true)}
+    ${BTN(`${env.siteUrl}/kit?email=${encodeURIComponent(email)}`, "Get the kit — $47")}
+    ${P("This price is only because you showed up to the training. The page will charge full price for everyone else.", true)}
+    ${SIG}
+  `;
+  return send(email, subject, wrap(inner));
+}
+
 export async function sendTrainingRegistrationEmail(
   email: string,
   name: string,
