@@ -12,7 +12,10 @@ const links = [
   { href: "/#faq", label: "FAQ" },
 ];
 
-export function Header({ tone = "light" }: { tone?: "light" | "dark" } = {}) {
+export function Header({
+  tone = "light",
+  minimal = false,
+}: { tone?: "light" | "dark"; minimal?: boolean } = {}) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const useDark = tone === "dark" && !scrolled;
@@ -44,50 +47,55 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" } = {}) {
             : "bg-transparent border-b border-transparent"
         }`}
       >
-        <div className="container-page relative flex h-[96px] md:h-[112px] items-center justify-center sm:justify-between">
+        <div className={`container-page relative flex h-[96px] md:h-[112px] items-center ${minimal ? "justify-center" : "justify-center sm:justify-between"}`}>
           <Wordmark size="small" tone={useDark ? "ivory" : "ink"} />
 
-          <nav className="hidden lg:flex items-center gap-9">
-            {links.map((l) => (
+          {!minimal && (
+            <>
+              <nav className="hidden lg:flex items-center gap-9">
+                {links.map((l) => (
+                  <Link
+                    key={l.href}
+                    href={l.href}
+                    className={`text-[13.5px] font-medium tracking-[0.01em] transition-colors ${
+                      useDark
+                        ? "text-ivory/75 hover:text-ivory"
+                        : "text-forest/75 hover:text-forest"
+                    }`}
+                  >
+                    {l.label}
+                  </Link>
+                ))}
+              </nav>
+
               <Link
-                key={l.href}
-                href={l.href}
-                className={`text-[13.5px] font-medium tracking-[0.01em] transition-colors ${
+                href="/apply"
+                className={`hidden sm:inline-flex items-center rounded-full text-[13px] font-medium tracking-[0.02em] px-6 py-2.5 transition-all duration-500 ease-editorial ${
                   useDark
-                    ? "text-ivory/75 hover:text-ivory"
-                    : "text-forest/75 hover:text-forest"
+                    ? "bg-brass text-ivory hover:bg-[#8a6c3f]"
+                    : "bg-forest text-ivory hover:bg-ink"
                 }`}
               >
-                {l.label}
+                Apply
               </Link>
-            ))}
-          </nav>
 
-          <Link
-            href="/apply"
-            className={`hidden sm:inline-flex items-center rounded-full text-[13px] font-medium tracking-[0.02em] px-6 py-2.5 transition-all duration-500 ease-editorial ${
-              useDark
-                ? "bg-brass text-ivory hover:bg-[#8a6c3f]"
-                : "bg-forest text-ivory hover:bg-ink"
-            }`}
-          >
-            Apply
-          </Link>
-
-          <button
-            type="button"
-            aria-label="Open menu"
-            aria-expanded={open}
-            onClick={() => setOpen(true)}
-            className="lg:hidden absolute right-6 md:right-10 top-1/2 -translate-y-1/2 sm:static sm:translate-y-0 sm:ml-3 h-10 w-10 inline-flex flex-col items-center justify-center gap-1.5"
-          >
-            <span className={`block h-[1.5px] w-5 ${useDark ? "bg-ivory" : "bg-forest"}`} />
-            <span className={`block h-[1.5px] w-5 ${useDark ? "bg-ivory" : "bg-forest"}`} />
-          </button>
+              <button
+                type="button"
+                aria-label="Open menu"
+                aria-expanded={open}
+                onClick={() => setOpen(true)}
+                className="lg:hidden absolute right-6 md:right-10 top-1/2 -translate-y-1/2 sm:static sm:translate-y-0 sm:ml-3 h-10 w-10 inline-flex flex-col items-center justify-center gap-1.5"
+              >
+                <span className={`block h-[1.5px] w-5 ${useDark ? "bg-ivory" : "bg-forest"}`} />
+                <span className={`block h-[1.5px] w-5 ${useDark ? "bg-ivory" : "bg-forest"}`} />
+              </button>
+            </>
+          )}
         </div>
       </header>
 
       {/* Mobile menu — full-screen overlay above all page content */}
+      {!minimal && (
       <div
         className={`lg:hidden fixed inset-0 z-[100] bg-ivory transition-all duration-500 ease-editorial ${
           open
@@ -138,6 +146,7 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" } = {}) {
           </div>
         </div>
       </div>
+      )}
     </>
   );
 }

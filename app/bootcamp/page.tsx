@@ -36,7 +36,7 @@ export default async function BootcampPage({
 
   return (
     <>
-      <Header tone="dark" />
+      <Header tone="dark" minimal />
       <main>
         {/* HERO */}
         <section className="bg-forest text-ivory pt-28 md:pt-36 pb-20 md:pb-24 relative overflow-hidden">
