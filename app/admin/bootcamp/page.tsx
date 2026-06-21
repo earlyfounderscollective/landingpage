@@ -53,6 +53,7 @@ export default async function AdminBootcampPage() {
             priceCents: config.priceCents,
             originalPriceCents: config.originalPriceCents,
             isOpen: config.isOpen,
+            videoUrl: config.videoUrl ?? "",
           }}
         />
 

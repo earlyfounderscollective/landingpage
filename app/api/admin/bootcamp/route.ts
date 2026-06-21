@@ -27,6 +27,10 @@ export async function POST(req: Request) {
     Math.round(Number(body.original_price_cents ?? 0)),
   );
   const is_open = body.is_open === true;
+  const video_url =
+    typeof body.video_url === "string" && body.video_url.trim()
+      ? body.video_url.trim().slice(0, 500)
+      : null;
 
   if (!cohort_label) {
     return NextResponse.json({ error: "Label required" }, { status: 400 });
@@ -55,6 +59,7 @@ export async function POST(req: Request) {
     price_cents,
     original_price_cents,
     is_open,
+    video_url,
     updated_at: new Date().toISOString(),
   };
 

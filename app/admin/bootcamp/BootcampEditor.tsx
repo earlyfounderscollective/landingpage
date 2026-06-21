@@ -9,6 +9,7 @@ type Initial = {
   priceCents: number;
   originalPriceCents: number;
   isOpen: boolean;
+  videoUrl: string;
 };
 
 export function BootcampEditor({ initial }: { initial: Initial }) {
@@ -19,6 +20,7 @@ export function BootcampEditor({ initial }: { initial: Initial }) {
     priceDollars: String(initial.priceCents / 100),
     originalPriceDollars: String(initial.originalPriceCents / 100),
     isOpen: initial.isOpen,
+    videoUrl: initial.videoUrl,
   });
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState<{ kind: "ok" | "err"; text: string } | null>(null);
@@ -40,6 +42,7 @@ export function BootcampEditor({ initial }: { initial: Initial }) {
           price_cents: Math.round(Number(data.priceDollars) * 100),
           original_price_cents: Math.round(Number(data.originalPriceDollars) * 100),
           is_open: data.isOpen,
+          video_url: data.videoUrl.trim() || null,
         }),
       });
       if (res.ok) {
@@ -106,6 +109,20 @@ export function BootcampEditor({ initial }: { initial: Initial }) {
           <Hint>Shown struck-through next to the sale price.</Hint>
         </Field>
       </div>
+
+      <Field label="Hero video URL (optional)">
+        <input
+          type="url"
+          value={data.videoUrl}
+          onChange={(e) => set("videoUrl", e.target.value)}
+          className={inputCls}
+          placeholder="https://www.youtube.com/watch?v=… or Vimeo / Loom / direct mp4"
+        />
+        <Hint>
+          Paste a YouTube, Vimeo, Loom, or mp4 URL — it'll embed under the
+          hero subhead. Leave blank to hide the slot.
+        </Hint>
+      </Field>
 
       <label className="flex items-center gap-3 cursor-pointer">
         <input

@@ -4,11 +4,11 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { VideoReviews } from "@/components/site/VideoReviews";
 import { FAQAccordion } from "@/components/funnel/FAQAccordion";
+import { VSLEmbed } from "@/components/funnel/VSLEmbed";
 import { getBootcampConfig, formatCohortDate } from "@/lib/bootcamp";
 import { CheckoutButton } from "./CheckoutButton";
 import { BrushUnderline } from "@/components/bootcamp/BrushUnderline";
 import { HeroGradientField, SwooshDivider } from "@/components/bootcamp/GradientSwoosh";
-import { TrustStrip } from "@/components/bootcamp/TrustStrip";
 import { FoundationGlyph } from "@/components/bootcamp/FoundationGlyph";
 
 export const metadata: Metadata = {
@@ -66,45 +66,45 @@ export default async function BootcampPage({
                 or we work with you until it's built.
               </p>
 
-              <p className="mt-8 max-w-[660px] mx-auto text-[16.5px] md:text-[18px] leading-[1.7] text-ivory/78">
-                A guided cohort program for{" "}
-                <span className="text-ivory font-medium">photographers</span>,{" "}
-                <span className="text-ivory font-medium">painters</span>,{" "}
-                <span className="text-ivory font-medium">event planners</span>,{" "}
-                <span className="text-ivory font-medium">consultants</span>,{" "}
-                <span className="text-ivory font-medium">creators</span>, and{" "}
-                <span className="text-ivory font-medium">service providers</span>{" "}
-                ready to stop treating their side hustle like a hobby.
+              <p className="mt-9 max-w-[680px] mx-auto text-[16.5px] md:text-[18px] leading-[1.7] text-ivory/78">
+                A 4-week guided program designed to help you turn your skill,
+                side hustle, or business idea into a legitimate business that's
+                structured, professional, and ready to grow.
               </p>
 
-              {/* CTA + pricing */}
-              <div className="mt-11">
+              {/* Video slot */}
+              <div className="mt-12 max-w-[780px] mx-auto">
+                <VSLEmbed url={config.videoUrl} />
+              </div>
+
+              {/* Pricing line above CTA — sets the value before the button */}
+              <div className="mt-12 inline-flex items-baseline gap-3 flex-wrap justify-center">
+                <span className="text-[11.5px] font-semibold tracking-[0.26em] uppercase text-ivory/55">
+                  Investment
+                </span>
+                <span className="font-serif text-[26px] text-ivory/45 line-through tabular-nums">
+                  {originalLabel}
+                </span>
+                <span className="font-serif text-[34px] md:text-[40px] text-brass tabular-nums leading-none">
+                  {priceLabel}
+                </span>
+              </div>
+
+              {/* CTA */}
+              <div className="mt-7 flex justify-center">
                 <CheckoutButton
                   source={source}
                   label="Join Founders Foundation"
+                  accent
+                  size="large"
                 />
-                <div className="mt-6 inline-flex items-baseline gap-3 flex-wrap justify-center">
-                  <span className="text-[12px] font-semibold tracking-[0.22em] uppercase text-ivory/55">
-                    Investment
-                  </span>
-                  <span className="font-serif text-[26px] text-ivory/45 line-through tabular-nums">
-                    {originalLabel}
-                  </span>
-                  <span className="font-serif text-[32px] md:text-[36px] text-brass tabular-nums">
-                    {priceLabel}
-                  </span>
-                </div>
-                {config.cohortLabel && (
-                  <p className="mt-5 text-[12px] text-ivory/55 tracking-[0.18em] uppercase">
-                    {config.cohortLabel}
-                  </p>
-                )}
               </div>
 
-              {/* Trust strip */}
-              <div className="mt-12 flex justify-center">
-                <TrustStrip tone="dark" />
-              </div>
+              {config.cohortLabel && (
+                <p className="mt-7 text-[12px] text-ivory/55 tracking-[0.22em] uppercase">
+                  {config.cohortLabel}
+                </p>
+              )}
             </div>
           </div>
         </section>
@@ -565,11 +565,11 @@ export default async function BootcampPage({
             <div className="max-w-[760px] mx-auto">
               <div className="text-center mb-12">
                 <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-brass mb-4">
-                  Frequently asked
+                  Before you join
                 </p>
                 <h2 className="font-serif text-[36px] md:text-[44px] leading-[1.08] tracking-[-0.018em] text-forest">
-                  Stuff we{" "}
-                  <BrushUnderline color="#9B7A4A">get asked.</BrushUnderline>
+                  Common questions,{" "}
+                  <BrushUnderline color="#9B7A4A">honest answers.</BrushUnderline>
                 </h2>
               </div>
               <FAQAccordion

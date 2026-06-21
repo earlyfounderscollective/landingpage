@@ -6,10 +6,12 @@ export function CheckoutButton({
   source,
   label,
   accent,
+  size = "default",
 }: {
   source: string;
   label: string;
   accent?: boolean;
+  size?: "default" | "large";
 }) {
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState("");
@@ -49,17 +51,23 @@ export function CheckoutButton({
   }
 
   if (!showForm) {
+    const padX = size === "large" ? "px-10 md:px-12" : "px-8";
+    const padY = size === "large" ? "py-5" : "py-4";
+    const text = size === "large" ? "text-[14.5px] md:text-[15px]" : "text-[13.5px]";
     return (
       <button
         type="button"
         onClick={() => setShowForm(true)}
-        className={`inline-flex items-center justify-center px-8 py-4 rounded-full text-[13.5px] font-semibold tracking-[0.06em] uppercase transition-colors shadow-[0_22px_50px_-18px_rgba(155,122,74,0.65)] ${
+        className={`inline-flex items-center justify-center gap-2.5 ${padX} ${padY} rounded-full ${text} font-semibold tracking-[0.08em] uppercase transition-all shadow-[0_28px_60px_-20px_rgba(155,122,74,0.75)] hover:-translate-y-0.5 hover:shadow-[0_32px_70px_-20px_rgba(155,122,74,0.9)] ${
           accent
             ? "bg-brass text-ivory hover:bg-[#8a6c3f]"
             : "bg-brass text-ivory hover:bg-[#8a6c3f]"
         }`}
       >
-        {label}
+        <span>{label}</span>
+        <span aria-hidden className="text-[18px] leading-none">
+          →
+        </span>
       </button>
     );
   }
@@ -67,7 +75,7 @@ export function CheckoutButton({
   return (
     <form
       onSubmit={onSubmit}
-      className="max-w-[440px] mx-auto bg-ivory rounded-2xl p-6 border border-line/60 shadow-[0_18px_50px_-25px_rgba(35,53,45,0.35)] text-left space-y-3"
+      className="max-w-[440px] mx-auto bg-ivory rounded-2xl p-6 border border-line/60 shadow-[0_28px_60px_-20px_rgba(35,53,45,0.45)] text-left space-y-3"
     >
       <p className="text-[11px] font-semibold tracking-[0.22em] uppercase text-brass">
         Reserve your seat
