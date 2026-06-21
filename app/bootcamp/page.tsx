@@ -62,7 +62,7 @@ export default async function BootcampPage({
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-brass" />
                 </span>
                 <span className="text-[11px] font-semibold tracking-[0.26em] uppercase text-brass">
-                  Attention founders & side hustlers
+                  The foundation starts here
                 </span>
               </div>
 
