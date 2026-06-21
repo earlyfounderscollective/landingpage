@@ -30,6 +30,9 @@ export function AdminGate({ children }: { children: React.ReactNode }) {
             <Link href="/admin/applications" className="hover:text-brass">
               Applications
             </Link>
+            <Link href="/admin/images" className="hover:text-brass">
+              Images
+            </Link>
             <form action="/api/admin/logout" method="POST">
               <button type="submit" className="hover:text-brass">
                 Sign out

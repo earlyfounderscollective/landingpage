@@ -30,4 +30,8 @@ export const env = {
   // Password for the /admin/* pages. Set in Vercel env. If unset, admin
   // routes refuse to log anyone in.
   adminPassword: optional("ADMIN_PASSWORD"),
+
+  // OpenAI API key — used by /api/admin/images/generate. If unset, the
+  // image generator route refuses to run.
+  openaiApiKey: optional("OPENAI_API_KEY"),
 };

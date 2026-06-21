@@ -6,6 +6,7 @@ import { VideoReviews } from "@/components/site/VideoReviews";
 import { FAQAccordion } from "@/components/funnel/FAQAccordion";
 import { VSLEmbed } from "@/components/funnel/VSLEmbed";
 import { getBootcampConfig, formatCohortDate } from "@/lib/bootcamp";
+import { getImageSlot } from "@/lib/ai-images";
 import { CheckoutButton } from "./CheckoutButton";
 import { BrushUnderline } from "@/components/bootcamp/BrushUnderline";
 import { HeroGradientField, SwooshDivider } from "@/components/bootcamp/GradientSwoosh";
@@ -25,7 +26,10 @@ export default async function BootcampPage({
   searchParams: { source?: string };
 }) {
   const source = searchParams.source ?? "direct";
-  const config = await getBootcampConfig();
+  const [config, heroImage] = await Promise.all([
+    getBootcampConfig(),
+    getImageSlot("bootcamp.hero"),
+  ]);
   const priceLabel = `$${(config.priceCents / 100).toLocaleString()}`;
   const originalLabel = `$${(config.originalPriceCents / 100).toLocaleString()}`;
   const cohortDate = formatCohortDate(config.cohortStartDate);
@@ -36,7 +40,19 @@ export default async function BootcampPage({
       <main>
         {/* HERO */}
         <section className="bg-forest text-ivory pt-28 md:pt-36 pb-20 md:pb-24 relative overflow-hidden">
-          <HeroGradientField />
+          {heroImage ? (
+            <div className="absolute inset-0 pointer-events-none">
+              <img
+                src={heroImage}
+                alt=""
+                aria-hidden
+                className="absolute inset-0 w-full h-full object-cover opacity-40"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-forest/65 via-forest/55 to-forest/85" />
+            </div>
+          ) : (
+            <HeroGradientField />
+          )}
           <div className="container-page relative">
             <div className="max-w-[920px] mx-auto text-center">
               {/* Pill badge */}
@@ -58,13 +74,6 @@ export default async function BootcampPage({
                 </span>{" "}
                 in 4 weeks.
               </h1>
-
-              <p
-                className="mt-7 font-handwritten text-brass text-[26px] md:text-[32px] leading-[1.2] -rotate-[1.5deg]"
-                style={{ fontFamily: "'Caveat', 'Kalam', cursive" }}
-              >
-                or we work with you until it's built.
-              </p>
 
               <p className="mt-9 max-w-[680px] mx-auto text-[16.5px] md:text-[18px] leading-[1.7] text-ivory/78">
                 A 4-week guided program designed to help you turn your skill,
@@ -564,12 +573,8 @@ export default async function BootcampPage({
           <div className="container-page">
             <div className="max-w-[760px] mx-auto">
               <div className="text-center mb-12">
-                <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-brass mb-4">
-                  Before you join
-                </p>
-                <h2 className="font-serif text-[36px] md:text-[44px] leading-[1.08] tracking-[-0.018em] text-forest">
-                  Common questions,{" "}
-                  <BrushUnderline color="#9B7A4A">honest answers.</BrushUnderline>
+                <h2 className="font-serif text-[36px] md:text-[44px] leading-[1.08] tracking-[-0.02em] text-forest">
+                  FAQ
                 </h2>
               </div>
               <FAQAccordion
