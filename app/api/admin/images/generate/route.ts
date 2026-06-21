@@ -69,8 +69,17 @@ export async function POST(req: Request) {
     if (!r.ok) {
       const errText = await r.text();
       console.error("OpenAI error:", errText);
+      // Try to surface OpenAI's actual reason — invaluable for debugging
+      // (rate limits, billing, content policy, model access, etc.)
+      let detail = errText;
+      try {
+        const parsed = JSON.parse(errText);
+        detail = parsed?.error?.message || parsed?.error?.code || errText;
+      } catch {
+        /* keep raw text */
+      }
       return NextResponse.json(
-        { error: "OpenAI rejected the request. Check the prompt." },
+        { error: `OpenAI: ${detail}` },
         { status: 502 },
       );
     }
