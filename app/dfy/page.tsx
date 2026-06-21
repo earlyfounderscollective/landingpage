@@ -214,28 +214,30 @@ export default function DFYPage() {
         <section className="bg-ivory py-20 md:py-24">
           <div className="container-page">
             <div className="max-w-[820px] mx-auto text-center">
-              <div className="inline-block mb-8">
+              <div className="mb-9 inline-block relative">
+                <div className="absolute -inset-3 bg-brass/20 rounded-2xl blur-xl" aria-hidden />
                 <Image
-                  src="/founder-portrait.jpg"
-                  alt="Oge Madu"
-                  width={140}
-                  height={140}
-                  className="rounded-full border-2 border-brass shadow-[0_18px_40px_-16px_rgba(35,53,45,0.35)]"
+                  src="/media/speaking.jpg"
+                  alt="Oge Madu speaking"
+                  width={420}
+                  height={520}
+                  className="relative rounded-2xl object-cover shadow-[0_30px_70px_-25px_rgba(35,53,45,0.45)]"
+                  style={{ aspectRatio: "4/5", maxHeight: "520px", width: "auto" }}
                 />
               </div>
               <p className="text-[11px] font-semibold tracking-[0.26em] uppercase text-brass mb-4">
                 Who you're working with
               </p>
               <h3 className="font-serif text-[26px] md:text-[30px] leading-[1.2] tracking-[-0.012em] text-forest">
-                Led by Oge Madu. Backed by Early Founders Collective.
+                You're not working alone.
               </h3>
               <p className="mt-6 text-[16.5px] leading-[1.7] text-ink/72">
-                We've helped founders launch repainting companies, photography
-                studios, supplement brands, hair care lines, and event services
-                — most of them while working another job. The pattern is the
-                same every time: the people who win pick one offer, charge what
-                it's worth, and talk to ten people a day. We'll help you do
-                that.
+                Oge Madu leads our team out of Houston. We've helped founders
+                launch repainting companies, photography studios, supplement
+                brands, hair care lines, and event services — most of them
+                while working another job. The pattern is the same every time:
+                the people who win pick one offer, charge what it's worth, and
+                talk to ten people a day. We'll help you do that.
               </p>
             </div>
           </div>

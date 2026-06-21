@@ -73,6 +73,52 @@ export async function POST(req: Request) {
         return NextResponse.json({ received: true });
       }
 
+      // Bootcamp purchase
+      if (metaType === "bootcamp_order") {
+        if (supabase && email) {
+          await supabase.from("bootcamp_orders").insert({
+            email,
+            full_name: session.metadata?.name || null,
+            cohort: session.metadata?.cohort || null,
+            amount_cents: session.amount_total ?? 49_700,
+            stripe_session_id: session.id,
+            stripe_payment_intent_id:
+              typeof session.payment_intent === "string"
+                ? session.payment_intent
+                : session.payment_intent?.id ?? null,
+            source: session.metadata?.source || null,
+            status: "completed",
+          });
+
+          // Bootcamp buyers get full kit access — seed a kit_orders row so
+          // they pass the isKitBuyer check, then email them the access link.
+          const { data: existingKit } = await supabase
+            .from("kit_orders")
+            .select("id")
+            .eq("email", email)
+            .limit(1)
+            .maybeSingle();
+
+          if (!existingKit) {
+            await supabase.from("kit_orders").insert({
+              email,
+              full_name: session.metadata?.name || null,
+              amount_cents: 0,
+              status: "completed",
+              source: "bootcamp",
+            });
+          }
+
+          const token = await createMagicToken(email);
+          if (token) {
+            const magicLink = `${env.siteUrl}/api/kit/access/verify?token=${token}`;
+            const name = session.metadata?.name || session.customer_details?.name || "";
+            await sendKitWelcomeEmail(email, name, magicLink).catch(() => null);
+          }
+        }
+        return NextResponse.json({ received: true });
+      }
+
       // Done-For-You payment
       if (metaType === "dfy_payment") {
         const applicationId = session.metadata?.application_id || null;
