@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { env } from "@/lib/env";
+import { isAdmin } from "@/lib/admin-auth";
 import {
   sendTraining24hReminder,
   sendTraining1hReminder,
@@ -16,6 +17,8 @@ export const maxDuration = 60;
 type Kind = "reminder_24h" | "reminder_1h" | "replay_delivery" | "kit_pitch";
 
 function authOk(req: Request): boolean {
+  // Admin session also authorises manual runs (admin UI button / debug)
+  if (isAdmin()) return true;
   if (!env.cronSecret) return false;
   const header = req.headers.get("authorization") ?? "";
   if (header === `Bearer ${env.cronSecret}`) return true;
