@@ -6,6 +6,12 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 import { sendWelcomeEmail } from "@/lib/emails";
 import { createMagicToken } from "@/lib/kit-auth";
 import { sendKitWelcomeEmail } from "@/lib/kit-emails";
+import {
+  sendRecoveryEmail,
+  type ProductType,
+  type RecoveryKind,
+} from "@/lib/recovery-emails";
+import { signDFYCheckoutToken } from "@/lib/signing";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -206,6 +212,79 @@ export async function POST(req: Request) {
           .update({ paid: false, status: "cancelled" })
           .eq("stripe_customer_id", customerId);
       }
+    }
+
+    // Recovery: session expired (user abandoned checkout) OR async payment
+    // failed (e.g. card declined). One recovery email per session per kind,
+    // deduped via the (stripe_session_id, recovery_type) unique constraint.
+    if (
+      event.type === "checkout.session.expired" ||
+      event.type === "checkout.session.async_payment_failed"
+    ) {
+      const session = event.data.object as Stripe.Checkout.Session;
+      const email =
+        session.customer_details?.email ?? session.customer_email ?? null;
+      const metaType = (session.metadata?.type ?? null) as ProductType | null;
+
+      // Only recover for our known products with a known email
+      if (
+        email &&
+        metaType &&
+        ["kit_order", "bootcamp_order", "dfy_payment", "training_vip"].includes(
+          metaType,
+        )
+      ) {
+        const recoveryKind: RecoveryKind =
+          event.type === "checkout.session.expired" ? "expired" : "declined";
+
+        // Dedup — don't send twice for the same session+kind
+        let alreadySent = false;
+        if (supabase) {
+          const { data } = await supabase
+            .from("payment_recovery_log")
+            .select("id")
+            .eq("stripe_session_id", session.id)
+            .eq("recovery_type", recoveryKind)
+            .maybeSingle();
+          alreadySent = Boolean(data);
+        }
+
+        if (!alreadySent) {
+          const applicationId = session.metadata?.application_id ?? null;
+          const dfyToken = applicationId
+            ? signDFYCheckoutToken(applicationId)
+            : null;
+
+          try {
+            await sendRecoveryEmail({
+              email,
+              name:
+                session.metadata?.name || session.customer_details?.name || "",
+              productType: metaType,
+              recoveryKind,
+              applicationId,
+              dfyToken,
+            });
+          } catch (err) {
+            console.error("Recovery email failed (non-blocking):", err);
+          }
+
+          if (supabase) {
+            await supabase.from("payment_recovery_log").insert({
+              email,
+              product_type: metaType,
+              stripe_session_id: session.id,
+              recovery_type: recoveryKind,
+              amount_cents: session.amount_total ?? null,
+              metadata: {
+                application_id: applicationId,
+                source: session.metadata?.source ?? null,
+              },
+            });
+          }
+        }
+      }
+      return NextResponse.json({ received: true });
     }
 
     if (event.type === "invoice.payment_failed") {
