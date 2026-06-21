@@ -24,6 +24,9 @@ export function AdminGate({ children }: { children: React.ReactNode }) {
             <Link href="/admin/training" className="hover:text-brass">
               Training
             </Link>
+            <Link href="/admin/bootcamp" className="hover:text-brass">
+              Bootcamp
+            </Link>
             <Link href="/admin/applications" className="hover:text-brass">
               Applications
             </Link>

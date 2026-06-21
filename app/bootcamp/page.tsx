@@ -1,26 +1,29 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Image from "next/image";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { FAQAccordion } from "@/components/funnel/FAQAccordion";
-import { GuaranteeBadge } from "@/components/funnel/GuaranteeBadge";
-import { BOOTCAMP } from "@/lib/bootcamp";
+import { getBootcampConfig, formatCohortDate } from "@/lib/bootcamp";
 import { CheckoutButton } from "./CheckoutButton";
 
 export const metadata: Metadata = {
-  title: "The Bootcamp · Early Founders Collective",
+  title: "Founders Foundation · Early Founders Collective",
   description:
-    "Four weeks. Group cohort. We get you from idea to first paying customers — together. $497.",
+    "A 4-week guided program to turn your skill, side hustle, or business idea into a legitimate business. $497.",
 };
 
-export default function BootcampPage({
+export const dynamic = "force-dynamic";
+
+export default async function BootcampPage({
   searchParams,
 }: {
   searchParams: { source?: string };
 }) {
   const source = searchParams.source ?? "direct";
-  const priceLabel = `$${(BOOTCAMP.priceCents / 100).toLocaleString()}`;
+  const config = await getBootcampConfig();
+  const priceLabel = `$${(config.priceCents / 100).toLocaleString()}`;
+  const originalLabel = `$${(config.originalPriceCents / 100).toLocaleString()}`;
+  const cohortDate = formatCohortDate(config.cohortStartDate);
 
   return (
     <>
@@ -30,99 +33,188 @@ export default function BootcampPage({
         <section className="bg-forest text-ivory pt-28 md:pt-36 pb-16 md:pb-20 relative overflow-hidden">
           <div className="absolute inset-0 grain opacity-30 pointer-events-none" />
           <div className="container-page relative">
-            <div className="max-w-[860px] mx-auto text-center">
-              <p className="inline-flex items-center gap-2 text-[10.5px] font-semibold tracking-[0.26em] uppercase text-brass mb-7">
+            <div className="max-w-[820px] mx-auto text-center">
+              <p className="inline-flex items-center gap-2 text-[10.5px] font-semibold tracking-[0.3em] uppercase text-brass mb-7">
                 <span className="inline-block h-1.5 w-1.5 rounded-full bg-brass" />
-                The Bootcamp · 4 weeks · {priceLabel}
+                Founders Foundation · 4 weeks
               </p>
-              <h1 className="font-serif text-[42px] sm:text-[54px] md:text-[68px] leading-[1.02] tracking-[-0.02em] text-ivory">
-                Four weeks. To a real business.
+              <h1 className="font-serif text-[42px] sm:text-[54px] md:text-[64px] leading-[1.04] tracking-[-0.02em] text-ivory">
+                Build the foundation every real business needs.
               </h1>
-              <p
-                className="mt-6 font-handwritten text-brass text-[28px] md:text-[32px] leading-[1.2] -rotate-1"
-                style={{ fontFamily: "'Caveat', 'Kalam', cursive" }}
-              >
-                with the people building one too.
-              </p>
-              <p className="mt-7 max-w-[620px] mx-auto text-[16.5px] md:text-[18px] leading-[1.65] text-ivory/75">
-                Twelve people. Four weekly group sessions. The kit, the
-                accountability, and a Slack channel that doesn't go quiet
-                between calls. By the end you have an offer, a price, a way to
-                get customers — and a small room of founders who'll watch you
-                build for the next year.
-              </p>
+              <div className="mt-9 max-w-[640px] mx-auto text-[16.5px] md:text-[18px] leading-[1.7] text-ivory/78 space-y-5">
+                <p>
+                  A 4-week guided program designed to help you turn your skill,
+                  side hustle, or business idea into a legitimate business
+                  that's structured, professional, and ready to grow.
+                </p>
+                <p>
+                  Whether you're a photographer, painter, event planner,
+                  consultant, real estate professional, trainer, creator, or
+                  service provider, the goal is the same:
+                </p>
+                <p
+                  className="font-serif italic text-[24px] md:text-[28px] text-brass leading-[1.2]"
+                  style={{ fontFamily: "'Caveat', 'Kalam', cursive" }}
+                >
+                  Build something real.
+                </p>
+              </div>
               <div className="mt-10">
                 <CheckoutButton
                   source={source}
-                  label={`Reserve my seat — ${priceLabel}`}
+                  label="Join Founders Foundation"
                 />
+                <div className="mt-5 inline-flex items-baseline gap-3">
+                  <span className="text-[12px] font-semibold tracking-[0.22em] uppercase text-ivory/55">
+                    Investment
+                  </span>
+                  <span className="font-serif text-[24px] text-ivory/55 line-through tabular-nums">
+                    {originalLabel}
+                  </span>
+                  <span className="font-serif text-[28px] text-brass tabular-nums">
+                    {priceLabel}
+                  </span>
+                </div>
               </div>
-              <p className="mt-5 text-[12.5px] text-ivory/55 tracking-[0.1em] uppercase">
-                {BOOTCAMP.nextCohort.label} · Limited to 12 founders
-              </p>
+              {config.cohortLabel && (
+                <p className="mt-6 text-[12px] text-ivory/55 tracking-[0.18em] uppercase">
+                  {config.cohortLabel}
+                </p>
+              )}
+            </div>
+          </div>
+        </section>
+
+        {/* WHAT YOU'LL LEAVE WITH */}
+        <section className="bg-ivory py-20 md:py-24">
+          <div className="container-page">
+            <div className="max-w-[760px] mx-auto">
+              <div className="text-center mb-12">
+                <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-brass mb-4">
+                  What you'll leave with
+                </p>
+                <h2 className="font-serif text-[34px] md:text-[42px] leading-[1.08] tracking-[-0.018em] text-forest">
+                  By the end of Founders Foundation, you'll have:
+                </h2>
+              </div>
+
+              <ul className="space-y-4 max-w-[600px] mx-auto">
+                {LEAVE_WITH.map((item) => (
+                  <li
+                    key={item}
+                    className="grid grid-cols-[auto_1fr] gap-4 items-start text-[16px] md:text-[17px] leading-[1.6] text-forest"
+                  >
+                    <span
+                      className="mt-1 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-forest text-ivory"
+                      aria-hidden
+                    >
+                      <svg
+                        width="13"
+                        height="13"
+                        viewBox="0 0 12 12"
+                        fill="none"
+                      >
+                        <path
+                          d="M2 6.5L4.5 9L10 3"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-14 max-w-[520px] mx-auto text-center space-y-2">
+                <p className="font-serif text-[22px] md:text-[26px] leading-[1.3] text-ink/55 italic">
+                  This isn't about consuming more content.
+                </p>
+                <p className="font-serif text-[24px] md:text-[30px] leading-[1.25] text-forest">
+                  It's about building a business.
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
         {/* WHY THIS EXISTS */}
-        <section className="bg-ivory py-20 md:py-24">
+        <section className="bg-bone py-20 md:py-24 grain">
           <div className="container-page">
-            <div className="max-w-[680px] mx-auto text-center">
-              <p className="text-[11px] font-semibold tracking-[0.26em] uppercase text-brass mb-5">
-                Why this exists
-              </p>
-              <h2 className="font-serif text-[32px] md:text-[42px] leading-[1.1] tracking-[-0.015em] text-forest">
-                You don't have a knowledge problem. You have an alone problem.
-              </h2>
-              <p className="mt-7 text-[16.5px] leading-[1.7] text-ink/72">
-                The kit teaches the moves. The trainings show why. But four out
-                of five people who buy the kit don't finish it — not because
-                it's too hard but because they're doing it alone. The bootcamp
-                is what fixes that.
-              </p>
+            <div className="max-w-[680px] mx-auto">
+              <div className="text-center mb-10">
+                <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-brass mb-4">
+                  Why Founders Foundation exists
+                </p>
+                <h2 className="font-serif text-[32px] md:text-[42px] leading-[1.1] tracking-[-0.015em] text-forest">
+                  Most people don't fail because they lack talent.
+                </h2>
+              </div>
+
+              <div className="space-y-5 text-[16.5px] md:text-[17px] leading-[1.75] text-ink/75 max-w-[600px] mx-auto">
+                <p>
+                  Most people fail because nobody teaches them how to turn a
+                  skill into a business.
+                </p>
+                <p>
+                  So they spend months jumping between YouTube videos, Google
+                  searches, podcasts, and random advice trying to figure out
+                  what to do next.
+                </p>
+                <p>
+                  Founders Foundation was built to simplify the process.
+                </p>
+                <p className="font-serif text-[19px] md:text-[20px] text-forest italic leading-[1.5] pt-2">
+                  Instead of wondering where to start, you'll follow a proven
+                  roadmap and build alongside people doing the same thing.
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* THE 4 WEEKS */}
-        <section className="bg-bone py-20 md:py-24 grain">
+        {/* THE FOUR FOUNDATIONS */}
+        <section className="bg-ivory py-20 md:py-24">
           <div className="container-page">
             <div className="max-w-[1080px] mx-auto">
               <div className="text-center mb-14">
-                <p className="text-[11px] font-semibold tracking-[0.26em] uppercase text-brass mb-4">
-                  The four weeks
+                <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-brass mb-4">
+                  The Four Foundations
                 </p>
                 <h2 className="font-serif text-[34px] md:text-[44px] leading-[1.08] tracking-[-0.018em] text-forest">
-                  Here's the path.
+                  The path is the same every time.
                 </h2>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
-                {WEEKS.map((w) => (
+                {FOUNDATIONS.map((f, i) => (
                   <article
-                    key={w.n}
-                    className="bg-ivory rounded-2xl p-7 md:p-8 border border-line/60 shadow-[0_6px_16px_-10px_rgba(35,53,45,0.08)]"
+                    key={f.title}
+                    className="bg-bone rounded-2xl p-7 md:p-9 border border-line/60"
                   >
-                    <div className="flex items-baseline gap-3 mb-3">
-                      <span className="font-serif text-[14px] text-brass tracking-[0.08em]">
-                        {w.n}
-                      </span>
-                      <span className="text-[10.5px] font-semibold tracking-[0.18em] uppercase text-mute">
-                        {w.label}
-                      </span>
-                    </div>
-                    <h3 className="font-serif text-[22px] md:text-[24px] leading-[1.2] text-forest mb-3">
-                      {w.title}
+                    <p className="text-[10.5px] font-semibold tracking-[0.22em] uppercase text-mute mb-2">
+                      Foundation {NUM[i]}
+                    </p>
+                    <h3 className="font-serif text-[30px] md:text-[34px] leading-[1.1] tracking-[-0.015em] text-forest mb-5">
+                      {f.title}
                     </h3>
-                    <p className="text-[14.5px] leading-[1.6] text-ink/72 mb-4">
-                      {w.desc}
+                    <p className="text-[15px] leading-[1.65] text-ink/72 mb-4">
+                      {f.lead}
                     </p>
-                    <p className="text-[10.5px] font-semibold tracking-[0.18em] uppercase text-brass mb-2">
-                      Live group call
-                    </p>
-                    <p className="text-[13.5px] text-ink/72 leading-[1.5]">
-                      {w.call}
-                    </p>
+                    {f.body && (
+                      <p className="text-[15px] leading-[1.65] text-ink/72">
+                        {f.body}
+                      </p>
+                    )}
+                    {f.list && (
+                      <ul className="space-y-1.5 mt-3 text-[15px] leading-[1.55] text-ink/72">
+                        {f.list.map((x) => (
+                          <li key={x}>{x}</li>
+                        ))}
+                      </ul>
+                    )}
                   </article>
                 ))}
               </div>
@@ -131,98 +223,62 @@ export default function BootcampPage({
         </section>
 
         {/* WHAT'S INCLUDED */}
-        <section className="bg-ivory py-20 md:py-24">
+        <section className="bg-bone py-20 md:py-24 grain">
           <div className="container-page">
             <div className="max-w-[920px] mx-auto">
               <div className="text-center mb-12">
-                <p className="text-[11px] font-semibold tracking-[0.26em] uppercase text-brass mb-4">
+                <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-brass mb-4">
                   What's included
                 </p>
                 <h2 className="font-serif text-[34px] md:text-[42px] leading-[1.08] tracking-[-0.018em] text-forest">
-                  Everything you need for {priceLabel}.
+                  Everything you need to build.
                 </h2>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+              <div className="space-y-5">
                 {INCLUDED.map((item) => (
                   <div
                     key={item.title}
-                    className="bg-bone rounded-2xl p-6 md:p-7 border border-line/60"
+                    className="bg-ivory rounded-2xl p-7 md:p-9 border border-line/60"
                   >
-                    <div className="flex items-baseline justify-between gap-3 mb-2">
-                      <h3 className="font-serif text-[19px] md:text-[20px] text-forest leading-[1.25]">
-                        {item.title}
-                      </h3>
-                      <span className="font-serif italic text-[14px] text-brass tabular-nums shrink-0">
-                        {item.value}
-                      </span>
-                    </div>
-                    <p className="text-[14px] text-ink/72 leading-[1.55]">
-                      {item.desc}
-                    </p>
+                    <h3 className="font-serif text-[22px] md:text-[24px] leading-[1.2] text-forest mb-3">
+                      {item.title}
+                    </h3>
+                    {item.body && (
+                      <p className="text-[15.5px] leading-[1.65] text-ink/72">
+                        {item.body}
+                      </p>
+                    )}
+                    {item.list && (
+                      <ul className="grid grid-cols-2 gap-x-6 gap-y-1.5 mt-3 text-[15px] leading-[1.55] text-ink/72">
+                        {item.list.map((x) => (
+                          <li key={x}>{x}</li>
+                        ))}
+                      </ul>
+                    )}
+                    {item.foot && (
+                      <p className="mt-3 text-[14.5px] leading-[1.65] text-ink/65">
+                        {item.foot}
+                      </p>
+                    )}
                   </div>
                 ))}
               </div>
-
-              {/* Total stack */}
-              <div className="mt-10 bg-forest text-ivory rounded-2xl p-7 md:p-8 text-center">
-                <p className="text-[11px] font-semibold tracking-[0.22em] uppercase text-brass mb-3">
-                  Total stack value
-                </p>
-                <p className="font-serif text-[44px] md:text-[52px] leading-none tracking-[-0.018em] line-through text-ivory/55 mb-1.5 tabular-nums">
-                  $1,991
-                </p>
-                <p className="text-[12px] uppercase tracking-[0.22em] text-brass mb-2">
-                  Your price today
-                </p>
-                <p className="font-serif text-[52px] md:text-[60px] leading-none tracking-[-0.018em] text-ivory tabular-nums">
-                  {priceLabel}
-                </p>
-                <div className="mt-7">
-                  <CheckoutButton
-                    source={source}
-                    label="Reserve my seat →"
-                    accent
-                  />
-                </div>
-              </div>
             </div>
           </div>
         </section>
 
-        {/* GUARANTEE */}
-        <section className="bg-bone py-16 md:py-20 grain">
-          <div className="container-page">
-            <div className="max-w-[820px] mx-auto grid grid-cols-1 md:grid-cols-[auto_1fr] gap-8 md:gap-12 items-center">
-              <GuaranteeBadge />
-              <div>
-                <p className="text-[11px] font-semibold tracking-[0.26em] uppercase text-brass mb-3">
-                  14-day money back
-                </p>
-                <h2 className="font-serif text-[28px] md:text-[34px] leading-[1.1] tracking-[-0.012em] text-forest">
-                  Show up to week one. If it's not for you, we refund the whole thing.
-                </h2>
-                <p className="mt-4 text-[15px] text-ink/72 leading-[1.6]">
-                  Come to the first session. Try the kit. See the room. If
-                  you're not getting value by day 14, email us and we refund —
-                  no friction, no "are you sure," nothing.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* WHO IT'S FOR / NOT FOR */}
+        {/* WHO THIS IS FOR / NOT FOR */}
         <section className="bg-ivory py-20 md:py-24">
           <div className="container-page">
             <div className="max-w-[1080px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-              <Fit title="This is for you if…" items={FIT_YES} tone="yes" />
-              <Fit title="This isn't for you if…" items={FIT_NO} tone="no" />
+              <FitColumn title="Who this is for" items={FIT_YES} tone="yes" />
+              <FitColumn title="Who this is not for" items={FIT_NO} tone="no" />
             </div>
           </div>
         </section>
 
-        {/* HOST */}
+        {/* MEET YOUR HOST */}
         <section className="bg-bone py-20 md:py-24 grain">
           <div className="container-page">
             <div className="max-w-[820px] mx-auto text-center">
@@ -237,38 +293,139 @@ export default function BootcampPage({
                   width={420}
                   height={520}
                   className="relative rounded-2xl object-cover shadow-[0_30px_70px_-25px_rgba(35,53,45,0.45)]"
-                  style={{ aspectRatio: "4/5", maxHeight: "520px", width: "auto" }}
+                  style={{
+                    aspectRatio: "4/5",
+                    maxHeight: "520px",
+                    width: "auto",
+                  }}
                 />
               </div>
-              <p className="text-[11px] font-semibold tracking-[0.26em] uppercase text-brass mb-4">
-                Who's leading the room
+              <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-brass mb-4">
+                Meet your host
               </p>
-              <h3 className="font-serif text-[26px] md:text-[30px] leading-[1.2] tracking-[-0.012em] text-forest">
-                You're not working alone.
+              <h3 className="font-serif text-[32px] md:text-[38px] leading-[1.15] tracking-[-0.015em] text-forest">
+                Oge Madu
               </h3>
-              <p className="mt-6 text-[16.5px] leading-[1.7] text-ink/72">
-                Oge Madu leads the bootcamp out of Houston. We've helped
-                founders launch repainting companies, photography studios,
-                supplement brands, hair care lines, and event services — most
-                of them while working another job.
-              </p>
+              <div className="mt-7 max-w-[580px] mx-auto space-y-5 text-[16.5px] leading-[1.7] text-ink/75">
+                <p>
+                  Over the last decade, Oge has built businesses across multiple
+                  industries including home services, consumer products,
+                  finance, real estate, and community organizations.
+                </p>
+                <p>Along the way, he learned something important:</p>
+                <p className="font-serif text-[19px] md:text-[20px] text-forest italic leading-[1.5]">
+                  Successful businesses often look completely different on the
+                  surface, but they usually have the same foundation.
+                </p>
+                <p>
+                  Founders Foundation is the roadmap he wishes he had when he
+                  started.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* AFTER GRADUATION */}
+        <section className="bg-ivory py-20 md:py-24">
+          <div className="container-page">
+            <div className="max-w-[760px] mx-auto">
+              <div className="text-center mb-10">
+                <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-brass mb-4">
+                  What happens after graduation?
+                </p>
+                <h2 className="font-serif text-[34px] md:text-[42px] leading-[1.08] tracking-[-0.018em] text-forest">
+                  Graduation isn't the end.
+                </h2>
+                <p className="mt-3 font-serif italic text-[22px] md:text-[24px] text-brass leading-[1.3]">
+                  It's the beginning.
+                </p>
+              </div>
+
+              <div className="bg-bone rounded-2xl p-7 md:p-9 border border-line/60 max-w-[640px] mx-auto">
+                <p className="text-[15.5px] leading-[1.65] text-ink/72 mb-5">
+                  After completing Founders Foundation, graduates receive:
+                </p>
+                <ul className="space-y-3">
+                  {AFTER_GRADUATION.map((g) => (
+                    <li
+                      key={g}
+                      className="grid grid-cols-[auto_1fr] gap-3.5 items-start text-[15.5px] leading-[1.55] text-forest"
+                    >
+                      <span
+                        className="mt-1 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-forest text-ivory"
+                        aria-hidden
+                      >
+                        <svg
+                          width="11"
+                          height="11"
+                          viewBox="0 0 12 12"
+                          fill="none"
+                        >
+                          <path
+                            d="M2 6.5L4.5 9L10 3"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
+                      <span>{g}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-7 pt-6 border-t border-line/60 text-[15.5px] leading-[1.7] text-ink/72">
+                  Early Founders Collective is designed for founders who want
+                  ongoing accountability, implementation, networking, and
+                  support as they continue building their businesses.
+                </p>
+                <p className="mt-3 font-serif italic text-[16px] text-forest/85 leading-[1.5]">
+                  Because building a business doesn't end after four weeks.
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
         {/* FAQ */}
-        <section className="bg-ivory py-20 md:py-24">
+        <section className="bg-bone py-20 md:py-24 grain">
           <div className="container-page">
             <div className="max-w-[760px] mx-auto">
               <div className="text-center mb-12">
-                <p className="text-[11px] font-semibold tracking-[0.26em] uppercase text-brass mb-4">
-                  Questions
+                <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-brass mb-4">
+                  Frequently asked questions
                 </p>
                 <h2 className="font-serif text-[32px] md:text-[40px] leading-[1.08] tracking-[-0.018em] text-forest">
-                  Stuff we get asked.
+                  Quick answers.
                 </h2>
               </div>
-              <FAQAccordion items={FAQ} />
+              <FAQAccordion
+                items={[
+                  {
+                    q: "When does the next cohort start?",
+                    a: cohortDate
+                      ? `The next cohort begins ${cohortDate}.`
+                      : "The next cohort opens soon. Reserve your seat and we'll email you the start date.",
+                  },
+                  {
+                    q: "What if I miss a session?",
+                    a: "Every session is recorded and available to participants.",
+                  },
+                  {
+                    q: "Do I keep access to the toolkit?",
+                    a: "Yes. You'll retain access to the Business Builder Toolkit after the program ends.",
+                  },
+                  {
+                    q: "How much time should I expect to commit?",
+                    a: "Plan for approximately 4-6 hours per week, including live sessions and implementation.",
+                  },
+                  {
+                    q: "Will this work for my type of business?",
+                    a: "Founders Foundation is designed around business fundamentals that apply across industries. The businesses may be different. The foundation is often the same.",
+                  },
+                ]}
+              />
             </div>
           </div>
         </section>
@@ -277,26 +434,37 @@ export default function BootcampPage({
         <section className="bg-forest text-ivory py-24 md:py-28">
           <div className="container-page">
             <div className="max-w-[680px] mx-auto text-center">
-              <p className="text-[11px] font-semibold tracking-[0.26em] uppercase text-brass mb-4">
-                Last thing
-              </p>
-              <h2 className="font-serif text-[36px] md:text-[48px] leading-[1.05] tracking-[-0.018em] text-ivory">
-                Pick the seat. Show up. Build.
+              <h2 className="font-serif text-[36px] md:text-[50px] leading-[1.05] tracking-[-0.018em] text-ivory">
+                You already have the skill.
               </h2>
-              <p className="mt-6 text-[16.5px] leading-[1.7] text-ivory/75">
-                {BOOTCAMP.nextCohort.label}. Twelve founders. Four weeks. The
-                rest is up to you.
+              <p
+                className="mt-4 font-serif italic text-brass text-[26px] md:text-[32px] leading-[1.2]"
+                style={{ fontFamily: "'Caveat', 'Kalam', cursive" }}
+              >
+                Now it's time to build the business.
               </p>
-              <div className="mt-8">
+              <p className="mt-7 text-[16px] md:text-[17px] leading-[1.7] text-ivory/75 max-w-[560px] mx-auto">
+                Join Founders Foundation and spend the next four weeks building
+                something you're proud to put your name on.
+              </p>
+              <div className="mt-9">
                 <CheckoutButton
                   source={source}
-                  label={`Reserve my seat — ${priceLabel}`}
+                  label="Join Founders Foundation"
                   accent
                 />
+                <div className="mt-5 inline-flex items-baseline gap-3">
+                  <span className="text-[12px] font-semibold tracking-[0.22em] uppercase text-ivory/55">
+                    Investment
+                  </span>
+                  <span className="font-serif text-[22px] text-ivory/55 line-through tabular-nums">
+                    {originalLabel}
+                  </span>
+                  <span className="font-serif text-[26px] text-brass tabular-nums">
+                    {priceLabel}
+                  </span>
+                </div>
               </div>
-              <p className="mt-5 text-[12.5px] text-ivory/55 tracking-[0.1em] uppercase">
-                14-day money-back guarantee
-              </p>
             </div>
           </div>
         </section>
@@ -306,106 +474,106 @@ export default function BootcampPage({
   );
 }
 
-const WEEKS = [
+const LEAVE_WITH = [
+  "A clear offer you can confidently explain",
+  "Pricing that makes sense for your market",
+  "A professional business foundation",
+  "A customer acquisition plan",
+  "A 90-day roadmap for growth",
+  "A community of founders building alongside you",
+];
+
+const NUM = ["One", "Two", "Three", "Four"];
+
+const FOUNDATIONS: {
+  title: string;
+  lead: string;
+  body?: string;
+  list?: string[];
+}[] = [
   {
-    n: "Week 1",
-    label: "Offer + positioning",
-    title: "Lock the one sentence.",
-    desc: "Most early founders can't say what they sell in one sentence. By the end of week one you can — and so can the people in the room with you. We pressure-test it live.",
-    call: "90-min group call · 12 founders, 12 offers reviewed.",
+    title: "Clarity",
+    lead: "Know exactly what you sell, who it's for, and why someone should choose you.",
+    body: "By the end of week one, you'll be able to clearly explain your business and confidently communicate the value you provide.",
   },
   {
-    n: "Week 2",
-    label: "Pricing + business setup",
-    title: "Price what you're worth. Get legal.",
-    desc: "Hourly floor, market range, recommended start. Entity, EIN, business banking. The boring stuff that makes the business real — done in a week with help.",
-    call: "90-min group call · Bring your pricing draft. Leave with a final number.",
+    title: "Structure",
+    lead: "Build the foundation that makes your business legitimate.",
+    list: ["Business setup", "Pricing", "Systems", "Processes"],
+    body: "The pieces most people skip until they become problems.",
   },
   {
-    n: "Week 3",
-    label: "First customers",
-    title: "Talk to ten people this week.",
-    desc: "Inventory who you already know. A-list outreach. Referral asks. Pick the one channel you'll commit to for the next 90 days. By Friday, ten conversations live.",
-    call: "90-min group call · We send outreach together on the call.",
+    title: "Customers",
+    lead: "Learn how to generate conversations, referrals, and opportunities.",
+    body: "You'll identify the people most likely to buy from you and create a practical plan for getting in front of them. No complicated funnels. No expensive ads. Just focused action.",
   },
   {
-    n: "Week 4",
-    label: "Pipeline + the next 90 days",
-    title: "Make it repeatable without us.",
-    desc: "Move the first 10 conversations forward. Templated proposals. The 90-day operating doc you'll run on after the bootcamp ends.",
-    call: "90-min group call · Each founder shares their 90-day commitment.",
+    title: "Growth",
+    lead: "Build your 90-day roadmap.",
+    body: "Know what to focus on. Know what to ignore. Know what actions move your business forward. Leave with a clear plan instead of more uncertainty.",
   },
 ];
 
-const INCLUDED = [
+const INCLUDED: {
+  title: string;
+  body?: string;
+  list?: string[];
+  foot?: string;
+}[] = [
   {
-    title: "4 live group calls (90 min each)",
-    desc: "Twelve founders in the room. Real offers reviewed. Real outreach drafted live. Recordings if you miss one.",
-    value: "$1,200",
+    title: "Four Live Implementation Sessions",
+    body: "Build alongside other founders in a structured environment focused on execution, feedback, and progress.",
   },
   {
-    title: "Build Your Business Kit",
-    desc: "Full access to the 6 interactive modules — offer, setup, pricing, AI prompts, first 30 customers, lead tracker.",
-    value: "$97",
+    title: "Business Builder Toolkit",
+    body: "Everything you'll need to build your foundation:",
+    list: [
+      "Templates",
+      "Worksheets",
+      "Business planning resources",
+      "Pricing frameworks",
+      "Customer acquisition exercises",
+      "AI prompts",
+      "Launch checklists",
+    ],
   },
   {
-    title: "Private Slack channel",
-    desc: "Daily check-ins with your cohort. We're in there. The point is the room doesn't go quiet between sessions.",
-    value: "$397",
+    title: "Session Recordings",
+    body: "Miss a session? Every call is recorded so you can revisit the material and continue making progress.",
   },
   {
-    title: "Two office hours sessions",
-    desc: "Drop-in Q&A between calls if you're stuck. No appointment, no agenda — just bring the question.",
-    value: "$297",
+    title: "Office Hours",
+    body: "Additional opportunities to ask questions, get feedback, and work through roadblocks.",
+  },
+  {
+    title: "Founder Community",
+    body: "Build relationships with other people who are actively working on their businesses.",
+    foot: "Because entrepreneurship is hard enough without doing it alone.",
   },
 ];
 
 const FIT_YES = [
-  "You've started — at least an idea you're committed to, or one customer in",
-  "You can put 4-6 hours a week into this for four weeks",
-  "You learn better with other people building alongside you",
-  "You want to talk to actual customers by week three",
+  "You've been paid for a skill, service, or expertise.",
+  "You have a business idea you're serious about pursuing.",
+  "You're ready to stop treating your side hustle like a hobby.",
+  "You want structure, accountability, and direction.",
+  "You can commit 4-6 hours per week for four weeks.",
 ];
 
 const FIT_NO = [
-  "You haven't picked an idea yet (do the training first — it's free)",
-  "You're already at $20K+ monthly (DFY's a better fit at that stage)",
-  "You hate group calls and can't make weekly Zoom work",
-  "You want a course you watch on your own time (the kit covers that)",
+  "People looking for overnight success.",
+  "People unwilling to take action.",
+  "People who want to passively watch videos.",
+  "Established businesses already operating at an advanced level.",
 ];
 
-const FAQ = [
-  {
-    q: "When does the next cohort start?",
-    a: `${BOOTCAMP.nextCohort.label}. Reservations close 24 hours before week one. We run a new cohort every six weeks — if you miss this one, the next reservation opens automatically.`,
-  },
-  {
-    q: "What if I can't make a live call?",
-    a: "Every call is recorded and posted in the Slack channel within 24 hours. You can ask follow-up questions in the channel — we read everything. If you're going to miss two of the four calls, the bootcamp probably isn't the right fit for this cohort.",
-  },
-  {
-    q: "Do I keep the kit after the bootcamp ends?",
-    a: "Yes. Lifetime access to all six modules — you'll keep using the lead tracker and pricing template long after the cohort wraps.",
-  },
-  {
-    q: "Is this better than the kit alone?",
-    a: "The kit is the material. The bootcamp is the accountability + the room. If you're someone who finishes things on your own, the kit might be enough. If you've ever bought a course and not opened it, the bootcamp is the difference between owning the work and doing it.",
-  },
-  {
-    q: "Can I pay in installments?",
-    a: `Right now it's $497 in full. If installments would be the difference between joining or not, email contact@earlyfounderscollective.com and we'll figure something out.`,
-  },
-  {
-    q: "What happens if I want a refund?",
-    a: "Show up to week one, try the kit, see the room. If by day 14 you don't think this is for you, email us and we refund the full amount. No phone call, no friction.",
-  },
+const AFTER_GRADUATION = [
+  "Founders Foundation Certificate of Completion",
+  "Alumni Network Access",
+  "Invitation to join Early Founders Collective",
 ];
 
-function CheckoutWrap({ children }: { children: React.ReactNode }) {
-  return <div>{children}</div>;
-}
-
-function Fit({
+function FitColumn({
   title,
   items,
   tone,
@@ -417,18 +585,18 @@ function Fit({
   return (
     <div>
       <p
-        className={`text-[11px] font-semibold tracking-[0.24em] uppercase mb-4 ${tone === "yes" ? "text-brass" : "text-mute"}`}
+        className={`text-[11px] font-semibold tracking-[0.26em] uppercase mb-4 ${tone === "yes" ? "text-brass" : "text-mute"}`}
       >
         {tone === "yes" ? "Good fit" : "Not a fit"}
       </p>
-      <h3 className="font-serif text-[24px] md:text-[28px] leading-[1.2] text-forest mb-6">
+      <h3 className="font-serif text-[26px] md:text-[30px] leading-[1.15] text-forest mb-7">
         {title}
       </h3>
       <ul className="space-y-3.5">
         {items.map((it) => (
           <li
             key={it}
-            className="grid grid-cols-[auto_1fr] gap-3 items-start text-[15px] leading-[1.55] text-ink/72"
+            className="grid grid-cols-[auto_1fr] gap-3 items-start text-[15.5px] leading-[1.55] text-ink/72"
           >
             <span
               className={`mt-1 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${tone === "yes" ? "bg-forest text-ivory" : "bg-bone border border-line text-ink/40"}`}

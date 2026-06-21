@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
 import { env } from "@/lib/env";
-import { BOOTCAMP } from "@/lib/bootcamp";
+import { getBootcampConfig, formatCohortDate } from "@/lib/bootcamp";
 
 export const runtime = "nodejs";
 
@@ -21,10 +21,20 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Valid email required" }, { status: 400 });
   }
 
+  const config = await getBootcampConfig();
+  if (!config.isOpen) {
+    return NextResponse.json(
+      { error: "Reservations are currently closed for this cohort." },
+      { status: 400 },
+    );
+  }
+
   const stripe = getStripe();
   if (!stripe) {
     return NextResponse.json({ error: "Stripe not configured" }, { status: 503 });
   }
+
+  const cohortLabel = formatCohortDate(config.cohortStartDate) || "next cohort";
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -36,10 +46,10 @@ export async function POST(req: Request) {
           price_data: {
             currency: "usd",
             product_data: {
-              name: "The Bootcamp · 4-week cohort",
-              description: `${BOOTCAMP.durationLabel} group cohort starting ${BOOTCAMP.nextCohort.startDate}. Includes Build Your Business Kit, Slack room, and office hours.`,
+              name: "Founders Foundation · 4-week program",
+              description: `Cohort starting ${cohortLabel}. Includes Business Builder Toolkit, live sessions, recordings, office hours, and the founder community.`,
             },
-            unit_amount: BOOTCAMP.priceCents,
+            unit_amount: config.priceCents,
           },
           quantity: 1,
         },
@@ -51,7 +61,7 @@ export async function POST(req: Request) {
         email,
         name,
         source,
-        cohort: BOOTCAMP.nextCohort.startDate,
+        cohort: cohortLabel,
       },
       allow_promotion_codes: true,
     });

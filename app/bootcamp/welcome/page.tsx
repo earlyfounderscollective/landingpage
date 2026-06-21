@@ -3,10 +3,10 @@ import Link from "next/link";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { getStripe } from "@/lib/stripe";
-import { BOOTCAMP } from "@/lib/bootcamp";
+import { getBootcampConfig, formatCohortDate } from "@/lib/bootcamp";
 
 export const metadata: Metadata = {
-  title: "You're in · The Bootcamp",
+  title: "You're in · Founders Foundation",
   robots: { index: false, follow: false },
 };
 
@@ -18,6 +18,9 @@ export default async function BootcampWelcomePage({
   searchParams: { session_id?: string };
 }) {
   const sessionId = (searchParams.session_id ?? "").trim();
+  const config = await getBootcampConfig();
+  const cohortDate = formatCohortDate(config.cohortStartDate);
+
   let firstName = "";
   if (sessionId) {
     const stripe = getStripe();
@@ -51,9 +54,20 @@ export default async function BootcampWelcomePage({
                 {firstName ? `You're in, ${firstName}.` : "You're in."}
               </h1>
               <p className="mt-6 text-[16px] leading-[1.7] text-ink/72">
-                Cohort starts <strong className="text-forest">{BOOTCAMP.nextCohort.startDate}</strong>. We'll
-                email you within 24 hours with the Slack invite, the week-one
-                Zoom link, and a kickoff form to fill before the first call.
+                {cohortDate ? (
+                  <>
+                    Founders Foundation starts <strong className="text-forest">{cohortDate}</strong>. We'll
+                    email you within 24 hours with the community invite, the
+                    week-one Zoom link, and a kickoff form to fill before the
+                    first session.
+                  </>
+                ) : (
+                  <>
+                    Welcome to Founders Foundation. We'll email you within 24
+                    hours with the community invite, the cohort start date, and
+                    a kickoff form to fill before week one.
+                  </>
+                )}
               </p>
             </div>
           </div>
@@ -66,18 +80,18 @@ export default async function BootcampWelcomePage({
                 While you wait
               </p>
               <h2 className="font-serif text-[24px] md:text-[26px] leading-[1.25] text-forest mb-5">
-                Start in the kit.
+                Open the Business Builder Toolkit.
               </h2>
               <p className="text-[15px] text-ink/72 leading-[1.65] mb-6">
-                Your Build Your Business Kit access is unlocked. Pick at Module
-                01 (Offer Clarity) and Module 02 (Business Setup) before week
-                one. You'll show up to the first call already moving.
+                Your toolkit is unlocked. Pick at Module 01 (Offer Clarity) and
+                Module 02 (Business Setup) before week one. You'll show up to
+                the first session already moving.
               </p>
               <Link
                 href="/kit/access"
                 className="inline-flex items-center justify-center bg-forest text-ivory px-6 py-3 rounded-full text-[13px] font-semibold tracking-[0.04em] uppercase hover:bg-ink transition-colors"
               >
-                Open my kit →
+                Open my toolkit →
               </Link>
             </div>
           </div>
