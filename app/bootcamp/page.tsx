@@ -39,9 +39,10 @@ export default async function BootcampPage({
     ? Math.max(0, config.priceCents - REFERRAL.friendDiscountCents)
     : config.priceCents;
   const priceLabel = `$${(finalPriceCents / 100).toLocaleString()}`;
-  const originalLabel = discountActive
-    ? `$${(config.priceCents / 100).toLocaleString()}`
-    : `$${(config.originalPriceCents / 100).toLocaleString()}`;
+  // Always anchor against the original retail price ($997) so the
+  // perceived discount looks like the full delta from retail, not
+  // from the standard sale price.
+  const originalLabel = `$${(config.originalPriceCents / 100).toLocaleString()}`;
   const cohortDate = formatCohortDate(config.cohortStartDate);
 
   return (
