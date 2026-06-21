@@ -5,6 +5,7 @@ import { StatusBanner } from "@/components/funnel/StatusBanner";
 import { VSLEmbed } from "@/components/funnel/VSLEmbed";
 import { CalendarButtons } from "@/components/funnel/CalendarButtons";
 import { ScreenshotSave } from "@/components/funnel/ScreenshotSave";
+import { BootcampPitchCard } from "@/components/funnel/BootcampPitchCard";
 import {
   getActiveTrainingEvent,
   formatTrainingDateLine,
@@ -224,23 +225,38 @@ export default async function TrainingConfirmedPage({
 
               {/* Kit pitch for everyone after training */}
               {(mode === "replay" || mode === "between") && (
-                <div className="mt-12 bg-forest text-ivory rounded-2xl p-6 md:p-7 text-center">
-                  <p className="text-[11px] font-semibold tracking-[0.22em] uppercase text-brass">
-                    Next step
-                  </p>
-                  <p className="mt-3 font-serif text-[18px] md:text-[20px] leading-[1.3] text-ivory">
-                    Take what you just learned and run with it.
-                  </p>
-                  <p className="mt-3 text-[14px] text-ivory/75 leading-[1.55]">
-                    Build Your Business Kit has the worksheets, templates, and AI prompts to set up the business in a weekend.
-                  </p>
-                  <Link
-                    href={`/kit${email ? `?email=${encodeURIComponent(email)}` : ""}`}
-                    className="mt-5 inline-flex items-center justify-center rounded-full bg-brass text-ivory px-7 py-3 text-[13.5px] font-semibold tracking-[0.04em] uppercase hover:bg-[#8a6c3f] transition-colors"
-                  >
-                    Get Build Your Business Kit →
-                  </Link>
-                </div>
+                <>
+                  <div className="mt-12 bg-forest text-ivory rounded-2xl p-6 md:p-7 text-center">
+                    <p className="text-[11px] font-semibold tracking-[0.22em] uppercase text-brass">
+                      Next step
+                    </p>
+                    <p className="mt-3 font-serif text-[18px] md:text-[20px] leading-[1.3] text-ivory">
+                      Take what you just learned and run with it.
+                    </p>
+                    <p className="mt-3 text-[14px] text-ivory/75 leading-[1.55]">
+                      Build Your Business Kit has the worksheets, templates, and AI prompts to set up the business in a weekend.
+                    </p>
+                    <Link
+                      href={`/kit${email ? `?email=${encodeURIComponent(email)}` : ""}`}
+                      className="mt-5 inline-flex items-center justify-center rounded-full bg-brass text-ivory px-7 py-3 text-[13.5px] font-semibold tracking-[0.04em] uppercase hover:bg-[#8a6c3f] transition-colors"
+                    >
+                      Get Build Your Business Kit →
+                    </Link>
+                  </div>
+                  <BootcampPitchCard
+                    variant="after-kit"
+                    source="training_confirmed_post"
+                  />
+                </>
+              )}
+
+              {/* Upcoming-event variant: surface bootcamp BEFORE the event so
+                  attendees have context for the pitch they'll hear live. */}
+              {isUpcoming && (
+                <BootcampPitchCard
+                  variant="after-kit"
+                  source="training_confirmed_upcoming"
+                />
               )}
 
               <p className="mt-14 font-serif italic text-[17px] text-forest/80 text-center">

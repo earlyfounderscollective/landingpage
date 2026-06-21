@@ -152,7 +152,15 @@ export async function sendTrainingKitPitch(
     ${P("Build Your Business Kit is what I'd hand you if you were sitting next to me. Six modules. Worksheets, templates, AI prompts. Most people get the offer, pricing, and entity setup done in a weekend.")}
     ${P("Because you attended the training, you get it for $47 instead of $97. That's about as close to free as I can make it without giving it away.", true)}
     ${BTN(`${env.siteUrl}/kit?email=${encodeURIComponent(email)}&t=${signKitRegistrantToken(email)}`, "Get the kit — $47")}
-    ${P("This price is only because you showed up to the training. The page will charge full price for everyone else.", true)}
+    ${P("This price is only because you showed up to the training. The page will charge full price for everyone else.")}
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:20px 0 28px 0;background:#EFE7DA;border:1px solid rgba(17,17,17,0.08);border-radius:12px;">
+      <tr><td style="padding:18px 22px;">
+        <p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:10.5px;letter-spacing:0.2em;text-transform:uppercase;color:#9B7A4A;font-weight:600;margin:0 0 6px 0;">Want the live version?</p>
+        <p style="font-family:'Fraunces',Georgia,serif;font-size:17px;color:#23352D;line-height:1.4;margin:0 0 6px 0;">Founders Foundation — 4-week cohort with the kit included.</p>
+        <p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:13.5px;color:rgba(17,17,17,0.65);line-height:1.55;margin:0 0 10px 0;">Live group sessions, private community, office hours. $497.</p>
+        <a href="${env.siteUrl}/bootcamp?source=kit_pitch_email" style="display:inline-block;font-family:ui-sans-serif,system-ui,sans-serif;font-size:12.5px;font-weight:600;letter-spacing:0.04em;color:#23352D;text-decoration:none;border-bottom:1.5px solid #9B7A4A;padding-bottom:2px;">See Founders Foundation →</a>
+      </td></tr>
+    </table>
     ${SIG}
   `;
   return send(email, subject, wrap(inner));

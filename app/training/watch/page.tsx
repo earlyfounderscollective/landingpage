@@ -4,6 +4,7 @@ import { FunnelFooter } from "@/components/funnel/FunnelChrome";
 import { StatusBanner } from "@/components/funnel/StatusBanner";
 import { VSLEmbed } from "@/components/funnel/VSLEmbed";
 import { CountdownTimer, InlineCountdown } from "@/components/funnel/CountdownTimer";
+import { BootcampPitchCard } from "@/components/funnel/BootcampPitchCard";
 import {
   getActiveTrainingEvent,
   formatTrainingDateLine,
@@ -237,8 +238,9 @@ export default async function TrainingWatchPage({
                   <VSLEmbed url={replayUrl} />
                 </div>
 
-                {/* Kit pitch under replay */}
+                {/* Kit pitch under replay, with bootcamp upsell below it */}
                 <KitPitchCard />
+                <BootcampPitchCard variant="after-kit" source="training_watch_replay" />
               </div>
             )}
 
@@ -255,6 +257,7 @@ export default async function TrainingWatchPage({
                   The training is over for now. The next live training drops soon. In the meantime, the workbook covers the same ground.
                 </p>
                 <KitPitchCard withTitle={false} />
+                <BootcampPitchCard variant="primary" source="training_watch_expired" />
               </div>
             )}
 
