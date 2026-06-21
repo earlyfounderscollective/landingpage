@@ -47,8 +47,11 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Invalid size" }, { status: 400 });
   }
 
-  // Call DALL-E 3
-  let dalleUrl: string | undefined;
+  // Call gpt-image-1 (the current image-generation model). Returns base64.
+  // gpt-image-1 supports `quality` (low|medium|high|auto) but NOT `style`
+  // or `response_format`. Output is always base64 in `data[0].b64_json`.
+  const apiQuality = quality === "hd" ? "high" : "medium";
+  let bytes: Buffer;
   try {
     const r = await fetch("https://api.openai.com/v1/images/generations", {
       method: "POST",
@@ -57,20 +60,16 @@ export async function POST(req: Request) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "dall-e-3",
+        model: "gpt-image-1",
         prompt,
         n: 1,
         size,
-        quality,
-        style,
-        response_format: "url",
+        quality: apiQuality,
       }),
     });
     if (!r.ok) {
       const errText = await r.text();
       console.error("OpenAI error:", errText);
-      // Try to surface OpenAI's actual reason — invaluable for debugging
-      // (rate limits, billing, content policy, model access, etc.)
       let detail = errText;
       try {
         const parsed = JSON.parse(errText);
@@ -84,31 +83,18 @@ export async function POST(req: Request) {
       );
     }
     const json = await r.json();
-    dalleUrl = json?.data?.[0]?.url;
-    if (!dalleUrl) {
+    const b64 = json?.data?.[0]?.b64_json;
+    if (!b64) {
       return NextResponse.json(
-        { error: "OpenAI returned no image URL." },
+        { error: "OpenAI returned no image data." },
         { status: 502 },
       );
     }
+    bytes = Buffer.from(b64, "base64");
   } catch (err) {
     console.error("OpenAI request failed:", err);
     return NextResponse.json(
       { error: "OpenAI request failed." },
-      { status: 502 },
-    );
-  }
-
-  // Pull bytes
-  let bytes: ArrayBuffer;
-  try {
-    const r = await fetch(dalleUrl);
-    if (!r.ok) throw new Error(`Download failed ${r.status}`);
-    bytes = await r.arrayBuffer();
-  } catch (err) {
-    console.error("Image download failed:", err);
-    return NextResponse.json(
-      { error: "Couldn't download generated image." },
       { status: 502 },
     );
   }
@@ -124,7 +110,7 @@ export async function POST(req: Request) {
   const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.png`;
   const { error: uploadErr } = await supabase.storage
     .from("ai-images")
-    .upload(filename, Buffer.from(bytes), {
+    .upload(filename, bytes, {
       contentType: "image/png",
       cacheControl: "31536000",
     });
@@ -142,13 +128,14 @@ export async function POST(req: Request) {
     .getPublicUrl(filename);
   const imageUrl = publicData.publicUrl;
 
-  const centsCost = quality === "hd" && size !== "1024x1024" ? 12 : quality === "hd" ? 8 : 4;
+  // gpt-image-1 pricing: medium ~$0.04, high ~$0.17-0.25 (varies by size)
+  const centsCost = quality === "hd" ? (size === "1024x1024" ? 17 : 25) : 4;
 
   // History
   await supabase.from("ai_image_history").insert({
     image_url: imageUrl,
     prompt,
-    model: "dall-e-3",
+    model: "gpt-image-1",
     size,
     quality,
     style,
@@ -162,7 +149,7 @@ export async function POST(req: Request) {
         slot_key: slotKey,
         image_url: imageUrl,
         prompt,
-        model: "dall-e-3",
+        model: "gpt-image-1",
         size,
         quality,
         style,
