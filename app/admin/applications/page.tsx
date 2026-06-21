@@ -33,7 +33,9 @@ function formatRelTime(iso: string): string {
 const STATUS_COLOR: Record<string, string> = {
   new: "bg-brass text-ivory",
   contacted: "bg-[#5B7A6A] text-ivory",
-  scheduled: "bg-forest text-ivory",
+  scheduled: "bg-[#5B7A6A] text-ivory",
+  accepted: "bg-forest text-ivory",
+  paid: "bg-[#1b6b3a] text-ivory",
   closed: "bg-ink/10 text-ink/55",
   passed: "bg-bone text-mute",
 };

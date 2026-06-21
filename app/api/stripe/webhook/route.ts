@@ -73,6 +73,30 @@ export async function POST(req: Request) {
         return NextResponse.json({ received: true });
       }
 
+      // Done-For-You payment
+      if (metaType === "dfy_payment") {
+        const applicationId = session.metadata?.application_id || null;
+        if (supabase && email && applicationId) {
+          await supabase
+            .from("dfy_payments")
+            .update({
+              status: "completed",
+              stripe_payment_intent_id:
+                typeof session.payment_intent === "string"
+                  ? session.payment_intent
+                  : session.payment_intent?.id ?? null,
+              paid_at: new Date().toISOString(),
+            })
+            .eq("stripe_session_id", session.id);
+
+          await supabase
+            .from("dfy_applications")
+            .update({ status: "paid" })
+            .eq("id", applicationId);
+        }
+        return NextResponse.json({ received: true });
+      }
+
       // Training VIP purchase — separate handler
       if (metaType === "training_vip") {
         const eventId = session.metadata?.event_id || null;

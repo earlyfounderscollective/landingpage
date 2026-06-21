@@ -41,6 +41,65 @@ const Row = (label: string, value?: string | null) => {
     </tr>`;
 };
 
+/**
+ * Sent to the applicant when admin clicks "Accept" in /admin/applications.
+ * Contains a signed link to /dfy/checkout where they can pay.
+ */
+export async function sendDFYAcceptanceEmail(opts: {
+  email: string;
+  fullName: string;
+  checkoutUrl: string;
+}) {
+  const c = client();
+  if (!c) return { skipped: true as const };
+  const first = opts.fullName ? escapeHtml(opts.fullName.trim().split(/\s+/)[0]) : "";
+  const subject = first ? `${first}, you're in` : "You're in";
+
+  const html = `
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"/></head>
+<body style="margin:0;background:#F7F2EA;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F7F2EA;">
+    <tr><td align="center" style="padding:40px 16px;">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background:#FFFFFF;border:1px solid rgba(17,17,17,0.06);border-radius:16px;padding:48px 40px;">
+        <tr><td>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 36px 0;">
+            <tr><td align="center">
+              <img src="${env.siteUrl}/email-logo.png" width="180" height="87" alt="Early Founders Collective" style="display:block;width:180px;height:auto;border:0;outline:none;text-decoration:none;margin:0 auto;" />
+            </td></tr>
+          </table>
+          <h1 style="font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:30px;line-height:1.18;color:#23352D;margin:0 0 24px 0;letter-spacing:-0.015em;">
+            ${first ? `${first},` : "Hey,"}
+          </h1>
+          <p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;color:rgba(17,17,17,0.78);margin:0 0 16px 0;line-height:1.65;">
+            We've reviewed your application and we'd love to work with you. Your seat is reserved for the next 48 hours.
+          </p>
+          <p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;color:rgba(17,17,17,0.78);margin:0 0 28px 0;line-height:1.65;">
+            Tap below to lock it in. After payment, we'll send you the kickoff intake and book your first session.
+          </p>
+          <div style="margin:8px 0 24px 0;">
+            <a href="${opts.checkoutUrl}" style="display:inline-block;background:#23352D;color:#F7F2EA;font-family:ui-sans-serif,system-ui,sans-serif;font-size:14px;font-weight:600;letter-spacing:0.05em;text-decoration:none;padding:16px 32px;border-radius:9999px;text-transform:uppercase;">
+              Reserve my seat
+            </a>
+          </div>
+          <p style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:14px;color:rgba(17,17,17,0.55);margin:0 0 28px 0;line-height:1.6;">
+            Questions? Just reply to this email.
+          </p>
+          <p style="font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:17px;color:rgba(35,53,45,0.85);margin:0;">— The EFC team</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body></html>`;
+
+  return c.emails.send({
+    from: `Early Founders Collective <${env.resendFromEmail}>`,
+    to: opts.email,
+    subject,
+    html,
+  });
+}
+
 export async function sendDFYApplicationAdminEmail(app: DFYApplication) {
   const c = client();
   if (!c) return { skipped: true as const };

@@ -4,7 +4,7 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 
 export const runtime = "nodejs";
 
-const ALLOWED = new Set(["new", "contacted", "scheduled", "closed", "passed"]);
+const ALLOWED = new Set(["new", "contacted", "scheduled", "accepted", "paid", "closed", "passed"]);
 
 export async function POST(
   req: Request,

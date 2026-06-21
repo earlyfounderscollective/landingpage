@@ -75,3 +75,26 @@ export function verifyChecklistUnsubscribeToken(
     return false;
   }
 }
+
+/**
+ * Signs a DFY checkout link so only an applicant who's been accepted
+ * can hit /dfy/checkout?token=X. The link goes in the acceptance email.
+ */
+export function signDFYCheckoutToken(applicationId: string): string {
+  return createHmac("sha256", env.adminActionSecret)
+    .update(`dfy_checkout:${applicationId}`)
+    .digest("hex");
+}
+
+export function verifyDFYCheckoutToken(
+  applicationId: string,
+  token: string,
+): boolean {
+  const expected = signDFYCheckoutToken(applicationId);
+  if (expected.length !== token.length) return false;
+  try {
+    return timingSafeEqual(Buffer.from(expected), Buffer.from(token));
+  } catch {
+    return false;
+  }
+}
