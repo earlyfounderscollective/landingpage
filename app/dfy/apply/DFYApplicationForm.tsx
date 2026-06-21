@@ -19,8 +19,8 @@ const REVENUE = [
 ];
 
 const BUDGETS = [
-  "Done-With-You ($1,500)",
-  "Done-For-You ($3,500)",
+  "Done-With-You ($2,997)",
+  "Done-For-You ($10,000)",
   "Not sure yet — want to talk",
 ];
 
@@ -152,7 +152,7 @@ export function DFYApplicationForm({ initialTier }: { initialTier?: string }) {
 
       <Field
         label="What's the biggest thing in your way right now?"
-        hint="Be honest. The vague answer (&quot;marketing&quot;) is less helpful to both of us than the specific one (&quot;I've tried IG ads twice and nobody clicked&quot;)."
+        hint="Be honest. The vague answer (&quot;marketing&quot;) is less helpful to all of us than the specific one (&quot;I've tried IG ads twice and nobody clicked&quot;)."
       >
         <textarea
           rows={3}
@@ -188,7 +188,7 @@ export function DFYApplicationForm({ initialTier }: { initialTier?: string }) {
         {submitting ? "Sending..." : "Submit my application →"}
       </button>
       <p className="text-[12px] text-mute text-center leading-[1.5]">
-        I read every one. If it's a fit I'll be in touch within 48 hours.
+        We read every one. If it's a fit we'll be in touch within 48 hours.
       </p>
     </form>
   );

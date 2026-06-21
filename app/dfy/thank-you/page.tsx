@@ -31,13 +31,13 @@ export default function DFYThankYouPage() {
                 Application received
               </p>
               <h1 className="font-serif text-[36px] md:text-[44px] leading-[1.08] tracking-[-0.018em] text-forest">
-                Got it. I'll be in touch.
+                Got it. We'll be in touch.
               </h1>
               <p className="mt-6 text-[16px] leading-[1.7] text-ink/72">
-                I read every application personally. If it's a fit, I'll email
-                you within 48 hours to set up a 15-minute call. If it's not the
-                right time, I'll tell you that too — and what would be a better
-                starting point.
+                We read every application. If it's a fit, we'll email you within
+                48 hours to set up a 15-minute call. If it's not the right time,
+                we'll tell you that too — and what would be a better starting
+                point.
               </p>
               <p className="mt-4 text-[15.5px] leading-[1.7] text-ink/72">
                 In the meantime, the{" "}
@@ -50,7 +50,7 @@ export default function DFYThankYouPage() {
                 covers the foundational work we'd do in week one and two.
               </p>
               <p className="mt-12 font-serif italic text-[18px] text-forest/85">
-                Oge
+                — The EFC team
               </p>
             </div>
           </div>

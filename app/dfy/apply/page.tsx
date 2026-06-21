@@ -30,8 +30,8 @@ export default function DFYApplyPage({
                 Tell me where you're at.
               </h1>
               <p className="mt-5 text-[16px] md:text-[17px] leading-[1.65] text-ink/72">
-                Four minutes. I read every application personally. If it's a fit,
-                I'll email you within 48 hours to set up a 15-minute call.
+                Four minutes. We read every application. If it's a fit, we'll
+                email you within 48 hours to set up a 15-minute call.
               </p>
             </div>
           </div>

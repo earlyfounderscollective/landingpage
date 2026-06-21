@@ -3,17 +3,21 @@ import Link from "next/link";
 import Image from "next/image";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
+import { VSLEmbed } from "@/components/funnel/VSLEmbed";
 
 export const metadata: Metadata = {
   title: "Done-For-You · Early Founders Collective",
   description:
-    "Hire Oge directly to set up your business with you. Offer, pricing, entity, first 30 customers. 6 weeks, side-by-side.",
+    "Work with Early Founders Collective for six weeks to build your business — offer, pricing, entity, first 30 customers, side-by-side.",
 };
+
+// Drop a video URL here once recorded — YouTube / Vimeo / Loom / MP4 all work.
+const DFY_VIDEO_URL: string | null = null;
 
 export default function DFYPage() {
   return (
     <>
-      <Header />
+      <Header tone="dark" />
       <main>
         {/* HERO */}
         <section className="bg-forest text-ivory pt-28 md:pt-36 pb-16 md:pb-20 relative overflow-hidden">
@@ -34,17 +38,22 @@ export default function DFYPage() {
                 if that's you, this is for you.
               </p>
               <p className="mt-7 max-w-[620px] mx-auto text-[16.5px] md:text-[18px] leading-[1.65] text-ivory/75">
-                Six weeks of working side-by-side. I rebuild your offer with you,
-                fix your pricing, hand you the operating systems, and walk you
-                through your first 30 customers. By the end you have a business
-                — not a side hustle pretending.
+                Six weeks of working side-by-side. We rebuild your offer with
+                you, fix your pricing, hand you the operating systems, and walk
+                you through your first 30 customers. By the end you have a
+                business — not a side hustle pretending.
               </p>
+
+              <div className="mt-12">
+                <VSLEmbed url={DFY_VIDEO_URL} />
+              </div>
+
               <div className="mt-10">
                 <Link
                   href="/dfy/apply"
                   className="inline-flex items-center justify-center bg-brass text-ivory px-8 py-4 rounded-full text-[13.5px] font-semibold tracking-[0.06em] uppercase hover:bg-[#8a6c3f] transition-colors shadow-[0_22px_50px_-18px_rgba(155,122,74,0.65)]"
                 >
-                  Apply to work with me →
+                  Apply to work with us →
                 </Link>
               </div>
               <p className="mt-5 text-[12.5px] text-ivory/55 tracking-[0.1em] uppercase">
@@ -146,26 +155,26 @@ export default function DFYPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
                 <PricingCard
                   tier="Done-With-You"
-                  desc="You do the work. I review every week, push you forward, unstick the things that stall."
-                  price="$1,500"
+                  desc="You do the work. We review every week, push you forward, unstick the things that stall."
+                  price="$2,997"
                   perks={[
                     "6 weekly 1-on-1 Zoom calls (60 min)",
                     "Weekly written feedback on your kit work",
                     "Voice memo Q&A between calls",
-                    "Private text thread with me",
+                    "Private text thread with the team",
                   ]}
                   cta="Apply for DWY →"
                   href="/dfy/apply?tier=dwy"
                 />
                 <PricingCard
                   tier="Done-For-You"
-                  desc="I do the work. You answer questions, own decisions, and review what I built before it ships."
-                  price="$3,500"
+                  desc="We do the work. You answer questions, own decisions, and review what we built before it ships."
+                  price="$10,000"
                   perks={[
                     "Everything in DWY plus —",
-                    "I write your offer + sales page",
-                    "I set up entity + payments + tracking",
-                    "I send the first batch of outreach with you",
+                    "We write your offer + sales page",
+                    "We set up entity + payments + tracking",
+                    "We send the first batch of outreach with you",
                     "First 10 customers landed before week 6",
                   ]}
                   highlight
@@ -177,7 +186,7 @@ export default function DFYPage() {
               <p className="mt-10 text-center text-[13.5px] text-mute leading-[1.6] max-w-[560px] mx-auto">
                 Paid in two installments — half before week one, half before
                 week four. If after week one you don't think this is for you,
-                I refund the first payment in full. No friction.
+                we refund the first payment in full. No friction.
               </p>
             </div>
           </div>
@@ -218,14 +227,15 @@ export default function DFYPage() {
                 Who you're working with
               </p>
               <h3 className="font-serif text-[26px] md:text-[30px] leading-[1.2] tracking-[-0.012em] text-forest">
-                I'm Oge. I run Early Founders Collective.
+                Led by Oge Madu. Backed by Early Founders Collective.
               </h3>
               <p className="mt-6 text-[16.5px] leading-[1.7] text-ink/72">
-                I've helped founders launch repainting companies, photography
+                We've helped founders launch repainting companies, photography
                 studios, supplement brands, hair care lines, and event services
                 — most of them while working another job. The pattern is the
                 same every time: the people who win pick one offer, charge what
-                it's worth, and talk to ten people a day. I'll help you do that.
+                it's worth, and talk to ten people a day. We'll help you do
+                that.
               </p>
             </div>
           </div>
@@ -239,8 +249,8 @@ export default function DFYPage() {
                 Want to talk?
               </h2>
               <p className="mt-6 text-[16.5px] leading-[1.7] text-ivory/75">
-                The application takes 4 minutes. I read every one personally.
-                If it's a fit, I'll email you to set up a 15-minute call.
+                The application takes 4 minutes. We read every one. If it's a
+                fit, we'll email you to set up a 15-minute call.
               </p>
               <Link
                 href="/dfy/apply"
