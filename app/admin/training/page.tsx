@@ -2,7 +2,9 @@ import { redirect } from "next/navigation";
 import { isAdmin } from "@/lib/admin-auth";
 import { getActiveTrainingEvent } from "@/lib/training";
 import { TrainingEditor } from "@/components/admin/TrainingEditor";
+import { TrainingEmailTester } from "@/components/admin/TrainingEmailTester";
 import { AdminGate } from "@/components/admin/AdminGate";
+import { env } from "@/lib/env";
 
 export const dynamic = "force-dynamic";
 
@@ -29,6 +31,7 @@ export default async function AdminTrainingPage() {
   return (
     <AdminGate>
       <TrainingEditor initial={event} />
+      <TrainingEmailTester defaultEmail={env.adminEmail} />
     </AdminGate>
   );
 }
