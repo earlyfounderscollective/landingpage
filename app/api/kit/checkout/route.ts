@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
 import { env } from "@/lib/env";
 import { getSupabaseAdmin } from "@/lib/supabase";
+import { verifyKitRegistrantToken } from "@/lib/signing";
 
 export const runtime = "nodejs";
 
@@ -21,6 +22,8 @@ export async function POST(req: Request) {
   const name = String(body.name ?? "").trim().slice(0, 200);
   const bump = body.bump === true;
   const source = String(body.source ?? "cold").trim().slice(0, 60);
+  const registrantToken =
+    typeof body.registrant_token === "string" ? body.registrant_token : "";
 
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return NextResponse.json({ error: "Valid email required" }, { status: 400 });
@@ -31,10 +34,15 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Stripe not configured" }, { status: 503 });
   }
 
-  // Verify whether the email is in training_registrations to set price.
-  let isRegistrant = false;
+  // Signed token from training emails is the primary registrant proof —
+  // immune to DB sync issues (case mismatch, deleted rows, etc.).
+  let isRegistrant = Boolean(
+    registrantToken && verifyKitRegistrantToken(email, registrantToken),
+  );
+
+  // Fall back to DB lookup if no valid token.
   const supabase = getSupabaseAdmin();
-  if (supabase) {
+  if (!isRegistrant && supabase) {
     const { data } = await supabase
       .from("training_registrations")
       .select("id")

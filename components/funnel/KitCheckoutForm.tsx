@@ -7,11 +7,13 @@ export function KitCheckoutForm({
   priceCents,
   bumpPriceCents,
   isRegistrant,
+  registrantToken,
 }: {
   prefillEmail: string;
   priceCents: number;
   bumpPriceCents: number;
   isRegistrant: boolean;
+  registrantToken?: string;
 }) {
   const [email, setEmail] = useState(prefillEmail);
   const [name, setName] = useState("");
@@ -33,6 +35,7 @@ export function KitCheckoutForm({
           name,
           bump,
           source: isRegistrant ? "training_registrant" : "cold",
+          registrant_token: registrantToken ?? null,
         }),
       });
       const data = await res.json();

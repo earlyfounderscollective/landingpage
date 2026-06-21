@@ -98,3 +98,29 @@ export function verifyDFYCheckoutToken(
     return false;
   }
 }
+
+/**
+ * Signs a "this email was a training registrant" token so links inside
+ * training emails can unlock the $47 kit price even if the recipient's
+ * registration row is missing or their email matches inexactly. Verifies
+ * the email is bound to the token so the link can't be replayed for a
+ * different address.
+ */
+export function signKitRegistrantToken(email: string): string {
+  return createHmac("sha256", env.adminActionSecret)
+    .update(`kit_registrant:${email.toLowerCase()}`)
+    .digest("hex");
+}
+
+export function verifyKitRegistrantToken(
+  email: string,
+  token: string,
+): boolean {
+  const expected = signKitRegistrantToken(email);
+  if (expected.length !== token.length) return false;
+  try {
+    return timingSafeEqual(Buffer.from(expected), Buffer.from(token));
+  } catch {
+    return false;
+  }
+}

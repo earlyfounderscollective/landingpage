@@ -14,6 +14,7 @@ import {
 import { FAQAccordion } from "@/components/funnel/FAQAccordion";
 import { GuaranteeBadge } from "@/components/funnel/GuaranteeBadge";
 import { getSupabaseAdmin } from "@/lib/supabase";
+import { verifyKitRegistrantToken } from "@/lib/signing";
 
 export const metadata: Metadata = {
   title:
@@ -40,6 +41,7 @@ async function isTrainingRegistrant(email: string): Promise<boolean> {
     .maybeSingle();
   return Boolean(data);
 }
+
 
 const MODULES = [
   {
@@ -125,10 +127,16 @@ const MODULES = [
 export default async function KitPage({
   searchParams,
 }: {
-  searchParams: { email?: string };
+  searchParams: { email?: string; t?: string };
 }) {
   const email = (searchParams.email ?? "").trim().toLowerCase();
-  const isRegistrant = await isTrainingRegistrant(email);
+  // Signed token from training emails unlocks the $47 price even when the
+  // DB lookup misses (e.g. case mismatch on the email row). DB lookup is
+  // still the source of truth — token is the secondary path.
+  const tokenOk = Boolean(
+    email && searchParams.t && verifyKitRegistrantToken(email, searchParams.t),
+  );
+  const isRegistrant = tokenOk || (await isTrainingRegistrant(email));
 
   const priceCents = isRegistrant ? REGISTRANT_PRICE_CENTS : FULL_PRICE_CENTS;
 
@@ -179,6 +187,7 @@ export default async function KitPage({
                     priceCents={priceCents}
                     bumpPriceCents={BUMP_PRICE_CENTS}
                     isRegistrant={isRegistrant}
+                    registrantToken={searchParams.t}
                   />
                 </div>
               </div>
@@ -281,6 +290,7 @@ export default async function KitPage({
                   priceCents={priceCents}
                   bumpPriceCents={BUMP_PRICE_CENTS}
                   isRegistrant={isRegistrant}
+                    registrantToken={searchParams.t}
                 />
               </div>
             </div>
@@ -545,6 +555,7 @@ export default async function KitPage({
                   priceCents={priceCents}
                   bumpPriceCents={BUMP_PRICE_CENTS}
                   isRegistrant={isRegistrant}
+                    registrantToken={searchParams.t}
                 />
               </div>
             </div>

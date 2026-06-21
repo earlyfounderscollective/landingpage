@@ -2,6 +2,7 @@ import { Resend } from "resend";
 import { env } from "./env";
 import type { TrainingEvent } from "./training";
 import { formatTrainingDateLine } from "./training";
+import { signKitRegistrantToken } from "./signing";
 
 let resend: Resend | null = null;
 function client(): Resend | null {
@@ -150,7 +151,7 @@ export async function sendTrainingKitPitch(
     ${P("You've watched the training. The hardest part of building a real business isn't the theory — it's the boring setup work that nobody talks about.")}
     ${P("Build Your Business Kit is what I'd hand you if you were sitting next to me. Six modules. Worksheets, templates, AI prompts. Most people get the offer, pricing, and entity setup done in a weekend.")}
     ${P("Because you attended the training, you get it for $47 instead of $97. That's about as close to free as I can make it without giving it away.", true)}
-    ${BTN(`${env.siteUrl}/kit?email=${encodeURIComponent(email)}`, "Get the kit — $47")}
+    ${BTN(`${env.siteUrl}/kit?email=${encodeURIComponent(email)}&t=${signKitRegistrantToken(email)}`, "Get the kit — $47")}
     ${P("This price is only because you showed up to the training. The page will charge full price for everyone else.", true)}
     ${SIG}
   `;
