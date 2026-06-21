@@ -7,11 +7,13 @@ export function CheckoutButton({
   label,
   accent,
   size = "default",
+  refCode,
 }: {
   source: string;
   label: string;
   accent?: boolean;
   size?: "default" | "large";
+  refCode?: string;
 }) {
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState("");
@@ -35,6 +37,7 @@ export function CheckoutButton({
           email: email.trim().toLowerCase(),
           name: name.trim(),
           source,
+          ref: refCode ?? null,
         }),
       });
       const json = await res.json();

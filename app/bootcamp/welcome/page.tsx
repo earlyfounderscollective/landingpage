@@ -4,6 +4,9 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { getStripe } from "@/lib/stripe";
 import { getBootcampConfig, formatCohortDate } from "@/lib/bootcamp";
+import { getOrCreateReferralCode, REFERRAL } from "@/lib/referrals";
+import { env } from "@/lib/env";
+import { ReferralShare } from "./ReferralShare";
 
 export const metadata: Metadata = {
   title: "You're in · Founders Foundation",
@@ -22,6 +25,7 @@ export default async function BootcampWelcomePage({
   const cohortDate = formatCohortDate(config.cohortStartDate);
 
   let firstName = "";
+  let buyerEmail = "";
   if (sessionId) {
     const stripe = getStripe();
     if (stripe) {
@@ -29,11 +33,25 @@ export default async function BootcampWelcomePage({
         const session = await stripe.checkout.sessions.retrieve(sessionId);
         const name = session.metadata?.name || session.customer_details?.name || "";
         if (name) firstName = String(name).split(/\s+/)[0];
+        buyerEmail = (
+          session.customer_details?.email ||
+          session.customer_email ||
+          session.metadata?.email ||
+          ""
+        ).toLowerCase();
       } catch {
         /* ignore */
       }
     }
   }
+
+  // Fetch (or backfill) this buyer's referral code.
+  const referralCode = buyerEmail
+    ? await getOrCreateReferralCode(buyerEmail)
+    : null;
+  const referralLink = referralCode
+    ? `${env.siteUrl}/bootcamp?ref=${referralCode}`
+    : null;
 
   return (
     <>
@@ -96,6 +114,29 @@ export default async function BootcampWelcomePage({
             </div>
           </div>
         </section>
+
+        {referralCode && referralLink && (
+          <section className="bg-forest text-ivory py-14 md:py-16">
+            <div className="container-page">
+              <div className="max-w-[640px] mx-auto">
+                <div className="bg-ivory/8 border border-brass/40 rounded-2xl p-7 md:p-9 backdrop-blur-sm">
+                  <p className="text-[10.5px] font-semibold tracking-[0.26em] uppercase text-brass mb-3">
+                    Earn $50 per founder you refer
+                  </p>
+                  <h2 className="font-serif text-[26px] md:text-[30px] leading-[1.2] text-ivory mb-3">
+                    Know someone who'd be a fit?
+                  </h2>
+                  <p className="text-[15px] leading-[1.65] text-ivory/72 mb-6">
+                    Share your link. They get $100 off Founders Foundation. You
+                    get $50 paid out 30 days after their cohort wraps. Unlimited
+                    referrals — no cap.
+                  </p>
+                  <ReferralShare code={referralCode} link={referralLink} />
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         <section className="bg-ivory py-14 md:py-16">
           <div className="container-page">

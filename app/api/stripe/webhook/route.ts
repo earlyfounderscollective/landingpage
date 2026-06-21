@@ -12,6 +12,7 @@ import {
   type RecoveryKind,
 } from "@/lib/recovery-emails";
 import { signDFYCheckoutToken } from "@/lib/signing";
+import { getOrCreateReferralCode, recordRedemption } from "@/lib/referrals";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -82,19 +83,27 @@ export async function POST(req: Request) {
       // Bootcamp purchase
       if (metaType === "bootcamp_order") {
         if (supabase && email) {
-          await supabase.from("bootcamp_orders").insert({
-            email,
-            full_name: session.metadata?.name || null,
-            cohort: session.metadata?.cohort || null,
-            amount_cents: session.amount_total ?? 49_700,
-            stripe_session_id: session.id,
-            stripe_payment_intent_id:
-              typeof session.payment_intent === "string"
-                ? session.payment_intent
-                : session.payment_intent?.id ?? null,
-            source: session.metadata?.source || null,
-            status: "completed",
-          });
+          const refCodeUsed = session.metadata?.ref_code || null;
+          const cohortStartDate = session.metadata?.cohort_start_date || null;
+
+          const { data: orderRow } = await supabase
+            .from("bootcamp_orders")
+            .insert({
+              email,
+              full_name: session.metadata?.name || null,
+              cohort: session.metadata?.cohort || null,
+              amount_cents: session.amount_total ?? 49_700,
+              stripe_session_id: session.id,
+              stripe_payment_intent_id:
+                typeof session.payment_intent === "string"
+                  ? session.payment_intent
+                  : session.payment_intent?.id ?? null,
+              source: session.metadata?.source || null,
+              status: "completed",
+              referred_by_code: refCodeUsed || null,
+            })
+            .select("id")
+            .single();
 
           // Bootcamp buyers get full kit access — seed a kit_orders row so
           // they pass the isKitBuyer check, then email them the access link.
@@ -113,6 +122,19 @@ export async function POST(req: Request) {
               status: "completed",
               source: "bootcamp",
             });
+          }
+
+          // Issue a fresh referral code to this grad. Idempotent on email.
+          await getOrCreateReferralCode(email, orderRow?.id ?? null).catch(() => null);
+
+          // If this purchase used a referral, log it for payout.
+          if (refCodeUsed) {
+            await recordRedemption({
+              code: refCodeUsed,
+              friendEmail: email,
+              friendOrderId: orderRow?.id ?? null,
+              cohortStartDate,
+            }).catch(() => null);
           }
 
           const token = await createMagicToken(email);

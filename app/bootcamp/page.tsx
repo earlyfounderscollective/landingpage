@@ -7,6 +7,7 @@ import { FAQAccordion } from "@/components/funnel/FAQAccordion";
 import { VSLEmbed } from "@/components/funnel/VSLEmbed";
 import { getBootcampConfig, formatCohortDate } from "@/lib/bootcamp";
 import { getImageSlot } from "@/lib/ai-images";
+import { lookupReferralCode, REFERRAL } from "@/lib/referrals";
 import { CheckoutButton } from "./CheckoutButton";
 import { BrushUnderline } from "@/components/bootcamp/BrushUnderline";
 import { HeroGradientField, SwooshDivider } from "@/components/bootcamp/GradientSwoosh";
@@ -23,15 +24,24 @@ export const dynamic = "force-dynamic";
 export default async function BootcampPage({
   searchParams,
 }: {
-  searchParams: { source?: string };
+  searchParams: { source?: string; ref?: string };
 }) {
   const source = searchParams.source ?? "direct";
-  const [config, heroImage] = await Promise.all([
+  const refCodeRaw = (searchParams.ref ?? "").trim().toUpperCase().slice(0, 32);
+  const [config, heroImage, referral] = await Promise.all([
     getBootcampConfig(),
     getImageSlot("bootcamp.hero"),
+    refCodeRaw ? lookupReferralCode(refCodeRaw) : Promise.resolve(null),
   ]);
-  const priceLabel = `$${(config.priceCents / 100).toLocaleString()}`;
-  const originalLabel = `$${(config.originalPriceCents / 100).toLocaleString()}`;
+
+  const discountActive = Boolean(referral);
+  const finalPriceCents = discountActive
+    ? Math.max(0, config.priceCents - REFERRAL.friendDiscountCents)
+    : config.priceCents;
+  const priceLabel = `$${(finalPriceCents / 100).toLocaleString()}`;
+  const originalLabel = discountActive
+    ? `$${(config.priceCents / 100).toLocaleString()}`
+    : `$${(config.originalPriceCents / 100).toLocaleString()}`;
   const cohortDate = formatCohortDate(config.cohortStartDate);
 
   return (
@@ -55,6 +65,13 @@ export default async function BootcampPage({
           )}
           <div className="container-page relative">
             <div className="max-w-[920px] mx-auto text-center">
+              {discountActive && (
+                <div className="inline-flex items-center gap-2.5 bg-brass text-ivory rounded-full px-5 py-2 mb-5 shadow-[0_18px_40px_-18px_rgba(155,122,74,0.7)]">
+                  <span className="text-[10.5px] font-semibold tracking-[0.22em] uppercase">
+                    $100 off · Referral applied
+                  </span>
+                </div>
+              )}
               {/* Pill badge */}
               <div className="inline-flex items-center gap-2.5 bg-ivory/8 border border-brass/40 rounded-full px-5 py-2.5 mb-9 backdrop-blur-sm">
                 <span className="relative inline-flex h-2 w-2">
@@ -102,6 +119,7 @@ export default async function BootcampPage({
               {/* CTA */}
               <div className="mt-7 flex justify-center">
                 <CheckoutButton
+                  refCode={discountActive ? refCodeRaw : undefined}
                   source={source}
                   label="Join Founders Foundation"
                   accent
@@ -435,6 +453,7 @@ export default async function BootcampPage({
               {/* Inline CTA below grid */}
               <div className="mt-14 text-center">
                 <CheckoutButton
+                  refCode={discountActive ? refCodeRaw : undefined}
                   source={source}
                   label="Join Founders Foundation"
                   accent
@@ -628,6 +647,7 @@ export default async function BootcampPage({
               </p>
               <div className="mt-10">
                 <CheckoutButton
+                  refCode={discountActive ? refCodeRaw : undefined}
                   source={source}
                   label="Join Founders Foundation"
                   accent
