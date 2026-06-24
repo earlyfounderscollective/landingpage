@@ -15,6 +15,8 @@ export const SITE_VIDEOS = {
   trainingUpgrade: "https://vimeo.com/1204051040",
   // /kit sales page hero
   kitMain: "https://vimeo.com/1204051067",
+  // /bootcamp main hero — fallback when DB value is unavailable
+  bootcampMain: "https://vimeo.com/1204051019",
   // /bootcamp/welcome post-purchase page
   bootcampWelcome: "https://vimeo.com/1204050628",
   // /dfy sales page hero

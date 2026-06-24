@@ -34,20 +34,7 @@ export async function getBootcampConfig(): Promise<BootcampConfig> {
     .limit(1)
     .maybeSingle();
 
-  if (error) {
-    console.error("[bootcamp] getBootcampConfig error:", error);
-    return FALLBACK;
-  }
-  if (!data) {
-    console.warn("[bootcamp] getBootcampConfig: no data returned");
-    return FALLBACK;
-  }
-  console.log("[bootcamp] data:", JSON.stringify({
-    id: data.id,
-    has_video_url: Boolean(data.video_url),
-    video_url: data.video_url,
-    keys: Object.keys(data),
-  }));
+  if (error || !data) return FALLBACK;
 
   return {
     id: data.id,

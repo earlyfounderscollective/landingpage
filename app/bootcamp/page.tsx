@@ -8,6 +8,7 @@ import { VSLEmbed } from "@/components/funnel/VSLEmbed";
 import { getBootcampConfig, formatCohortDate } from "@/lib/bootcamp";
 import { getImageSlot } from "@/lib/ai-images";
 import { lookupReferralCode, REFERRAL } from "@/lib/referrals";
+import { SITE_VIDEOS } from "@/lib/site-videos";
 import { CheckoutButton } from "./CheckoutButton";
 import { BrushUnderline } from "@/components/bootcamp/BrushUnderline";
 import { HeroGradientField, SwooshDivider } from "@/components/bootcamp/GradientSwoosh";
@@ -101,7 +102,7 @@ export default async function BootcampPage({
 
               {/* Video slot */}
               <div className="mt-12 max-w-[780px] mx-auto">
-                <VSLEmbed url={config.videoUrl} />
+                <VSLEmbed url={config.videoUrl || SITE_VIDEOS.bootcampMain} />
               </div>
 
               {/* Pricing line above CTA — sets the value before the button */}
