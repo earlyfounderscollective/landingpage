@@ -15,6 +15,8 @@ import { FAQAccordion } from "@/components/funnel/FAQAccordion";
 import { GuaranteeBadge } from "@/components/funnel/GuaranteeBadge";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { verifyKitRegistrantToken } from "@/lib/signing";
+import { VSLEmbed } from "@/components/funnel/VSLEmbed";
+import { SITE_VIDEOS } from "@/lib/site-videos";
 
 export const metadata: Metadata = {
   title:
@@ -192,22 +194,9 @@ export default async function KitPage({
                 </div>
               </div>
 
-              {/* HERO VISUAL — stacked mockups */}
-              <div className="hidden lg:block relative h-[460px]">
-                <div className="absolute top-0 right-0 w-[300px] -rotate-[6deg] scale-95 opacity-90">
-                  <BusinessSetupMockup />
-                </div>
-                <div className="absolute top-20 right-16 w-[320px] -rotate-[2deg] z-10">
-                  <OfferClarityMockup />
-                </div>
-                <div className="absolute top-44 right-0 w-[320px] rotate-[3deg] scale-95 opacity-95">
-                  <PricingMockup />
-                </div>
-              </div>
-
-              {/* HERO VISUAL — mobile single mockup */}
-              <div className="lg:hidden mt-8 max-w-[320px] mx-auto">
-                <OfferClarityMockup />
+              {/* HERO VISUAL — VSL */}
+              <div className="mt-8 lg:mt-0">
+                <VSLEmbed url={SITE_VIDEOS.kitMain} />
               </div>
             </div>
           </div>

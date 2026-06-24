@@ -11,8 +11,9 @@ export const metadata: Metadata = {
     "Work with Early Founders Collective for six weeks to build your business — offer, pricing, entity, first 30 customers, side-by-side.",
 };
 
-// Drop a video URL here once recorded — YouTube / Vimeo / Loom / MP4 all work.
-const DFY_VIDEO_URL: string | null = null;
+import { SITE_VIDEOS } from "@/lib/site-videos";
+
+const DFY_VIDEO_URL: string | null = SITE_VIDEOS.dfyMain;
 
 export default function DFYPage() {
   return (

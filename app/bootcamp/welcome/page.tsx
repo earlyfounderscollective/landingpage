@@ -7,6 +7,8 @@ import { getBootcampConfig, formatCohortDate } from "@/lib/bootcamp";
 import { getOrCreateReferralCode, REFERRAL } from "@/lib/referrals";
 import { env } from "@/lib/env";
 import { ReferralShare } from "./ReferralShare";
+import { VSLEmbed } from "@/components/funnel/VSLEmbed";
+import { SITE_VIDEOS } from "@/lib/site-videos";
 
 export const metadata: Metadata = {
   title: "You're in · Founders Foundation",
@@ -87,6 +89,10 @@ export default async function BootcampWelcomePage({
                   </>
                 )}
               </p>
+
+              <div className="mt-10 max-w-[680px] mx-auto">
+                <VSLEmbed url={SITE_VIDEOS.bootcampWelcome} />
+              </div>
             </div>
           </div>
         </section>

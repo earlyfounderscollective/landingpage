@@ -10,6 +10,7 @@ import {
   getActiveTrainingEvent,
   formatTrainingDateLine,
 } from "@/lib/training";
+import { SITE_VIDEOS } from "@/lib/site-videos";
 
 export const metadata: Metadata = {
   title: "Lifetime access — $17 · Early Founders Collective",
@@ -79,7 +80,7 @@ export default async function TrainingUpgradePage({
 
               {/* RIGHT: video + countdown */}
               <div>
-                <VSLEmbed url={event?.video_url} />
+                <VSLEmbed url={SITE_VIDEOS.trainingUpgrade} />
 
                 {isUpcoming && event?.starts_at && (
                   <div className="mt-6 bg-forest/40 border border-ivory/12 rounded-2xl px-5 py-4 flex items-center gap-4">

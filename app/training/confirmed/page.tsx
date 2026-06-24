@@ -6,6 +6,7 @@ import { VSLEmbed } from "@/components/funnel/VSLEmbed";
 import { CalendarButtons } from "@/components/funnel/CalendarButtons";
 import { ScreenshotSave } from "@/components/funnel/ScreenshotSave";
 import { BootcampPitchCard } from "@/components/funnel/BootcampPitchCard";
+import { SITE_VIDEOS } from "@/lib/site-videos";
 import {
   getActiveTrainingEvent,
   formatTrainingDateLine,
@@ -71,7 +72,7 @@ export default async function TrainingConfirmedPage({
             </div>
 
             <div className="mt-10 max-w-[760px] mx-auto">
-              <VSLEmbed url={event?.video_url} />
+              <VSLEmbed url={SITE_VIDEOS.trainingConfirmed} />
             </div>
 
             {isVip && (
