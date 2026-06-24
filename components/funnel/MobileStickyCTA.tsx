@@ -66,12 +66,12 @@ export function MobileStickyCTA({
 
   return (
     <div
-      className={`md:hidden fixed bottom-0 left-0 right-0 z-50 transition-opacity duration-300 ease-out ${
+      className={`md:hidden fixed bottom-0 left-0 right-0 z-50 bg-ivory/95 backdrop-blur-md border-t border-line/60 shadow-[0_-12px_30px_-12px_rgba(0,0,0,0.18)] transition-opacity duration-300 ease-out ${
         visible ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}
       style={{ paddingBottom: "max(12px, env(safe-area-inset-bottom))" }}
     >
-      <div className="bg-ivory/95 backdrop-blur-md border-t border-line/60 shadow-[0_-12px_30px_-12px_rgba(0,0,0,0.18)] px-4 pt-3">
+      <div className="px-4 pt-3">
         <div className="max-w-[420px] mx-auto">
           {href ? (
             <Link
