@@ -43,9 +43,13 @@ export function detectVideoEmbed(url: string | null | undefined): EmbedResult {
 
   const vimeo = trimmed.match(/vimeo\.com\/(?:video\/)?(\d+)/);
   if (vimeo) {
+    // dnt=1: do-not-track. byline/portrait/title=0: hide creator chrome.
+    // pip=0: hide picture-in-picture button.
+    // The end-of-video "More from creator" panel is controlled at the
+    // video level on Vimeo — see each video's Distribute > Embed settings.
     return {
       type: "vimeo",
-      embedUrl: `https://player.vimeo.com/video/${vimeo[1]}?autoplay=1&muted=1&playsinline=1`,
+      embedUrl: `https://player.vimeo.com/video/${vimeo[1]}?autoplay=1&muted=1&playsinline=1&byline=0&portrait=0&title=0&dnt=1&pip=0`,
     };
   }
 
