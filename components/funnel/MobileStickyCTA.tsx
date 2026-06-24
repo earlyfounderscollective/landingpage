@@ -33,10 +33,22 @@ export function MobileStickyCTA({
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const handler = () => setVisible(window.scrollY > threshold);
+    const handler = () => {
+      const scrolled = window.scrollY > threshold;
+      // Hide when within 320px of the page bottom so the natural CTA
+      // in the final section isn't competing with the sticky.
+      const nearBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 320;
+      setVisible(scrolled && !nearBottom);
+    };
     handler();
     window.addEventListener("scroll", handler, { passive: true });
-    return () => window.removeEventListener("scroll", handler);
+    window.addEventListener("resize", handler, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handler);
+      window.removeEventListener("resize", handler);
+    };
   }, [threshold]);
 
   const inner = (

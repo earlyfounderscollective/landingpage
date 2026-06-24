@@ -41,7 +41,7 @@ export default async function TrainingUpgradePage({
           <div className="container-page py-12 md:py-16">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 items-center max-w-[1100px] mx-auto">
               {/* LEFT: offer */}
-              <div>
+              <div className="text-center md:text-left">
                 {isUpcoming && (
                   <div className="inline-flex items-center gap-2 bg-forest/60 border border-ivory/15 rounded-full px-3.5 py-1.5 mb-6">
                     <span className="inline-block h-2 w-2 rounded-full bg-[#d23a3a]" />
@@ -56,7 +56,7 @@ export default async function TrainingUpgradePage({
                 </h1>
 
                 {dateLine && (
-                  <div className="mt-7 flex items-center gap-2">
+                  <div className="mt-7 flex items-center justify-center md:justify-start gap-2">
                     <span aria-hidden>📅</span>
                     <p className="font-serif italic text-[16px] md:text-[18px] text-brass">
                       {dateLine}
@@ -83,7 +83,7 @@ export default async function TrainingUpgradePage({
                 <VSLEmbed url={SITE_VIDEOS.trainingUpgrade} />
 
                 {isUpcoming && event?.starts_at && (
-                  <div className="mt-6 bg-forest/40 border border-ivory/12 rounded-2xl px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                  <div className="mt-6 bg-forest/40 border border-ivory/12 rounded-2xl px-5 py-4 flex flex-col items-center sm:flex-row sm:items-center gap-3 sm:gap-4">
                     <div className="inline-flex items-center gap-1.5 shrink-0">
                       <span aria-hidden className="text-[#d23a3a]">⚠</span>
                       <span className="text-[10.5px] font-semibold tracking-[0.22em] uppercase text-ivory/75">
