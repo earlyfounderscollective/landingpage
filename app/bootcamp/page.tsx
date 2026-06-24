@@ -647,14 +647,8 @@ export default async function BootcampPage({
                 Join Founders Foundation and spend the next four weeks building
                 something you're proud to put your name on.
               </p>
-              <div className="mt-10">
-                <CheckoutButton
-                  refCode={discountActive ? refCodeRaw : undefined}
-                  source={source}
-                  label="Join Founders Foundation"
-                  accent
-                />
-                <div className="mt-6 inline-flex items-baseline gap-3 flex-wrap justify-center">
+              <div className="mt-10 flex flex-col items-center gap-6">
+                <div className="inline-flex items-baseline gap-3 flex-wrap justify-center">
                   <span className="text-[12px] font-semibold tracking-[0.22em] uppercase text-ivory/55">
                     Investment
                   </span>
@@ -665,6 +659,13 @@ export default async function BootcampPage({
                     {priceLabel}
                   </span>
                 </div>
+                <CheckoutButton
+                  refCode={discountActive ? refCodeRaw : undefined}
+                  source={source}
+                  label="Join Founders Foundation"
+                  accent
+                  size="large"
+                />
               </div>
             </div>
           </div>
