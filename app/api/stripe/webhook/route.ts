@@ -13,6 +13,7 @@ import {
 } from "@/lib/recovery-emails";
 import { signDFYCheckoutToken } from "@/lib/signing";
 import { getOrCreateReferralCode, recordRedemption } from "@/lib/referrals";
+import { sendAdminPaymentNotification } from "@/lib/admin-payment-notification";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -76,6 +77,16 @@ export async function POST(req: Request) {
             const name = session.metadata?.name || session.customer_details?.name || "";
             await sendKitWelcomeEmail(email, name, magicLink).catch(() => null);
           }
+
+          // Admin notification
+          await sendAdminPaymentNotification({
+            product: "kit_order",
+            email,
+            name: session.metadata?.name || session.customer_details?.name || null,
+            amountCents: amountTotal,
+            source: session.metadata?.source || null,
+            stripeSessionId: session.id,
+          }).catch(() => null);
         }
         return NextResponse.json({ received: true });
       }
@@ -143,6 +154,17 @@ export async function POST(req: Request) {
             const name = session.metadata?.name || session.customer_details?.name || "";
             await sendKitWelcomeEmail(email, name, magicLink).catch(() => null);
           }
+
+          // Admin notification
+          await sendAdminPaymentNotification({
+            product: "bootcamp_order",
+            email,
+            name: session.metadata?.name || session.customer_details?.name || null,
+            amountCents: session.amount_total ?? 49_700,
+            source: session.metadata?.source || null,
+            refCode: refCodeUsed || null,
+            stripeSessionId: session.id,
+          }).catch(() => null);
         }
         return NextResponse.json({ received: true });
       }
@@ -167,6 +189,16 @@ export async function POST(req: Request) {
             .from("dfy_applications")
             .update({ status: "paid" })
             .eq("id", applicationId);
+
+          // Admin notification
+          await sendAdminPaymentNotification({
+            product: "dfy_payment",
+            email,
+            name: session.metadata?.name || session.customer_details?.name || null,
+            amountCents: session.amount_total ?? 0,
+            source: session.metadata?.plan || "full",
+            stripeSessionId: session.id,
+          }).catch(() => null);
         }
         return NextResponse.json({ received: true });
       }
@@ -189,6 +221,18 @@ export async function POST(req: Request) {
         // No additional welcome email here — /training/confirmed delivers
         // the VIP confirmation. (Optionally we could send a receipt; Stripe
         // already sends its own.)
+
+        // Admin notification
+        if (email) {
+          await sendAdminPaymentNotification({
+            product: "training_vip",
+            email,
+            name: session.metadata?.name || session.customer_details?.name || null,
+            amountCents: amountTotal,
+            source: "training_upgrade",
+            stripeSessionId: session.id,
+          }).catch(() => null);
+        }
         return NextResponse.json({ received: true });
       }
 
