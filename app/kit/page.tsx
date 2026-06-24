@@ -151,7 +151,7 @@ export default async function KitPage({
         <section className="relative bg-forest text-ivory overflow-hidden">
           <div className="container-page pt-[120px] sm:pt-[140px] md:pt-[160px] pb-12 md:pb-16">
             <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] gap-10 md:gap-14 items-center max-w-[1100px] mx-auto">
-              <div className="text-center lg:text-left">
+              <div className="order-2 lg:order-1 text-center lg:text-left">
                 <p className="text-[11px] sm:text-[12px] font-semibold uppercase tracking-[0.28em] text-brass">
                   Digital kit · Yours forever
                 </p>
@@ -195,8 +195,8 @@ export default async function KitPage({
                 </div>
               </div>
 
-              {/* HERO VISUAL — VSL */}
-              <div className="mt-8 lg:mt-0">
+              {/* HERO VISUAL — VSL (top of hero on mobile, right column on desktop) */}
+              <div className="order-1 lg:order-2">
                 <VSLEmbed url={SITE_VIDEOS.kitMain} />
               </div>
             </div>
