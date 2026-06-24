@@ -14,7 +14,7 @@ export function FunnelHeader({
   const invert = tone === "light";
   return (
     <header className="absolute top-0 left-0 right-0 z-30 pointer-events-none">
-      <div className="container-page py-6 md:py-8 pointer-events-auto">
+      <div className="container-page py-6 md:py-8 pointer-events-auto flex justify-center md:justify-start">
         <Link href="/" aria-label="Early Founders Collective — Home">
           <img
             src="/logo.png"

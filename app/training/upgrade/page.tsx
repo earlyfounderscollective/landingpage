@@ -46,7 +46,7 @@ export default async function TrainingUpgradePage({
                   <div className="inline-flex items-center gap-2 bg-forest/60 border border-ivory/15 rounded-full px-3.5 py-1.5 mb-6">
                     <span className="inline-block h-2 w-2 rounded-full bg-[#d23a3a]" />
                     <span className="text-[10.5px] font-semibold tracking-[0.22em] uppercase text-ivory/85">
-                      Live Virtual Event · {new Date(event.starts_at!).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                      Live Virtual Event · {new Date(event.starts_at!).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: event.timezone })}
                     </span>
                   </div>
                 )}

@@ -106,6 +106,7 @@ export default async function TrainingConfirmedPage({
                       month: "short",
                       day: "numeric",
                       year: "numeric",
+                      timeZone: event.timezone,
                     })}
                   </span>
                 </div>

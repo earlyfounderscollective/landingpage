@@ -34,6 +34,7 @@ export default async function TrainingPage() {
       month: "long",
       day: "numeric",
       year: "numeric",
+      timeZone: event.timezone,
     });
     pillLabel = `LIVE TRAINING · ${dateShort.toUpperCase()}`;
     ctaLabel = "Claim My Free Seat";
