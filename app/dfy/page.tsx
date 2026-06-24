@@ -18,7 +18,7 @@ const DFY_VIDEO_URL: string | null = SITE_VIDEOS.dfyMain;
 export default function DFYPage() {
   return (
     <>
-      <Header tone="dark" />
+      <Header tone="dark" minimal />
       <main>
         {/* HERO */}
         <section className="bg-forest text-ivory pt-28 md:pt-36 pb-16 md:pb-20 relative overflow-hidden">
@@ -57,9 +57,6 @@ export default function DFYPage() {
                   Apply to work with us →
                 </Link>
               </div>
-              <p className="mt-5 text-[12.5px] text-ivory/55 tracking-[0.1em] uppercase">
-                Limited to 4 founders per cohort
-              </p>
             </div>
           </div>
         </section>
