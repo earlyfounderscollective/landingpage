@@ -83,14 +83,14 @@ export default async function TrainingUpgradePage({
                 <VSLEmbed url={SITE_VIDEOS.trainingUpgrade} />
 
                 {isUpcoming && event?.starts_at && (
-                  <div className="mt-6 bg-forest/40 border border-ivory/12 rounded-2xl px-5 py-4 flex items-center gap-4">
+                  <div className="mt-6 bg-forest/40 border border-ivory/12 rounded-2xl px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
                     <div className="inline-flex items-center gap-1.5 shrink-0">
                       <span aria-hidden className="text-[#d23a3a]">⚠</span>
                       <span className="text-[10.5px] font-semibold tracking-[0.22em] uppercase text-ivory/75">
                         Training starts in
                       </span>
                     </div>
-                    <div className="flex-1 flex justify-end">
+                    <div className="sm:flex-1 sm:flex sm:justify-end">
                       <CountdownTimer targetIso={event.starts_at} tone="dark" />
                     </div>
                   </div>

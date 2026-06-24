@@ -100,7 +100,7 @@ export function TrainingForm({
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="First name"
-          className="w-full px-4 py-[14px] bg-white border border-line rounded-md text-[15px] focus:outline-none focus:border-forest"
+          className="w-full px-4 py-[14px] bg-white text-ink border border-line rounded-md text-[15px] focus:outline-none focus:border-forest placeholder:text-ink/40"
         />
         <input
           type="email"
@@ -109,7 +109,7 @@ export function TrainingForm({
           placeholder="Email"
           required
           autoFocus
-          className="w-full px-4 py-[14px] bg-white border border-line rounded-md text-[15px] focus:outline-none focus:border-forest"
+          className="w-full px-4 py-[14px] bg-white text-ink border border-line rounded-md text-[15px] focus:outline-none focus:border-forest placeholder:text-ink/40"
         />
         <button
           type="submit"

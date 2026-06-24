@@ -46,8 +46,8 @@ export function CountdownTimer({
       : "text-[10px] uppercase tracking-[0.18em] text-mute";
   const numCls =
     tone === "dark"
-      ? "font-serif text-[28px] md:text-[32px] text-ivory tabular-nums tracking-[-0.012em]"
-      : "font-serif text-[28px] md:text-[32px] text-forest tabular-nums tracking-[-0.012em]";
+      ? "font-serif text-[22px] sm:text-[28px] md:text-[32px] text-ivory tabular-nums tracking-[-0.012em]"
+      : "font-serif text-[22px] sm:text-[28px] md:text-[32px] text-forest tabular-nums tracking-[-0.012em]";
 
   const cells: { value: number; label: string }[] = [
     { value: t.days, label: "Day(s)" },
@@ -57,16 +57,16 @@ export function CountdownTimer({
   ];
 
   return (
-    <div className="inline-flex items-stretch gap-3 md:gap-4">
+    <div className="inline-flex items-stretch gap-2 sm:gap-3 md:gap-4">
       {cells.map((c, i) => (
-        <div key={c.label} className="flex items-center gap-3 md:gap-4">
+        <div key={c.label} className="flex items-center gap-2 sm:gap-3 md:gap-4">
           <div className="text-center">
             <p className={numCls}>{String(c.value).padStart(2, "0")}</p>
             <p className={`${labelCls} mt-1`}>{c.label}</p>
           </div>
           {i < cells.length - 1 && (
             <span
-              className={`font-serif text-[24px] ${tone === "dark" ? "text-ivory/40" : "text-mute/40"} pb-4`}
+              className={`font-serif text-[20px] sm:text-[24px] ${tone === "dark" ? "text-ivory/40" : "text-mute/40"} pb-4`}
               aria-hidden
             >
               :
