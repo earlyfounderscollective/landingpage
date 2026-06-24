@@ -16,6 +16,7 @@ import { GuaranteeBadge } from "@/components/funnel/GuaranteeBadge";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { verifyKitRegistrantToken } from "@/lib/signing";
 import { VSLEmbed } from "@/components/funnel/VSLEmbed";
+import { MobileStickyCTA } from "@/components/funnel/MobileStickyCTA";
 import { SITE_VIDEOS } from "@/lib/site-videos";
 
 export const metadata: Metadata = {
@@ -183,7 +184,7 @@ export default async function KitPage({
                   </p>
                 </div>
 
-                <div className="mt-8">
+                <div id="buy" className="mt-8 scroll-mt-24">
                   <KitCheckoutForm
                     prefillEmail={email}
                     priceCents={priceCents}
@@ -552,6 +553,11 @@ export default async function KitPage({
         </section>
       </main>
       <FunnelFooter />
+      <MobileStickyCTA
+        href="#buy"
+        label={`Get the Kit — $${priceCents / 100}`}
+        sub={isRegistrant ? "Your registrant price" : undefined}
+      />
     </>
   );
 }

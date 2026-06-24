@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { VSLEmbed } from "@/components/funnel/VSLEmbed";
+import { MobileStickyCTA } from "@/components/funnel/MobileStickyCTA";
 
 export const metadata: Metadata = {
   title: "Done-For-You · Early Founders Collective",
@@ -266,6 +267,11 @@ export default function DFYPage() {
         </section>
       </main>
       <Footer />
+      <MobileStickyCTA
+        href="/dfy/apply"
+        label="Apply for Done-For-You"
+        sub="By application · We read every one"
+      />
     </>
   );
 }

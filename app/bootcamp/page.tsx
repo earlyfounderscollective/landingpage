@@ -13,6 +13,7 @@ import { CheckoutButton } from "./CheckoutButton";
 import { BrushUnderline } from "@/components/bootcamp/BrushUnderline";
 import { HeroGradientField, SwooshDivider } from "@/components/bootcamp/GradientSwoosh";
 import { FoundationGlyph } from "@/components/bootcamp/FoundationGlyph";
+import { MobileStickyCTA } from "@/components/funnel/MobileStickyCTA";
 
 export const metadata: Metadata = {
   title: "Founders Foundation · Early Founders Collective",
@@ -106,7 +107,7 @@ export default async function BootcampPage({
               </div>
 
               {/* Pricing line above CTA — sets the value before the button */}
-              <div className="mt-12 inline-flex items-baseline gap-3 flex-wrap justify-center">
+              <div id="join" className="mt-12 inline-flex items-baseline gap-3 flex-wrap justify-center scroll-mt-24">
                 <span className="text-[11.5px] font-semibold tracking-[0.26em] uppercase text-ivory/55">
                   Investment
                 </span>
@@ -672,6 +673,11 @@ export default async function BootcampPage({
         </section>
       </main>
       <Footer />
+      <MobileStickyCTA
+        href="#join"
+        label={`Join Founders Foundation — ${priceLabel}`}
+        sub={config.cohortLabel || undefined}
+      />
     </>
   );
 }
