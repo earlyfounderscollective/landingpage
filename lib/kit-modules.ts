@@ -8,7 +8,12 @@ export type KitModuleSlug =
   | "07-referral-worksheet"
   | "08-90-day-roadmap"
   | "09-weekly-planner"
-  | "10-kpi-dashboard";
+  | "10-kpi-dashboard"
+  | "11-branding"
+  | "12-website"
+  | "13-domain"
+  | "14-business-email"
+  | "15-google-business-profile";
 
 export type KitModule = {
   n: string;
@@ -88,5 +93,40 @@ export const KIT_MODULES: KitModule[] = [
     title: "KPI Dashboard",
     desc: "The 3-5 numbers that tell you if you have a business or a hobby.",
     estimate: "ongoing",
+  },
+  {
+    n: "11",
+    slug: "11-branding",
+    title: "Branding Basics",
+    desc: "Name, logo, palette, voice. The 60% that makes you look like a real business.",
+    estimate: "1 day",
+  },
+  {
+    n: "12",
+    slug: "12-website",
+    title: "Website Guide",
+    desc: "One page. Done in a weekend. The five sections every founder site needs.",
+    estimate: "1 weekend",
+  },
+  {
+    n: "13",
+    slug: "13-domain",
+    title: "Domain Guide",
+    desc: "Pick the right name, the right registrar, lock down the 5 settings.",
+    estimate: "20 min",
+  },
+  {
+    n: "14",
+    slug: "14-business-email",
+    title: "Business Email Setup",
+    desc: "hello@yourdomain.com in under an hour. Hosted, signed, on your phone.",
+    estimate: "45 min",
+  },
+  {
+    n: "15",
+    slug: "15-google-business-profile",
+    title: "Google Business Profile",
+    desc: "Free real estate on Google. Claim, verify, get your first 5 reviews.",
+    estimate: "30 min + ongoing",
   },
 ];

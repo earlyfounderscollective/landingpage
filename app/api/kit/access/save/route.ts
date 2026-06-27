@@ -15,6 +15,11 @@ const ALLOWED_SLUGS = new Set([
   "08-90-day-roadmap",
   "09-weekly-planner",
   "10-kpi-dashboard",
+  "11-branding",
+  "12-website",
+  "13-domain",
+  "14-business-email",
+  "15-google-business-profile",
 ]);
 
 export async function POST(req: Request) {
