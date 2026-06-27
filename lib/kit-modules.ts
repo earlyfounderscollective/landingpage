@@ -4,7 +4,11 @@ export type KitModuleSlug =
   | "03-pricing"
   | "04-ai-prompts"
   | "05-first-30"
-  | "06-lead-tracker";
+  | "06-lead-tracker"
+  | "07-referral-worksheet"
+  | "08-90-day-roadmap"
+  | "09-weekly-planner"
+  | "10-kpi-dashboard";
 
 export type KitModule = {
   n: string;
@@ -55,6 +59,34 @@ export const KIT_MODULES: KitModule[] = [
     slug: "06-lead-tracker",
     title: "Lead Tracker Sheet",
     desc: "Where every conversation goes. Pipeline value, status, follow-up dates.",
+    estimate: "ongoing",
+  },
+  {
+    n: "07",
+    slug: "07-referral-worksheet",
+    title: "Referral Worksheet",
+    desc: "Map who could refer you, what to ask, what to offer back. Compound your network.",
+    estimate: "20 min",
+  },
+  {
+    n: "08",
+    slug: "08-90-day-roadmap",
+    title: "90-Day Roadmap",
+    desc: "Three phases. One number per phase. The plan that survives contact with reality.",
+    estimate: "30 min",
+  },
+  {
+    n: "09",
+    slug: "09-weekly-planner",
+    title: "Weekly Planner",
+    desc: "Five days. Three outcomes. The week that moves the business forward.",
+    estimate: "10 min/week",
+  },
+  {
+    n: "10",
+    slug: "10-kpi-dashboard",
+    title: "KPI Dashboard",
+    desc: "The 3-5 numbers that tell you if you have a business or a hobby.",
     estimate: "ongoing",
   },
 ];
