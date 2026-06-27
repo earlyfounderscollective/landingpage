@@ -2,6 +2,20 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { trackPixelEvent } from "@/components/site/MetaPixel";
+
+function readCookie(name: string): string | null {
+  if (typeof document === "undefined") return null;
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop()?.split(";").shift() || null;
+  return null;
+}
+
+function makeEventId(): string {
+  // Compact unique id for Meta dedup. Pixel + CAPI both use this.
+  return `tr_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
+}
 
 type Mode = "upcoming" | "replay" | "between";
 
@@ -55,16 +69,33 @@ export function TrainingForm({
     if (!email) return;
     setStatus("sending");
     try {
+      // Meta Pixel/CAPI dedup: same event_id sent both client + server.
+      const metaEventId = makeEventId();
+      const metaFbc = readCookie("_fbc");
+      const metaFbp = readCookie("_fbp");
+
       const res = await fetch("/api/training/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, _gotcha: honey }),
+        body: JSON.stringify({
+          name,
+          email,
+          _gotcha: honey,
+          meta_event_id: metaEventId,
+          meta_fbc: metaFbc,
+          meta_fbp: metaFbp,
+        }),
       });
       const data = await res.json();
       if (!res.ok) {
         throw new Error(data?.error || "Couldn't reserve. Try again.");
       }
       setStatus("sent");
+
+      // Fire client-side Pixel event with the matching event_id.
+      // Server-side CAPI fires from /api/training/register — Meta
+      // dedupes them.
+      trackPixelEvent("Lead", { eventId: metaEventId });
 
       // For upcoming + replay modes, route the new registrant straight to
       // the VIP upgrade page. "between" mode has nothing to upgrade to.

@@ -34,4 +34,13 @@ export const env = {
   // OpenAI API key — used by /api/admin/images/generate. If unset, the
   // image generator route refuses to run.
   openaiApiKey: optional("OPENAI_API_KEY"),
+
+  // Meta Pixel + Conversions API. Pixel ID is public (loads in client
+  // JS). CAPI token is server-only — Meta Business Manager →
+  // Events Manager → Conversions API → "Generate access token".
+  metaPixelId: optional("NEXT_PUBLIC_META_PIXEL_ID"),
+  metaConversionsApiToken: optional("META_CONVERSIONS_API_TOKEN"),
+  // Optional: test event code, lets you verify events in the
+  // Meta Events Manager "Test Events" tab without polluting prod.
+  metaTestEventCode: optional("META_TEST_EVENT_CODE"),
 };

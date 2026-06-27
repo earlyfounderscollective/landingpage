@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Fraunces, Caveat } from "next/font/google";
 import "./globals.css";
+import { MetaPixel } from "@/components/site/MetaPixel";
 
 const sans = Inter({
   subsets: ["latin"],
@@ -81,6 +82,7 @@ export default function RootLayout({
       className={`${sans.variable} ${serif.variable} ${hand.variable}`}
     >
       <body className="font-sans antialiased text-ink bg-ivory selection:bg-forest selection:text-ivory">
+        <MetaPixel />
         {children}
       </body>
     </html>
