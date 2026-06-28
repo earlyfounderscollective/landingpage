@@ -27,10 +27,15 @@ export const BRANDING_GUIDE: GuideConfig = {
       hint: "Skip the $5K agency. The 80% solution gets you launched.",
       options: [
         {
+          value: "ideogram",
+          label: "Ideogram AI",
+          sub: "Free tier. The AI image tool that actually renders letters correctly — most others mangle text. Type your business name + a style and iterate.",
+          recommended: true,
+        },
+        {
           value: "canva_diy",
           label: "DIY in Canva",
-          sub: "Free. Good wordmarks for most service businesses.",
-          recommended: true,
+          sub: "Free. Good wordmarks for most service businesses if you have any design instinct.",
         },
         {
           value: "fiverr",
@@ -39,8 +44,8 @@ export const BRANDING_GUIDE: GuideConfig = {
         },
         {
           value: "ai_generator",
-          label: "AI logo tool (Looka / Brandmark)",
-          sub: "$20-50. Decent if you have no design instinct.",
+          label: "Looka / Brandmark",
+          sub: "$20-50. Older AI logo generators. Decent backup if Ideogram doesn't click.",
         },
       ],
     },
@@ -80,6 +85,7 @@ export const BRANDING_GUIDE: GuideConfig = {
     {
       title: "Recommended tools",
       tools: [
+        { name: "Ideogram AI", url: "https://ideogram.ai", tag: "Free tier", why: "The AI image tool that actually renders letters correctly. Type your business name + a style direction (e.g. 'minimal brass wordmark, italic serif'), iterate 3-4 times, and you'll have a usable logo in under 10 min." },
         { name: "Canva", url: "https://canva.com", tag: "Free", why: "Logo + profile pics + banners + business cards. The 'one tool to rule them all' for non-designers." },
         { name: "Coolors", url: "https://coolors.co", tag: "Free", why: "Generate a 3-color palette in 10 seconds. Lock the one you like and copy the hex codes." },
         { name: "Fontshare", url: "https://fontshare.com", tag: "Free", why: "Premium fonts, free for commercial use. Pair one serif + one sans. Done." },
