@@ -271,3 +271,5 @@ export async function sendTrainingRegistrationEmail(
     html: wrap(inner),
   });
 }
+
+// vercel git auto-deploy smoke test — 2026-07-02T13:56:10Z
