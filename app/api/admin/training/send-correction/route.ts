@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { isAdmin } from "@/lib/admin-auth";
+import { env } from "@/lib/env";
 import { getActiveTrainingEvent } from "@/lib/training";
 import { sendTrainingCorrection } from "@/lib/training-emails";
 
@@ -8,14 +9,23 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
+function authOk(req: Request): boolean {
+  if (isAdmin()) return true;
+  if (!env.cronSecret) return false;
+  const header = req.headers.get("authorization") ?? "";
+  if (header === `Bearer ${env.cronSecret}`) return true;
+  const url = new URL(req.url);
+  return url.searchParams.get("secret") === env.cronSecret;
+}
+
 // One-shot broadcast for correcting a wrong-timing reminder that
-// already went out. Admin session required. Sends the correction to
-// every registration for the currently active event.
+// already went out. Admin session OR cron secret required. Sends the
+// correction to every registration for the currently active event.
 //
 // Idempotency: logs into training_email_log with kind="correction" so
 // re-running is safe — anyone already corrected is skipped.
-export async function POST() {
-  if (!isAdmin()) {
+export async function POST(req: Request) {
+  if (!authOk(req)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
