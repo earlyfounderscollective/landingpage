@@ -94,7 +94,9 @@ export async function sendTraining24hReminder(
 }
 
 // ─────────────────────────────────────────────────────────
-// 1-hour pre-event reminder
+// Same-day reminder (fires 0-12h before start via daily cron)
+// Copy is intentionally same-day, NOT "in an hour" — the trigger
+// window is up to 12h wide because we run on a daily cron.
 // ─────────────────────────────────────────────────────────
 export async function sendTraining1hReminder(
   email: string,
@@ -102,13 +104,42 @@ export async function sendTraining1hReminder(
   event: TrainingEvent,
 ) {
   const first = firstOf(name);
-  const subject = first ? `Starting in an hour, ${first}` : "Starting in an hour";
+  const dateLine = formatTrainingDateLine(event);
+  const subject = first ? `Tonight, ${first}` : "Tonight";
   const inner = `
-    ${H1("In an hour.")}
-    ${P("The training starts in about 60 minutes. Pour the coffee.")}
-    ${event.zoom_url ? P(`<a href="${event.zoom_url}" style="color:#23352D;text-decoration:underline;font-weight:500;">${escapeHtml(event.zoom_url)}</a>`, true) : ""}
+    ${H1("Later today.")}
+    ${P("Quick reminder — the training is tonight.")}
+    ${P(`<strong style="color:#23352D;">${escapeHtml(dateLine)}</strong>`)}
+    ${event.zoom_url ? P(`Zoom link: <a href="${event.zoom_url}" style="color:#23352D;text-decoration:underline;font-weight:500;">${escapeHtml(event.zoom_url)}</a>`, true) : ""}
     ${BTN(`${env.siteUrl}/training/watch?email=${encodeURIComponent(email)}`, "Open the training room")}
     ${P("Doors open 30 min before start.", true)}
+    ${SIG}
+  `;
+  return send(email, subject, wrap(inner));
+}
+
+// ─────────────────────────────────────────────────────────
+// One-shot correction email — sent manually via admin
+// broadcast route when a bad reminder went out with wrong timing.
+// ─────────────────────────────────────────────────────────
+export async function sendTrainingCorrection(
+  email: string,
+  name: string,
+  event: TrainingEvent,
+) {
+  const first = firstOf(name);
+  const dateLine = formatTrainingDateLine(event);
+  const subject = first
+    ? `Correction — training is tonight, ${first}`
+    : "Correction — training is tonight";
+  const inner = `
+    ${H1(first ? `Hey ${first},` : "Hey,")}
+    ${P("Quick note — you may have gotten an email earlier that read like the training was starting right away. That was a scheduling glitch on my end. My apologies.")}
+    ${P("The correct time is:")}
+    ${P(`<strong style="color:#23352D;">${escapeHtml(dateLine)}</strong>`)}
+    ${event.zoom_url ? P(`Zoom link: <a href="${event.zoom_url}" style="color:#23352D;text-decoration:underline;font-weight:500;">${escapeHtml(event.zoom_url)}</a>`, true) : ""}
+    ${BTN(`${env.siteUrl}/training/watch?email=${encodeURIComponent(email)}`, "Open the training room")}
+    ${P("Sorry for the mix-up. See you tonight.", true)}
     ${SIG}
   `;
   return send(email, subject, wrap(inner));
