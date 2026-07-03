@@ -94,13 +94,24 @@ export async function consumeMagicToken(
     .maybeSingle();
 
   if (error || !data) return null;
-  if (data.used_at) return null;
+
+  // Only expiry invalidates a link — NOT a prior "use". Email security
+  // scanners and link prefetchers (Gmail, Outlook Safe Links, corporate
+  // antivirus) fire a GET on the magic link the instant it lands in the
+  // inbox. If we burned the token on that first touch, the human clicking
+  // seconds later would be bounced to /login?error=expired — which is exactly
+  // the "every time I enter my email it sends me back to the same link" bug
+  // buyers were hitting. Keeping the link valid until it expires (30 min)
+  // makes prefetch harmless while staying single-purchase and short-lived.
   if (new Date(data.expires_at).getTime() < Date.now()) return null;
 
-  await supabase
-    .from("kit_access_tokens")
-    .update({ used_at: new Date().toISOString() })
-    .eq("token", token);
+  // Stamp first-use for auditing only; don't gate on it.
+  if (!data.used_at) {
+    await supabase
+      .from("kit_access_tokens")
+      .update({ used_at: new Date().toISOString() })
+      .eq("token", token);
+  }
 
   return { email: String(data.email).toLowerCase() };
 }

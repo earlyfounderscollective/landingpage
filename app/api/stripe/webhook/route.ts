@@ -44,8 +44,14 @@ export async function POST(req: Request) {
     if (event.type === "checkout.session.completed") {
       const session = event.data.object as Stripe.Checkout.Session;
       const customerId = idOrString(session.customer);
-      const email =
+      // Normalize to lowercase at the source. Every downstream lookup
+      // (isKitBuyer, magic tokens, session cookie) lowercases the email, so
+      // storing it mixed-case here would silently lock out any buyer who
+      // typed a capital letter at checkout. Email addresses are effectively
+      // case-insensitive, so this is safe for sending too.
+      const rawEmail =
         session.customer_details?.email ?? session.customer_email ?? null;
+      const email = rawEmail ? rawEmail.trim().toLowerCase() : null;
       const metaType = session.metadata?.type || null;
 
       // Kit order — record in kit_orders + send welcome email with magic link
