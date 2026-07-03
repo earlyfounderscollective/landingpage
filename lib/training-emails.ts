@@ -146,6 +146,31 @@ export async function sendTrainingCorrection(
 }
 
 // ─────────────────────────────────────────────────────────
+// Zoom link update — sent when we swap the meeting URL mid-cohort.
+// ─────────────────────────────────────────────────────────
+export async function sendTrainingZoomUpdate(
+  email: string,
+  name: string,
+  event: TrainingEvent,
+) {
+  const first = firstOf(name);
+  const dateLine = formatTrainingDateLine(event);
+  const subject = first
+    ? `Updated Zoom link, ${first} — save this one`
+    : "Updated Zoom link — save this one";
+  const inner = `
+    ${H1(first ? `Hey ${first},` : "Hey,")}
+    ${P("Quick note — I switched the Zoom link for tonight&rsquo;s training. Please use <strong style=\"color:#23352D;\">this one</strong> instead of any earlier link I sent:")}
+    ${event.zoom_url ? P(`<a href="${event.zoom_url}" style="color:#23352D;text-decoration:underline;font-weight:600;font-size:17px;">${escapeHtml(event.zoom_url)}</a>`) : ""}
+    ${P(`Same time: <strong style="color:#23352D;">${escapeHtml(dateLine)}</strong>`)}
+    ${BTN(`${env.siteUrl}/training/watch?email=${encodeURIComponent(email)}`, "Open the training room")}
+    ${P("If you already saved the old link, delete it &mdash; only the link above will work. See you tonight.", true)}
+    ${SIG}
+  `;
+  return send(email, subject, wrap(inner));
+}
+
+// ─────────────────────────────────────────────────────────
 // Replay delivery (sent ~30 min after event ends)
 // ─────────────────────────────────────────────────────────
 export async function sendTrainingReplayDelivery(
