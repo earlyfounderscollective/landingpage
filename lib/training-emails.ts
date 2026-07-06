@@ -54,6 +54,10 @@ const P = (text: string, last = false) =>
 const BTN = (href: string, label: string) =>
   `<div style="margin:8px 0 32px 0;"><a href="${href}" style="display:inline-block;background:#23352D;color:#F7F2EA;font-family:ui-sans-serif,system-ui,sans-serif;font-size:13.5px;font-weight:500;letter-spacing:0.02em;text-decoration:none;padding:14px 26px;border-radius:9999px;">${label}</a></div>`;
 
+// Secondary/outline button — used when there's already a primary dark button.
+const SURVEY_BTN = (href: string, label: string) =>
+  `<div style="margin:8px 0 32px 0;"><a href="${href}" style="display:inline-block;background:#FFFFFF;color:#23352D;border:1.5px solid #23352D;font-family:ui-sans-serif,system-ui,sans-serif;font-size:13.5px;font-weight:500;letter-spacing:0.02em;text-decoration:none;padding:12.5px 24px;border-radius:9999px;">${label}</a></div>`;
+
 const SIG = `<p style="font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:17px;color:rgba(35,53,45,0.85);margin:0;">Oge</p>`;
 
 function firstOf(name: string): string {
@@ -182,12 +186,15 @@ export async function sendTrainingReplayDelivery(
   const first = firstOf(name);
   const subject = first ? `Replay's up, ${first}` : "Replay's up";
   const replayHref = event.replay_url || `${env.siteUrl}/training/watch?email=${encodeURIComponent(email)}`;
+  const surveyHref = `${env.siteUrl}/training/survey?email=${encodeURIComponent(email)}`;
   const inner = `
     ${H1("The replay is ready.")}
     ${P(isVip ? "As a VIP, your replay is permanent. Come back to it anytime." : "Free access for the next 48 hours. After that the link closes.")}
     ${BTN(replayHref, "Watch the replay")}
     ${!isVip ? P(`<a href="${env.siteUrl}/training/upgrade?email=${encodeURIComponent(email)}" style="color:#23352D;text-decoration:underline;">Want lifetime access?</a> Upgrade to VIP for $17.`) : ""}
-    ${P("If you couldn't make it live, watching is still worth your time. The first 25 minutes are the part most people quote back to me later.", true)}
+    ${P("If you couldn't make it live, watching is still worth your time. The first 25 minutes are the part most people quote back to me later.")}
+    ${P("One quick ask: after you watch, tell me how it landed. Two minutes, and it genuinely shapes what I build next.")}
+    ${SURVEY_BTN(surveyHref, "Give quick feedback")}
     ${SIG}
   `;
   return send(email, subject, wrap(inner));
