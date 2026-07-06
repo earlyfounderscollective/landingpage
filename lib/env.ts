@@ -8,6 +8,13 @@ export const env = {
   supabaseAnonKey: optional("NEXT_PUBLIC_SUPABASE_ANON_KEY"),
   supabaseServiceRoleKey: optional("SUPABASE_SERVICE_ROLE_KEY"),
 
+  // Kit (ConvertKit) v4 API key — server-side only. Used to sync leads
+  // captured in ManyChat into Kit via /api/kit/subscribe.
+  kitApiKey: optional("KIT_API_KEY"),
+  // Shared secret that gates /api/kit/subscribe so only our own callers
+  // (ManyChat External Request) can add emails to the list.
+  kitSyncSecret: optional("KIT_SYNC_SECRET"),
+
   resendApiKey: optional("RESEND_API_KEY"),
   resendFromEmail: optional("RESEND_FROM_EMAIL") ?? "contact@earlyfounderscollective.com",
   adminEmail: optional("ADMIN_NOTIFICATION_EMAIL") ?? "ogemadu8@gmail.com",
