@@ -238,6 +238,9 @@ export default async function TrainingWatchPage({
                   <VSLEmbed url={replayUrl} />
                 </div>
 
+                {/* Ask for feedback before the pitch */}
+                <SurveyPromptCard email={email} />
+
                 {/* Kit pitch under replay, with bootcamp upsell below it */}
                 <KitPitchCard />
                 <BootcampPitchCard variant="after-kit" source="training_watch_replay" />
@@ -256,6 +259,7 @@ export default async function TrainingWatchPage({
                 <p className="mt-5 text-[15.5px] text-ink/72 leading-[1.65] max-w-[480px] mx-auto">
                   The training is over for now. The next live training drops soon. In the meantime, the workbook covers the same ground.
                 </p>
+                <SurveyPromptCard email={email} />
                 <KitPitchCard withTitle={false} />
                 <BootcampPitchCard variant="primary" source="training_watch_expired" />
               </div>
@@ -300,6 +304,32 @@ function KitPitchCard({ withTitle = true }: { withTitle?: boolean }) {
         className="mt-7 inline-flex items-center justify-center rounded-full bg-brass text-ivory text-[14.5px] font-semibold tracking-[0.04em] uppercase px-8 py-[15px] hover:bg-[#8a6c3f] transition-colors"
       >
         Get Build Your Business Kit →
+      </Link>
+    </div>
+  );
+}
+
+function SurveyPromptCard({ email }: { email: string }) {
+  const href = email
+    ? `/training/survey?email=${encodeURIComponent(email)}`
+    : "/training/survey";
+  return (
+    <div className="mt-12 md:mt-14 bg-bone border border-line/60 rounded-2xl p-7 md:p-9 text-center">
+      <p className="text-[10.5px] font-semibold tracking-[0.28em] uppercase text-brass">
+        Before you go
+      </p>
+      <h3 className="mt-3 font-serif text-[23px] md:text-[26px] leading-[1.2] tracking-[-0.012em] text-forest">
+        Tell me how that landed.
+      </h3>
+      <p className="mt-3 text-[14.5px] md:text-[15px] leading-[1.6] text-ink/72 max-w-[460px] mx-auto">
+        Two minutes of honest feedback. It shapes the next training and I read
+        every single one.
+      </p>
+      <Link
+        href={href}
+        className="mt-6 inline-flex items-center justify-center rounded-full bg-forest text-ivory text-[13.5px] font-semibold tracking-[0.03em] px-7 py-3.5 hover:bg-ink transition-colors"
+      >
+        Give feedback →
       </Link>
     </div>
   );

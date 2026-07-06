@@ -125,3 +125,32 @@ alter table public.plan_email_log enable row level security;
 -- alter table public.plan_projects add column if not exists last_module_slug text;
 -- alter table public.plan_projects alter column user_id drop not null;
 -- create unique index if not exists plan_projects_email_idx on public.plan_projects (email);
+
+-- ────────────────────────────────────────────────────────────────────────
+-- Post-webinar survey: learn what landed so the training + offers improve
+-- ────────────────────────────────────────────────────────────────────────
+
+create table if not exists public.training_survey_responses (
+  id uuid primary key default gen_random_uuid(),
+  event_id uuid,                    -- which training_event this feedback is for
+  email text,                       -- optional; ties back to registration
+  full_name text,
+  rating int,                       -- overall, 1-5
+  most_valuable text,               -- what landed
+  confusing text,                   -- what to cut / fix
+  wish_covered text,                -- content gaps
+  kit_likelihood int,               -- intent to buy the kit, 1-5
+  cohort_likelihood int,            -- intent to join the cohort, 1-5
+  barrier text,                     -- what's holding them back from buying
+  other text,
+  source text,
+  created_at timestamp with time zone not null default now()
+);
+
+create index if not exists training_survey_event_idx
+  on public.training_survey_responses (event_id);
+create index if not exists training_survey_created_idx
+  on public.training_survey_responses (created_at desc);
+
+alter table public.training_survey_responses enable row level security;
+-- Service role bypasses RLS; the API writes with the service key.
