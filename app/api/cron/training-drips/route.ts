@@ -47,10 +47,13 @@ export async function GET(req: Request) {
     kit_pitch: { eligible: 0, sent: 0, skipped: 0, errors: 0 },
   };
 
-  // Pull all active or recent training events. Hourly cron only needs to look
-  // at events whose start time is +/- ~30h from now (covers all 4 send windows).
-  const lookbackHrs = 30;
-  const lookaheadHrs = 30;
+  // Pull all active or recent training events. The window must fully cover
+  // every send trigger below: reminder_24h fires up to 36h ahead, and
+  // kit_pitch fires up to 48h after the event ENDS. With a 30h window,
+  // evening events (start ~19:00-01:00 UTC) fell outside both, so their
+  // day-before reminder AND the $47 kit-pitch upsell silently never sent.
+  const lookbackHrs = 52; // 48h post-end + event duration buffer
+  const lookaheadHrs = 38; // 36h reminder window + buffer
   const { data: events } = await supabase
     .from("training_event")
     .select("*")

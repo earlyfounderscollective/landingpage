@@ -57,6 +57,17 @@ export async function POST(req: Request) {
       // Kit order — record in kit_orders + send welcome email with magic link
       if (metaType === "kit_order") {
         if (supabase && email) {
+          // Idempotency: Stripe delivers at-least-once and retries slow/failed
+          // responses. Skip if this session was already recorded, so a retry
+          // can't create a duplicate order, magic link, or welcome email.
+          const { data: dup } = await supabase
+            .from("kit_orders")
+            .select("id")
+            .eq("stripe_session_id", session.id)
+            .limit(1)
+            .maybeSingle();
+          if (dup) return NextResponse.json({ received: true, deduped: true });
+
           const kitPrice = Number(session.metadata?.kit_price_cents ?? 0);
           const bumpCents = Number(session.metadata?.bump_amount_cents ?? 0);
           const bumpIncluded = session.metadata?.bump_included === "true";
@@ -100,6 +111,16 @@ export async function POST(req: Request) {
       // Bootcamp purchase
       if (metaType === "bootcamp_order") {
         if (supabase && email) {
+          // Idempotency: skip if already recorded, so a retried webhook can't
+          // double-insert the order, re-run the referral payout, or re-email.
+          const { data: dup } = await supabase
+            .from("bootcamp_orders")
+            .select("id")
+            .eq("stripe_session_id", session.id)
+            .limit(1)
+            .maybeSingle();
+          if (dup) return NextResponse.json({ received: true, deduped: true });
+
           const refCodeUsed = session.metadata?.ref_code || null;
           const cohortStartDate = session.metadata?.cohort_start_date || null;
 
