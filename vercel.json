@@ -11,6 +11,10 @@
     {
       "path": "/api/cron/training-drips",
       "schedule": "0 13 * * *"
+    },
+    {
+      "path": "/api/cron/training-survey",
+      "schedule": "0 15 12 7 *"
     }
   ]
 }
