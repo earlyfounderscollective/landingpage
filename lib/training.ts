@@ -1,3 +1,4 @@
+import { unstable_noStore as noStore } from "next/cache";
 import { getSupabaseAdmin } from "./supabase";
 
 export type TrainingEventStatus = "upcoming" | "replay" | "between";
@@ -73,6 +74,11 @@ export function detectVideoEmbed(url: string | null | undefined): EmbedResult {
  * Server-only — uses the service-role Supabase client.
  */
 export async function getActiveTrainingEvent(): Promise<TrainingEvent | null> {
+  // Never serve a cached training event. Admin edits (date, status, zoom URL)
+  // must show on the funnel immediately, so opt this read out of Next.js's
+  // Data Cache. Without this, updates look "stuck" until a redeploy.
+  noStore();
+
   const supabase = getSupabaseAdmin();
   if (!supabase) return null;
 
