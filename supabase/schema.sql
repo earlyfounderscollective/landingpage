@@ -154,3 +154,24 @@ create index if not exists training_survey_created_idx
 
 alter table public.training_survey_responses enable row level security;
 -- Service role bypasses RLS; the API writes with the service key.
+
+-- ────────────────────────────────────────────────────────────────────────
+-- Ebook waitlist: "The Beginner's Guide to Profitable Events"
+-- Owned copy of the list so a Kit outage never costs a signup.
+-- ────────────────────────────────────────────────────────────────────────
+
+create table if not exists public.ebook_waitlist (
+  id uuid primary key default gen_random_uuid(),
+  email text not null,
+  name text,
+  source text,                      -- which form/placement captured them
+  created_at timestamp with time zone not null default now()
+);
+
+create unique index if not exists ebook_waitlist_email_idx
+  on public.ebook_waitlist (email);
+create index if not exists ebook_waitlist_created_idx
+  on public.ebook_waitlist (created_at desc);
+
+alter table public.ebook_waitlist enable row level security;
+-- Service role bypasses RLS; the API writes with the service key.
